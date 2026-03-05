@@ -5,13 +5,15 @@ import {
   loginStartAction,
   loginSuccessAction,
 } from "./auth.actions";
-import { map, exhaustMap, catchError, of } from "rxjs";
+import { map, exhaustMap, catchError, of, mergeMap } from "rxjs";
 import { AuthService } from "../services/auth.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthEffect {
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   login$ = createEffect(() => {
     return this.actions$.pipe(
@@ -24,6 +26,7 @@ export class AuthEffect {
               return loginSuccessAction({ auth: data });
             }),
             catchError((error) => {
+              // console.log(error);
               return of(
                 loginFailureAction({
                   error: error.message || "Login failed",
@@ -34,4 +37,16 @@ export class AuthEffect {
       }),
     );
   });
+
+  redirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(loginSuccessAction),
+        mergeMap((action) => {
+          return this.router.navigate(["/"]);
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 }

@@ -11,8 +11,9 @@ import {
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../store/app.state";
 import { loginStartAction } from "../state/auth.actions";
-import { getAuthLoading } from "../state/auth.selectors";
+import { getAuthError, getAuthLoading } from "../state/auth.selectors";
 import { AsyncPipe } from "@angular/common";
+import { AlertComponent } from "../../ui/alert/alert.component";
 
 @Component({
   selector: "app-signin-form",
@@ -22,6 +23,7 @@ import { AsyncPipe } from "@angular/common";
     FormsModule,
     ReactiveFormsModule,
     AsyncPipe,
+    AlertComponent,
   ],
   templateUrl: "./signin-form.component.html",
   styles: ``,
@@ -33,6 +35,9 @@ export class SigninFormComponent implements OnInit {
   isChecked = false;
 
   signInForm!: FormGroup;
+
+  loading$ = this.store.select(getAuthLoading);
+  authError$ = this.store.select(getAuthError);
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
@@ -96,6 +101,4 @@ export class SigninFormComponent implements OnInit {
       alert("Kindly tick the checkbox");
     }
   }
-
-  loading$ = this.store.select(getAuthLoading);
 }
