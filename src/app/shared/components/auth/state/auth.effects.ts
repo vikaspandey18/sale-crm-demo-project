@@ -18,7 +18,7 @@ export class AuthEffect {
       ofType(loginStartAction),
       exhaustMap((action) => {
         return this.authService
-          .loginAuthService(action.email, action.password)
+          .loginAuthService(action.mobile, action.password)
           .pipe(
             map((data) => {
               return loginSuccessAction({ auth: data });

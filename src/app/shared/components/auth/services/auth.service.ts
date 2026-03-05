@@ -9,9 +9,9 @@ import { AuthResponse } from "../../../../models/auth.model";
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  loginAuthService(email: string, password: string): Observable<AuthResponse> {
+  loginAuthService(mobile: string, password: string): Observable<AuthResponse> {
     const url = "https://rushabh.vizitlog.com/newapi/login.php";
-    const body = { email, password };
+    const body = { mobile, password };
     return this.http.post<AuthResponse>(url, body);
   }
 }

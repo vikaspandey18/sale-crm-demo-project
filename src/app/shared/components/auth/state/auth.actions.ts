@@ -3,7 +3,7 @@ import { AuthResponse } from "../../../../models/auth.model";
 
 export const loginStartAction = createAction(
   "[auth] login start",
-  props<{ email: string; password: string }>(),
+  props<{ mobile: string; password: string }>(),
 );
 
 export const loginSuccessAction = createAction(
@@ -16,4 +16,4 @@ export const loginFailureAction = createAction(
   props<{ error: string }>(),
 );
 
-export const logoutAction = createAction("[Auth] Logout");  
+export const logoutAction = createAction("[Auth] Logout");

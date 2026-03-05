@@ -11,10 +11,18 @@ import {
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../store/app.state";
 import { loginStartAction } from "../state/auth.actions";
+import { getAuthLoading } from "../state/auth.selectors";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: "app-signin-form",
-  imports: [LabelComponent, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    LabelComponent,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AsyncPipe,
+  ],
   templateUrl: "./signin-form.component.html",
   styles: ``,
 })
@@ -28,7 +36,11 @@ export class SigninFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
-      email: new FormControl("", [Validators.email, Validators.required]),
+      mobile: new FormControl("", [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
       password: new FormControl("", [
         Validators.minLength(4),
         Validators.required,
@@ -41,17 +53,20 @@ export class SigninFormComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  validateEmail() {
-    const emailValue = this.signInForm.get("email");
+  validateMobile() {
+    const mobileValue = this.signInForm.get("mobile");
     if (
-      emailValue?.errors?.["required"] &&
-      (emailValue.touched || emailValue.dirty)
+      mobileValue?.errors?.["required"] &&
+      (mobileValue.touched || mobileValue.dirty)
     ) {
       return "Email is required";
     }
 
-    if (emailValue?.errors?.["email"]) {
-      return "Email format is not correct";
+    if (
+      mobileValue?.hasError("minlength") ||
+      mobileValue?.hasError("maxlength")
+    ) {
+      return "Mobile Number should be 10 digit";
     }
     return;
   }
@@ -74,11 +89,13 @@ export class SigninFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const { email, password, checkeBox } = this.signInForm.value;
+    const { mobile, password, checkeBox } = this.signInForm.value;
     if (checkeBox) {
-      this.store.dispatch(loginStartAction({ email, password }));
+      this.store.dispatch(loginStartAction({ mobile, password }));
     } else {
       alert("Kindly tick the checkbox");
     }
   }
+
+  loading$ = this.store.select(getAuthLoading);
 }
