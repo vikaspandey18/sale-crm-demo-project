@@ -10,3 +10,10 @@ export const loginSuccessAction = createAction(
   "[auth] login success",
   props<{ auth: AuthResponse }>(),
 );
+
+export const loginFailureAction = createAction(
+  "[auth] login failure",
+  props<{ error: string }>(),
+);
+
+export const logoutAction = createAction("[Auth] Logout");  

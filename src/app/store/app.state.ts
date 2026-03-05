@@ -1,3 +1,4 @@
+import { AuthEffect } from "../shared/components/auth/state/auth.effects";
 import { authReducer } from "../shared/components/auth/state/auth.reducer";
 import { AuthState } from "../shared/components/auth/state/auth.state";
 
@@ -9,4 +10,4 @@ export const AppReducer = {
   auth: authReducer,
 };
 
-export const appEffect = {};
+export const AppEffect = [AuthEffect];

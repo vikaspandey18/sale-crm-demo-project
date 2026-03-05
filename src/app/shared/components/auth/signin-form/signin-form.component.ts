@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { LabelComponent } from "../../form/label/label.component";
 import { RouterModule } from "@angular/router";
 import {
@@ -8,6 +8,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../../../store/app.state";
+import { loginStartAction } from "../state/auth.actions";
 
 @Component({
   selector: "app-signin-form",
@@ -16,6 +19,8 @@ import {
   styles: ``,
 })
 export class SigninFormComponent implements OnInit {
+  private store = inject(Store<AppState>);
+
   showPassword = false;
   isChecked = false;
 
@@ -34,10 +39,6 @@ export class SigninFormComponent implements OnInit {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-  }
-
-  onSubmit() {
-    console.log(this.signInForm.value);
   }
 
   validateEmail() {
@@ -70,5 +71,14 @@ export class SigninFormComponent implements OnInit {
     }
 
     return;
+  }
+
+  onSubmit() {
+    const { email, password, checkeBox } = this.signInForm.value;
+    if (checkeBox) {
+      this.store.dispatch(loginStartAction({ email, password }));
+    } else {
+      alert("Kindly tick the checkbox");
+    }
   }
 }
