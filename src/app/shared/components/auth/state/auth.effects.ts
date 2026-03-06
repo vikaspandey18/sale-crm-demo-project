@@ -4,6 +4,7 @@ import {
   loginFailureAction,
   loginStartAction,
   loginSuccessAction,
+  logoutAction,
 } from "./auth.actions";
 import { map, exhaustMap, catchError, of, mergeMap } from "rxjs";
 import { AuthService } from "../services/auth.service";
@@ -44,6 +45,18 @@ export class AuthEffect {
         ofType(loginSuccessAction),
         mergeMap((action) => {
           return this.router.navigate(["/"]);
+        }),
+      );
+    },
+    { dispatch: false },
+  );
+
+  logout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(logoutAction),
+        map((action) => {
+          return this.router.navigate(["signin"]);
         }),
       );
     },
