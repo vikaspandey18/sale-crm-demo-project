@@ -75,6 +75,8 @@ export class AppSidebarComponent {
       subItems: [
         { name: "My Report", path: "/basic-tables" },
         { name: "Attendance", path: "/basic-tables" },
+        { name: "Order", path: "/basic-tables" },
+        { name: "Collection", path: "/basic-tables" },
       ],
     },
 
