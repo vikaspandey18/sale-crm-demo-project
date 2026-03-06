@@ -14,4 +14,12 @@ export class AuthService {
     const body = { mobile, password };
     return this.http.post<AuthResponse>(url, body);
   }
+
+  saveAuthInfoInLocalStorage(auth: AuthResponse) {
+    try {
+      localStorage.setItem("auth", JSON.stringify(auth));
+    } catch (e) {
+      console.log("There was error in saving data to localstorage");
+    }
+  }
 }

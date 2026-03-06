@@ -24,6 +24,7 @@ export class AuthEffect {
           .loginAuthService(action.mobile, action.password)
           .pipe(
             map((data) => {
+              this.authService.saveAuthInfoInLocalStorage(data);
               return loginSuccessAction({ auth: data });
             }),
             catchError((error) => {
