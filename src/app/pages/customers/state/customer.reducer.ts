@@ -15,10 +15,10 @@ export const customerReducer = createReducer(
     error: null,
   })),
 
-  on(getCustomerSuccess, (state, { customer }) => ({
+  on(getCustomerSuccess, (state, action) => ({
     ...state,
     loading: false,
-    customer: customer,
+    customers: action.customers,
   })),
 
   on(getCustomerFailure, (state, { error }) => ({

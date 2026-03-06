@@ -5,7 +5,7 @@ export const getCustomer = createAction("[Customer] Get Customer");
 
 export const getCustomerSuccess = createAction(
   "[Customer] Get Customer Success",
-  props<{ customer: CustomerResponse }>(),
+  props<{ customers: CustomerResponse[] }>(),
 );
 
 export const getCustomerFailure = createAction(

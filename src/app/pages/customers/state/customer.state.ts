@@ -1,13 +1,13 @@
 import { CustomerResponse } from "../../../models/customer.model";
 
 export interface CustomerState {
-  customer: CustomerResponse | null;
+  customers: CustomerResponse[];
   loading: boolean;
   error: string | null;
 }
 
 export const initialState: CustomerState = {
-  customer: null,
+  customers: [],
   loading: false,
   error: null,
 };

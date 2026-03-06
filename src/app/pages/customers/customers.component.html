@@ -1,1 +1,4 @@
 <p>customers works!</p>
+@for (customer of (customers$ | async); track $index) {
+{{ customer?.customer_name }}
+}
