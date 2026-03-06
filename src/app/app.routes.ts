@@ -18,6 +18,11 @@ import { VideosComponent } from "./pages/ui-elements/videos/videos.component";
 import { SignInComponent } from "./pages/auth-pages/sign-in/sign-in.component";
 import { SignUpComponent } from "./pages/auth-pages/sign-up/sign-up.component";
 import { CalenderComponent } from "./pages/calender/calender.component";
+import { CustomersComponent } from "./pages/customers/customers.component";
+import { TelecallerComponent } from "./pages/telecaller/telecaller.component";
+import { IndiamartComponent } from "./pages/indiamart/indiamart.component";
+import { LeadsComponent } from "./pages/leads/leads.component";
+import { AttendanceComponent } from "./pages/attendance/attendance.component";
 
 export const routes: Routes = [
   {
@@ -100,6 +105,31 @@ export const routes: Routes = [
         path: "videos",
         component: VideosComponent,
         title: "Videos",
+      },
+      {
+        path: "customer",
+        component: CustomersComponent,
+        title: "Customer",
+      },
+      {
+        path: "telecaller",
+        component: TelecallerComponent,
+        title: "TeleCaller",
+      },
+      {
+        path: "indiamart",
+        component: IndiamartComponent,
+        title: "India Mart",
+      },
+      {
+        path: "lead",
+        component: LeadsComponent,
+        title: "Lead",
+      },
+      {
+        path: "attendance",
+        component: AttendanceComponent,
+        title: "Lead",
       },
     ],
   },
