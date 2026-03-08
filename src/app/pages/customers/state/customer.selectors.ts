@@ -10,3 +10,10 @@ export const getSelectorCustomers = createSelector(
     return state.customers;
   },
 );
+
+export const getCustomerLoadingStatus = createSelector(
+  getCustomerFeatureSelector,
+  (state) => {
+    return state.loading;
+  },
+);
