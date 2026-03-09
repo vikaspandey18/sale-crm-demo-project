@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { AuthResponse } from "../../../../models/auth.model";
+import { ApiResponse } from "../../../../models/api-response.model";
 
 @Injectable({
   providedIn: "root",
@@ -9,10 +10,13 @@ import { AuthResponse } from "../../../../models/auth.model";
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  loginAuthService(mobile: string, password: string): Observable<AuthResponse> {
+  loginAuthService(
+    mobile: string,
+    password: string,
+  ): Observable<ApiResponse<AuthResponse>> {
     const url = "https://rushabh.vizitlog.com/newapi/login.php";
     const body = { mobile, password };
-    return this.http.post<AuthResponse>(url, body);
+    return this.http.post<ApiResponse<AuthResponse>>(url, body);
   }
 
   saveAuthInfoInLocalStorage(auth: AuthResponse) {
@@ -20,6 +24,22 @@ export class AuthService {
       localStorage.setItem("auth", JSON.stringify(auth));
     } catch (e) {
       console.log("There was error in saving data to localstorage");
+    }
+  }
+
+  getUserDataFromLocalStorage() {
+    try {
+      let loggedUser = localStorage.getItem("auth");
+
+      if (!loggedUser) {
+        return null;
+      }
+
+      let user = JSON.parse(loggedUser);
+
+      return user;
+    } catch (error) {
+      console.log("Error While fetching data form localstorage");
     }
   }
 }

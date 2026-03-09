@@ -17,3 +17,5 @@ export const loginFailureAction = createAction(
 );
 
 export const logoutAction = createAction("[Auth] Logout");
+
+export const getLoggedUser = createAction("[auth] get logged user");
