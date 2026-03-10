@@ -11,7 +11,7 @@ export class TelecallerService {
   private http: HttpClient = inject(HttpClient);
 
   getTelecaller(): Observable<ApiResponse<TelecallerModel[]>> {
-    const url = "https://rushabh.vizitlog.com/newapi/customer/getTelecallerCustomer.php";
+    const url = "https://rushabh.vizitlog.com/newapi/customer/getTelecallerCustomers.php";
     return this.http.get<ApiResponse<TelecallerModel[]>>(url);
   }
 }

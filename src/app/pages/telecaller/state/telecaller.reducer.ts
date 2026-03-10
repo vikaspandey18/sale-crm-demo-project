@@ -27,7 +27,7 @@ export const telecallerReducer = createReducer(
     return {
       ...state,
       loading: false,
-      error: null,
+      error: action.error,
     };
   }),
 );

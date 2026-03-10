@@ -1,5 +1,9 @@
 @if (error$ | async; as error) {
-  <app-alert variant="error" title="Authentication Failed" [message]="error" />
+  <app-alert
+    variant="error"
+    title="Failed To Fetch Telecaller Customer"
+    [message]="error"
+  />
 }
 
 <ag-grid-angular

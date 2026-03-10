@@ -27,7 +27,9 @@ export class TelecallerEffect {
             });
           }),
           catchError((error) => {
-            return of(failedToGetTelecallerCustomerAction({ error: error }));
+            return of(
+              failedToGetTelecallerCustomerAction({ error: error.message }),
+            );
           }),
         );
       }),
