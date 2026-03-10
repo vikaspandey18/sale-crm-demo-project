@@ -29,17 +29,19 @@ export class AuthService {
 
   getUserDataFromLocalStorage() {
     try {
-      let loggedUser = localStorage.getItem("auth");
+      const loggedUser = localStorage.getItem("auth");
 
       if (!loggedUser) {
         return null;
       }
 
-      let user = JSON.parse(loggedUser);
+      const user = JSON.parse(loggedUser);
 
       return user;
     } catch (error) {
       console.log("Error While fetching data form localstorage");
+       localStorage.removeItem("auth");
+      
       return null;
     }
   }
