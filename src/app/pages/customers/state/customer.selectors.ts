@@ -17,3 +17,10 @@ export const getCustomerLoadingStatus = createSelector(
     return state.loading;
   },
 );
+
+export const getCustomerErrorStatus = createSelector(
+  getCustomerFeatureSelector,
+  (state) => {
+    return state.error;
+  },
+);

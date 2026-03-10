@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
 import { getCustomer } from "./state/customer.actions";
 import {
+  getCustomerErrorStatus,
   getCustomerLoadingStatus,
   getSelectorCustomers,
 } from "./state/customer.selectors";
@@ -17,10 +18,11 @@ import {
   themeMaterial,
   themeQuartz,
 } from "ag-grid-community";
+import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 
 @Component({
   selector: "app-customers",
-  imports: [AsyncPipe, AgGridAngular],
+  imports: [AsyncPipe, AgGridAngular,AlertComponent],
   templateUrl: "./customers.component.html",
   styleUrl: "./customers.component.css",
 })
@@ -41,6 +43,7 @@ export class CustomersComponent implements OnInit {
   customers$!: Observable<CustomerResponse[]>;
 
   loadingCustomer$!: Observable<boolean>;
+  errorCustomer$!: Observable<string | null>;
 
   columnDefs: ColDef<CustomerResponse>[] = [
     {
@@ -70,10 +73,17 @@ export class CustomersComponent implements OnInit {
     { field: "comment", headerName: "Comment", sortable: true, filter: true },
   ];
 
+  defaultColDef = {
+    filter: true,
+    floatingFilter: true,
+    editable: true,
+  };
+
   ngOnInit(): void {
     this.store.dispatch(getCustomer());
 
     this.customers$ = this.store.select(getSelectorCustomers);
     this.loadingCustomer$ = this.store.select(getCustomerLoadingStatus);
+    this.errorCustomer$ = this.store.select(getCustomerErrorStatus);
   }
 }

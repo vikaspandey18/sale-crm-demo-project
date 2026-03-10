@@ -1,13 +1,11 @@
-@if (loadCustomer$ | async) {
-<p>India Mart Customer is loading please Wait</p>
-}
 @if(errorCustomer$ | async; as error){
-    <div class="alerts">
-        <app-alert variant="error" title="India Mart Customer Fetch Failed" [message]="error" />
-    </div>
+<div class="alerts">
+    <app-alert variant="error" title="India Mart Customer Fetch Failed" [message]="error" />
+</div>
 }
 
 
 <ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: 70vh" [theme]="theme"
-    [rowData]="indiamartCustomers$ | async" [columnDefs]="columnDefs" [pagination]="true" [paginationPageSize]="100">
+    [rowData]="indiamartCustomers$ | async" [columnDefs]="columnDefs" [pagination]="true"
+    [defaultColDef]="defaultColDef" [paginationPageSize]="100" [loading]="loadCustomer$ | async">
 </ag-grid-angular>

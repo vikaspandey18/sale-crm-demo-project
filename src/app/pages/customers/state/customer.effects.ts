@@ -21,11 +21,11 @@ export class CustomerEffect {
       ofType(getCustomer),
       switchMap((action) => {
         return this.customerService.getCustomer().pipe(
-          map((data) => {
-            return getCustomerSuccess({ customers: data });
+          map((response: any) => {
+            return getCustomerSuccess({ customers: response.data });
           }),
           catchError((error) => {
-            return of(getCustomerFailure({ error: error }));
+            return of(getCustomerFailure({ error: error?.message }));
           }),
         );
       }),
