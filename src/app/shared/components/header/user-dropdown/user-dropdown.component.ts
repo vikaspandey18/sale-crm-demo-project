@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { DropdownComponent } from "../../ui/dropdown/dropdown.component";
 import { AsyncPipe, CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
@@ -7,6 +7,7 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../../../../store/app.state";
 import { getAuthName } from "../../auth/state/auth.selectors";
 import { logoutAction } from "../../auth/state/auth.actions";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-user-dropdown",
@@ -24,6 +25,9 @@ export class UserDropdownComponent {
 
   private store = inject(Store<AppState>);
 
+  readonly username$: Observable<string | null> =
+    this.store.select(getAuthName);
+
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
@@ -31,8 +35,6 @@ export class UserDropdownComponent {
   closeDropdown() {
     this.isOpen = false;
   }
-
-  username$ = this.store.select(getAuthName);
 
   onSignout() {
     this.store.dispatch(logoutAction());

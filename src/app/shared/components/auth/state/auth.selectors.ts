@@ -4,7 +4,7 @@ import { AuthState } from "./auth.state";
 const authFeatureSelector = createFeatureSelector<AuthState>("auth");
 
 export const getAuthName = createSelector(authFeatureSelector, (state) => {
-  return state.auth?.name;
+  return state.auth?.name ?? null;
 });
 
 export const getAuthLoading = createSelector(
@@ -16,3 +16,11 @@ export const getAuthError = createSelector(
   authFeatureSelector,
   (state) => state.error,
 );
+
+export const getEmployeeGroup = createSelector(authFeatureSelector, (state) => {
+  return state.auth?.employee_group;
+});
+
+export const getEmployeeId = createSelector(authFeatureSelector, (state) => {
+  return state.auth?.id;
+});

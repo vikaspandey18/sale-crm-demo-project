@@ -39,8 +39,10 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      localStorage.removeItem("auth");
       console.log("Error While fetching data form localstorage");
+      localStorage.removeItem("auth");
+
+      return null;
     }
   }
 }
