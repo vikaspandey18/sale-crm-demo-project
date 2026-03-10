@@ -9,7 +9,7 @@ import {
 import { switchMap, take } from "rxjs";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const store = inject(Store);
+  const store = inject(Store<AppState>);
 
   return store.select(getEmployeeId).pipe(
     take(1),
