@@ -16,3 +16,11 @@ export const getAuthError = createSelector(
   authFeatureSelector,
   (state) => state.error,
 );
+
+export const getEmployeeGroup = createSelector(authFeatureSelector, (state) => {
+  return state.auth?.employee_group;
+});
+
+export const getEmployeeId = createSelector(authFeatureSelector, (state) => {
+  return state.auth?.id;
+});
