@@ -1,7 +1,7 @@
 export interface LeadResponse {
   id: string;
   employee?: string;
-  customer?: string;
+  customer_name?: string;
   order_value?: string;
   products?: string;
   status?: string;
