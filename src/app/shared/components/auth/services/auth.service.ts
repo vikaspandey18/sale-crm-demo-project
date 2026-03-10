@@ -40,6 +40,7 @@ export class AuthService {
       return user;
     } catch (error) {
       console.log("Error While fetching data form localstorage");
+      return null;
     }
   }
 }

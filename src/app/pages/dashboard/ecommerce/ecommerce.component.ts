@@ -1,13 +1,10 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { EcommerceMetricsComponent } from "../../../shared/components/ecommerce/ecommerce-metrics/ecommerce-metrics.component";
 import { MonthlySalesChartComponent } from "../../../shared/components/ecommerce/monthly-sales-chart/monthly-sales-chart.component";
 import { MonthlyTargetComponent } from "../../../shared/components/ecommerce/monthly-target/monthly-target.component";
 import { StatisticsChartComponent } from "../../../shared/components/ecommerce/statics-chart/statics-chart.component";
 import { DemographicCardComponent } from "../../../shared/components/ecommerce/demographic-card/demographic-card.component";
 import { RecentOrdersComponent } from "../../../shared/components/ecommerce/recent-orders/recent-orders.component";
-import { AppState } from "../../../store/app.state";
-import { Store } from "@ngrx/store";
-import { getLoggedUser } from "../../../shared/components/auth/state/auth.actions";
 
 @Component({
   selector: "app-ecommerce",
@@ -21,10 +18,4 @@ import { getLoggedUser } from "../../../shared/components/auth/state/auth.action
   ],
   templateUrl: "./ecommerce.component.html",
 })
-export class EcommerceComponent implements OnInit {
-  private store = inject(Store<AppState>);
-
-  ngOnInit(): void {
-    this.store.dispatch(getLoggedUser());
-  }
-}
+export class EcommerceComponent {}

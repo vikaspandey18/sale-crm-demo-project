@@ -7,7 +7,15 @@ import {
   loginSuccessAction,
   logoutAction,
 } from "./auth.actions";
-import { map, exhaustMap, catchError, of, mergeMap, EMPTY } from "rxjs";
+import {
+  map,
+  exhaustMap,
+  catchError,
+  of,
+  mergeMap,
+  EMPTY,
+  switchMap,
+} from "rxjs";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 
@@ -68,7 +76,7 @@ export class AuthEffect {
   getAuthUser$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getLoggedUser),
-      mergeMap((action) => {
+      switchMap((action) => {
         const user = this.authService.getUserDataFromLocalStorage();
         if (!user) {
           this.router.navigate(["signin"]);
