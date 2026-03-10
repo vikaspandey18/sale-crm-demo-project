@@ -59,6 +59,11 @@ export class TelecallerComponent implements OnInit {
     { field: "comment", headerName: "Comment", sortable: true, filter: true },
   ];
 
+  defaultColDef = {
+    filter: true,
+    floatingFilter: true,
+  };
+
   ngOnInit(): void {
     this.store.dispatch(getTelecallerCustomerStartAction());
 
