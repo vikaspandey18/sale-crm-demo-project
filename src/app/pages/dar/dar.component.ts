@@ -18,10 +18,11 @@ import {
   getDarSelector,
 } from "./state/dar.selectors";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
+import { ButtonComponent } from "../../shared/components/ui/button/button.component";
 
 @Component({
   selector: "app-dar",
-  imports: [AsyncPipe, AgGridAngular, AlertComponent],
+  imports: [AsyncPipe, AgGridAngular, AlertComponent, ButtonComponent],
   templateUrl: "./dar.component.html",
   styleUrl: "./dar.component.css",
 })
@@ -98,12 +99,14 @@ export class DarComponent implements OnInit {
   };
 
   onGridReady(params: GridReadyEvent) {
+    this.gridApi = params.api;
     params.api.sizeColumnsToFit();
   }
 
   // onQuickFilter(event: any) {
   //   this.gridApi.setQuickFilter(event.target.value);
   // }
+
 
   ngOnInit(): void {
     this.store.dispatch(fetchDarStartAction());
