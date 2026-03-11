@@ -10,6 +10,9 @@ import { IndiaMartState } from "../pages/indiamart/state/indiamart.state";
 import { LeadEffect } from "../pages/leads/state/lead.effects";
 import { leadReducer } from "../pages/leads/state/lead.reducer";
 import { LeadState } from "../pages/leads/state/lead.state";
+import { MyReportEffect } from "../pages/reports/my-report/state/my-report.effects";
+import { myReportReducer } from "../pages/reports/my-report/state/my-report.reducer";
+import { MyReportState } from "../pages/reports/my-report/state/my-report.state";
 import { TelecallerEffect } from "../pages/telecaller/state/telecaller.effects";
 import { telecallerReducer } from "../pages/telecaller/state/telecaller.reducer";
 import { TelecallerState } from "../pages/telecaller/state/telecaller.state";
@@ -24,6 +27,7 @@ export interface AppState {
   telecaller: TelecallerState;
   lead: LeadState;
   dar: DarState;
+  myReport:MyReportState;
 }
 
 export const AppReducer = {
@@ -33,6 +37,7 @@ export const AppReducer = {
   telecaller: telecallerReducer,
   lead: leadReducer,
   dar: darReducer,
+  myReport:myReportReducer
 };
 
 export const AppEffect = [
@@ -42,4 +47,5 @@ export const AppEffect = [
   TelecallerEffect,
   LeadEffect,
   DarEffect,
+  MyReportEffect
 ];

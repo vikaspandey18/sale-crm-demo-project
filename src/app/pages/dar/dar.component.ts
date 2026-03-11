@@ -18,11 +18,10 @@ import {
   getDarSelector,
 } from "./state/dar.selectors";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
-import { ButtonComponent } from "../../shared/components/ui/button/button.component";
 
 @Component({
   selector: "app-dar",
-  imports: [AsyncPipe, AgGridAngular, AlertComponent, ButtonComponent],
+  imports: [AsyncPipe, AgGridAngular, AlertComponent],
   templateUrl: "./dar.component.html",
   styleUrl: "./dar.component.css",
 })

@@ -24,6 +24,10 @@ import { IndiamartComponent } from "./pages/indiamart/indiamart.component";
 import { LeadsComponent } from "./pages/leads/leads.component";
 import { AttendanceComponent } from "./pages/attendance/attendance.component";
 import { DarComponent } from "./pages/dar/dar.component";
+import { MyReportComponent } from "./pages/reports/my-report/my-report.component";
+import { OrderReportComponent } from "./pages/reports/order-report/order-report.component";
+import { CollectionReportComponent } from "./pages/reports/collection-report/collection-report.component";
+import { AttendanceReportComponent } from "./pages/reports/attendance-report/attendance-report.component";
 
 export const routes: Routes = [
   {
@@ -136,6 +140,26 @@ export const routes: Routes = [
         path: "dar",
         component: DarComponent,
         title: "Dar",
+      },
+      {
+        path: "my-report",
+        component: MyReportComponent,
+        title: "My Report",
+      },
+      {
+        path: "order-report",
+        component: OrderReportComponent,
+        title: "Order Report",
+      },
+      {
+        path: "collection-report",
+        component: CollectionReportComponent,
+        title: "Collection Report",
+      },
+      {
+        path: "attendance-report",
+        component: AttendanceReportComponent,
+        title: "Attendance Report",
       },
     ],
   },

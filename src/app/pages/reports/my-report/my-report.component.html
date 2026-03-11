@@ -1,0 +1,10 @@
+@if (error$ | async; as error) {
+<div class="alertMessage">
+    <app-alert variant="error" title="Failed To Fetch My Report" [message]="error" />
+</div>
+}
+
+<ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: 500px" [theme]="theme"
+    [rowData]="customers$ | async" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
+    [paginationPageSize]="100" [loading]="loading$ | async">
+</ag-grid-angular>
