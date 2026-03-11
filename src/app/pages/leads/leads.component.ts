@@ -32,7 +32,7 @@ export class LeadsComponent implements OnInit {
 
   columnDefs: ColDef<LeadResponse>[] = [
     {
-      field: "employee",
+      field: "employee_name",
       headerName: "Employee Name",
       sortable: true,
       filter: true,

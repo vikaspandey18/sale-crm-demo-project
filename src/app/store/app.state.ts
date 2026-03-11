@@ -1,6 +1,9 @@
 import { CustomerEffect } from "../pages/customers/state/customer.effects";
 import { customerReducer } from "../pages/customers/state/customer.reducer";
 import { CustomerState } from "../pages/customers/state/customer.state";
+import { DarEffect } from "../pages/dar/state/dar.effects";
+import { darReducer } from "../pages/dar/state/dar.reducer";
+import { DarState } from "../pages/dar/state/dar.state";
 import { IndiaMartEffect } from "../pages/indiamart/state/indiamart.effects";
 import { indiaMartReducer } from "../pages/indiamart/state/indiamart.reducer";
 import { IndiaMartState } from "../pages/indiamart/state/indiamart.state";
@@ -20,6 +23,7 @@ export interface AppState {
   indiamart: IndiaMartState;
   telecaller: TelecallerState;
   lead: LeadState;
+  dar: DarState;
 }
 
 export const AppReducer = {
@@ -28,6 +32,7 @@ export const AppReducer = {
   indiamart: indiaMartReducer,
   telecaller: telecallerReducer,
   lead: leadReducer,
+  dar: darReducer,
 };
 
 export const AppEffect = [
@@ -36,4 +41,5 @@ export const AppEffect = [
   IndiaMartEffect,
   TelecallerEffect,
   LeadEffect,
+  DarEffect,
 ];

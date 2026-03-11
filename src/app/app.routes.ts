@@ -23,6 +23,7 @@ import { TelecallerComponent } from "./pages/telecaller/telecaller.component";
 import { IndiamartComponent } from "./pages/indiamart/indiamart.component";
 import { LeadsComponent } from "./pages/leads/leads.component";
 import { AttendanceComponent } from "./pages/attendance/attendance.component";
+import { DarComponent } from "./pages/dar/dar.component";
 
 export const routes: Routes = [
   {
@@ -129,7 +130,12 @@ export const routes: Routes = [
       {
         path: "attendance",
         component: AttendanceComponent,
-        title: "Lead",
+        title: "Attendance",
+      },
+      {
+        path: "dar",
+        component: DarComponent,
+        title: "Dar",
       },
     ],
   },
