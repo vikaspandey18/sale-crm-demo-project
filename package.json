@@ -26,6 +26,7 @@
     "@fullcalendar/interaction": "^6.1.20",
     "@fullcalendar/timegrid": "^6.1.20",
     "@ngrx/effects": "^21.0.1",
+    "@ngrx/router-store": "^21.0.1",
     "@ngrx/store": "^21.0.1",
     "@ngrx/store-devtools": "^21.0.1",
     "@popperjs/core": "^2.11.8",

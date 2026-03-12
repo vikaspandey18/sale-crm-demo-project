@@ -1,3 +1,4 @@
+import { routerReducer, RouterReducerState } from "@ngrx/router-store";
 import { CustomerEffect } from "../pages/customers/state/customer.effects";
 import { customerReducer } from "../pages/customers/state/customer.reducer";
 import { CustomerState } from "../pages/customers/state/customer.state";
@@ -27,7 +28,8 @@ export interface AppState {
   telecaller: TelecallerState;
   lead: LeadState;
   dar: DarState;
-  myReport:MyReportState;
+  myReport: MyReportState;
+  router: RouterReducerState;
 }
 
 export const AppReducer = {
@@ -37,7 +39,8 @@ export const AppReducer = {
   telecaller: telecallerReducer,
   lead: leadReducer,
   dar: darReducer,
-  myReport:myReportReducer
+  myReport: myReportReducer,
+  router: routerReducer,
 };
 
 export const AppEffect = [
@@ -47,5 +50,5 @@ export const AppEffect = [
   TelecallerEffect,
   LeadEffect,
   DarEffect,
-  MyReportEffect
+  MyReportEffect,
 ];

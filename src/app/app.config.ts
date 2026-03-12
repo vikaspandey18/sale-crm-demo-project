@@ -12,6 +12,8 @@ import { provideEffects } from "@ngrx/effects";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { authInterceptor } from "./interceptors/auth.interceptor";
+import { provideRouterStore } from '@ngrx/router-store';
+import { CustomSerializer } from "./store/router/custom-route-serializer";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,5 +23,8 @@ export const appConfig: ApplicationConfig = {
     provideEffects(AppEffect),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptors([authInterceptor])),
+    provideRouterStore({
+      serializer: CustomSerializer,
+    }),
   ],
 };
