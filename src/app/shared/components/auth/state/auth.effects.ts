@@ -37,10 +37,9 @@ export class AuthEffect {
               return loginSuccessAction({ auth: response.data });
             }),
             catchError((error) => {
-              // console.log(error);
               return of(
                 loginFailureAction({
-                  error: error.message || "Login failed",
+                  error: error.error.message || "Login failed",
                 }),
               );
             }),
@@ -66,6 +65,7 @@ export class AuthEffect {
       return this.actions$.pipe(
         ofType(logoutAction),
         map((action) => {
+          this.authService.logoutUserFromLocalStorage();
           return this.router.navigate(["signin"]);
         }),
       );

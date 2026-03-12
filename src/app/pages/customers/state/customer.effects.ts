@@ -25,7 +25,7 @@ export class CustomerEffect {
             return getCustomerSuccess({ customers: response.data });
           }),
           catchError((error) => {
-            return of(getCustomerFailure({ error: error?.message }));
+            return of(getCustomerFailure({ error: error?.error.message }));
           }),
         );
       }),

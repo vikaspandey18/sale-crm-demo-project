@@ -22,7 +22,9 @@ export class MyReportEffect {
             return fetchMyReportSuccessAction({ reports: response.data });
           }),
           catchError((error) => {
-            return of(fetchMyReportFaieldAction({ error: error.message }));
+            return of(
+              fetchMyReportFaieldAction({ error: error.error.message }),
+            );
           }),
         );
       }),

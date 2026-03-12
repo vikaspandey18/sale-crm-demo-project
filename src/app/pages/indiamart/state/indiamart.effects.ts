@@ -27,7 +27,9 @@ export class IndiaMartEffect {
             });
           }),
           catchError((error) => {
-            return of(failedIndiaMartCustomerAction({ error: error?.message }));
+            return of(
+              failedIndiaMartCustomerAction({ error: error?.error.message }),
+            );
           }),
         );
       }),

@@ -21,7 +21,7 @@ export class LeadEffect {
             return getLeadSuccessAction({ leads: response.data });
           }),
           catchError((error) => {
-            return of(getLeadErrorAction({ error: error?.message }));
+            return of(getLeadErrorAction({ error: error?.error.message }));
           }),
         );
       }),

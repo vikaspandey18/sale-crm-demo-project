@@ -28,7 +28,9 @@ export class TelecallerEffect {
           }),
           catchError((error) => {
             return of(
-              failedToGetTelecallerCustomerAction({ error: error.message }),
+              failedToGetTelecallerCustomerAction({
+                error: error.error.message,
+              }),
             );
           }),
         );
