@@ -28,11 +28,13 @@ import { MyReportComponent } from "./pages/reports/my-report/my-report.component
 import { OrderReportComponent } from "./pages/reports/order-report/order-report.component";
 import { CollectionReportComponent } from "./pages/reports/collection-report/collection-report.component";
 import { AttendanceReportComponent } from "./pages/reports/attendance-report/attendance-report.component";
+import { authGuard } from "./shared/components/auth/services/auth.guard";
 
 export const routes: Routes = [
   {
     path: "",
     component: AppLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: "",

@@ -12,13 +12,12 @@ export const authGuard: CanActivateFn = (route, state) => {
   return store.select(getEmployeeId).pipe(
     take(1),
     map((action) => {
-      if (action) {
+      // console.log(action);
+      if (!action) {
+        return router.createUrlTree(["/signin"]);
+      } else {
         return true;
       }
-      router.navigate(["/signin"]);
-      return false;
     }),
   );
-
-  return true;
 };
