@@ -9,6 +9,8 @@ import {
   getTelecallerCustomerStartAction,
   getTelecallerCustomerSuccessAction,
 } from "./telecaller.actions";
+import { getTelecallerCustomer } from "./telecaller.selectors";
+import { concatLatestFrom } from "@ngrx/operators";
 
 @Injectable()
 export class TelecallerEffect {
@@ -19,7 +21,11 @@ export class TelecallerEffect {
   getTelecallerCustomers$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getTelecallerCustomerStartAction),
-      switchMap((action) => {
+      concatLatestFrom(() => this.store.select(getTelecallerCustomer)),
+      switchMap(([action, customers]) => {
+        if (customers.length > 0) {
+          return of(getTelecallerCustomerSuccessAction({ customers }));
+        }
         return this.telecallerService.getTelecaller().pipe(
           map((response) => {
             return getTelecallerCustomerSuccessAction({

@@ -11,7 +11,7 @@ import {
   getCustomerSuccess,
 } from "./customer.actions";
 import { catchError, EMPTY, map, of, switchMap } from "rxjs";
-import { getCustomerLoadedStatus } from "./customer.selectors";
+import { getSelectorCustomers } from "./customer.selectors";
 
 @Injectable()
 export class CustomerEffect {
@@ -22,10 +22,10 @@ export class CustomerEffect {
   getCustomer$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getCustomer),
-      concatLatestFrom(() => this.store.select(getCustomerLoadedStatus)),
-      switchMap(([_, loaded]) => {
-        if (loaded) {
-          return EMPTY;
+      concatLatestFrom(() => this.store.select(getSelectorCustomers)),
+      switchMap(([action, customers]) => {
+        if (customers.length > 0) {
+          return of(getCustomerSuccess({ customers }));
         }
         return this.customerService.getCustomer().pipe(
           map((response: any) => {
