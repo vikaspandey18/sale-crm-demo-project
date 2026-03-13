@@ -6,7 +6,7 @@ import {
   fetchCollectionReportStartAction,
   fetchCollectionReportSuccessAction,
 } from "./collection-report.actions";
-import { catchError, concatMap, map, of } from "rxjs";
+import { catchError, concatMap, map, of, switchMap } from "rxjs";
 
 @Injectable()
 export class CollectionReportEffect {
@@ -16,12 +16,18 @@ export class CollectionReportEffect {
   collectionReport$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fetchCollectionReportStartAction),
-      concatMap((action) => {
+      switchMap((action) => {
         return this.collectionReportService.getCollectionReport().pipe(
           map((response) => {
-            return fetchCollectionReportSuccessAction({
-              collections: response.data,
-            });
+            if (response.data?.length > 0) {
+              return fetchCollectionReportSuccessAction({
+                collections: response.data,
+              });
+            } else {
+              return fetchCollectionReportFailedAction({
+                error: response.message,
+              });
+            }
           }),
           catchError((error) => {
             return of(

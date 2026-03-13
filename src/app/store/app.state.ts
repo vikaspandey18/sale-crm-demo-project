@@ -25,6 +25,7 @@ import { orderReportReducer } from "../pages/reports/order-report/state/order-re
 import { OrderReportEffect } from "../pages/reports/order-report/state/order-report.effects";
 import { CollectionReportState } from "../pages/reports/collection-report/state/collection-report.state";
 import { collectionReportReducer } from "../pages/reports/collection-report/state/collection-report.reducer";
+import { CollectionReportEffect } from "../pages/reports/collection-report/state/collection-report.effects";
 
 export interface AppState {
   auth: AuthState;
@@ -61,4 +62,5 @@ export const AppEffect = [
   DarEffect,
   MyReportEffect,
   OrderReportEffect,
+  CollectionReportEffect,
 ];

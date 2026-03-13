@@ -4,10 +4,12 @@ import { CollectionReportResponse } from "../../../../models/collection-report.m
 export const fetchCollectionReportStartAction = createAction(
   "[collection-report] fetch start",
 );
+
 export const fetchCollectionReportSuccessAction = createAction(
   "[collection-report] fetch success",
   props<{ collections: CollectionReportResponse[] }>(),
 );
+
 export const fetchCollectionReportFailedAction = createAction(
   "[collection-report] fetch failed",
   props<{ error: string }>(),

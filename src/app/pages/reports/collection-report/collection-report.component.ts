@@ -1,14 +1,7 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { AgGridAngular } from "ag-grid-angular";
 import { AlertComponent } from "../../../shared/components/ui/alert/alert.component";
 import { AsyncPipe } from "@angular/common";
-import { fetchOrderReportStartAction } from "../order-report/state/order-report.actions";
-import {
-  getOrderReportErrorSelector,
-  getOrderReportLoadingSelector,
-  getOrderReportSelector,
-} from "../order-report/state/order-report.selectors";
-import { OrderReportResponse } from "../../../models/order-report.model";
 import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
@@ -27,7 +20,7 @@ import {
   templateUrl: "./collection-report.component.html",
   styleUrl: "./collection-report.component.css",
 })
-export class CollectionReportComponent {
+export class CollectionReportComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
   customers$!: Observable<CollectionReportResponse[] | []>;
   loading$!: Observable<boolean>;
@@ -67,7 +60,7 @@ export class CollectionReportComponent {
     this.gridApi.setFilterModel(null);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.store.dispatch(fetchCollectionReportStartAction());
 
     this.customers$ = this.store.select(getCollectionReportSelector);
