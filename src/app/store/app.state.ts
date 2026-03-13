@@ -20,6 +20,11 @@ import { TelecallerState } from "../pages/telecaller/state/telecaller.state";
 import { AuthEffect } from "../shared/components/auth/state/auth.effects";
 import { authReducer } from "../shared/components/auth/state/auth.reducer";
 import { AuthState } from "../shared/components/auth/state/auth.state";
+import { OrderReportState } from "../pages/reports/order-report/state/order-report.state";
+import { orderReportReducer } from "../pages/reports/order-report/state/order-report.reducer";
+import { OrderReportEffect } from "../pages/reports/order-report/state/order-report.effects";
+import { CollectionReportState } from "../pages/reports/collection-report/state/collection-report.state";
+import { collectionReportReducer } from "../pages/reports/collection-report/state/collection-report.reducer";
 
 export interface AppState {
   auth: AuthState;
@@ -30,6 +35,8 @@ export interface AppState {
   dar: DarState;
   myReport: MyReportState;
   router: RouterReducerState;
+  orderReport: OrderReportState;
+  collectionReport: CollectionReportState;
 }
 
 export const AppReducer = {
@@ -41,6 +48,8 @@ export const AppReducer = {
   dar: darReducer,
   myReport: myReportReducer,
   router: routerReducer,
+  orderReport: orderReportReducer,
+  collectionReport: collectionReportReducer,
 };
 
 export const AppEffect = [
@@ -51,4 +60,5 @@ export const AppEffect = [
   LeadEffect,
   DarEffect,
   MyReportEffect,
+  OrderReportEffect,
 ];
