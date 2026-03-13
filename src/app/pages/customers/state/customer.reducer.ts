@@ -19,6 +19,7 @@ export const customerReducer = createReducer(
     ...state,
     loading: false,
     customers: action.customers,
+    loaded: true,
   })),
 
   on(getCustomerFailure, (state, { error }) => ({

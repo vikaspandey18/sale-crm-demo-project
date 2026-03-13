@@ -24,3 +24,10 @@ export const getCustomerErrorStatus = createSelector(
     return state.error;
   },
 );
+
+export const getCustomerLoadedStatus = createSelector(
+  getCustomerFeatureSelector,
+  (state) => {
+    return state.loaded;
+  },
+);
