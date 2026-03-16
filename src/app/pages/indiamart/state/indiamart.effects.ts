@@ -9,6 +9,8 @@ import {
 } from "./indiamart.actions";
 import { catchError, map, of, switchMap } from "rxjs";
 import { IndiamartService } from "../services/indiamart.service";
+import { concatLatestFrom } from "@ngrx/operators";
+import { getIndiaMartCustomersSelector } from "./indiamart.selectors";
 
 @Injectable()
 export class IndiaMartEffect {
@@ -19,7 +21,13 @@ export class IndiaMartEffect {
   getCustomerIndiaMart$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getIndianMartCustomerAction),
-      switchMap((action) => {
+      concatLatestFrom(() => this.store.select(getIndiaMartCustomersSelector)),
+      switchMap(([action, indiaMartCustomer]) => {
+        if (indiaMartCustomer.length > 0) {
+          return of(
+            getIndiaMartCustomerSuccessAction({ customers: indiaMartCustomer }),
+          );
+        }
         return this.indiamartService.getIndianMartCustomer().pipe(
           map((response) => {
             return getIndiaMartCustomerSuccessAction({
