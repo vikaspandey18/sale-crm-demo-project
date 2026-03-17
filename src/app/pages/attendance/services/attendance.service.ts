@@ -16,6 +16,7 @@ export class AttendanceService {
     const url =
       "https://rushabh.vizitlog.com/newapi/attendance/mark-attendance.php";
     const body = {
+      checkType: "checkIn",
       checkInTime,
     };
 
@@ -28,6 +29,7 @@ export class AttendanceService {
     const url =
       "https://rushabh.vizitlog.com/newapi/attendance/mark-attendance.php";
     const body = {
+      checkType: "checkOut",
       checkOutTime,
     };
 

@@ -8,6 +8,7 @@ import {
   markAttendaceStartAction,
   markAttendaceSuccessAction,
   markCheckInAction,
+  markCheckOutAction,
 } from "./attendance.actions";
 import { catchError, concatMap, map, of } from "rxjs";
 
@@ -22,7 +23,33 @@ export class MarkAttendaceEffect {
       concatMap((action) => {
         return this.markAttendaceService.markCheckIn(action.checkIn).pipe(
           map((response) => {
-            return markAttendaceSuccessAction({ record: response.data });
+            return markAttendaceSuccessAction({
+              record: response.data,
+              message: response.message,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              markAttendaceFailedAction({
+                error: error.error.message || error.message,
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  });
+
+  checkOut$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(markCheckOutAction),
+      concatMap((action) => {
+        return this.markAttendaceService.markCheckOut(action.checkOut).pipe(
+          map((response) => {
+            return markAttendaceSuccessAction({
+              record: response.data,
+              message: response.message,
+            });
           }),
           catchError((error) => {
             return of(

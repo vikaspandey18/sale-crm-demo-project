@@ -7,21 +7,21 @@ const getMarkAttendanceFeatureSelector =
 export const getMarkAttendanceCheckIn = createSelector(
   getMarkAttendanceFeatureSelector,
   (state) => {
-    return state.record?.checkin_time;
+    return state?.record?.checkin_time ?? null;
   },
 );
 
 export const getMarkAttendanceCheckOut = createSelector(
   getMarkAttendanceFeatureSelector,
   (state) => {
-    return state.record?.checkout_time;
+    return state?.record?.checkout_time ?? null;
   },
 );
 
 export const getMarkAttendanceLoading = createSelector(
   getMarkAttendanceFeatureSelector,
   (state) => {
-    return state.loading;
+    return state?.loading;
   },
 );
 

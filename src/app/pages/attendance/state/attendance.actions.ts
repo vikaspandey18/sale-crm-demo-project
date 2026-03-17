@@ -10,9 +10,14 @@ export const markCheckInAction = createAction(
 
 export const markAttendaceSuccessAction = createAction(
   "[mark attendance] success",
-  props<{ record: MarkAttendanceResponse }>(),
+  props<{ record: MarkAttendanceResponse; message: string }>(),
 );
 export const markAttendaceFailedAction = createAction(
   "[mark attendance] failed",
   props<{ error: string }>(),
+);
+
+export const markCheckOutAction = createAction(
+  "[mark] attendance checkout start",
+  props<{ checkOut: string }>(),
 );

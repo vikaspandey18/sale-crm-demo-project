@@ -4,11 +4,20 @@ import {
   markAttendaceFailedAction,
   markAttendaceStartAction,
   markAttendaceSuccessAction,
+  markCheckInAction,
+  markCheckOutAction,
 } from "./attendance.actions";
 
 export const markAttendanceReducer = createReducer(
   initialState,
-  on(markAttendaceStartAction, (state, action) => {
+  on(markCheckInAction, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(markCheckOutAction, (state, action) => {
     return {
       ...state,
       loading: true,
@@ -20,7 +29,7 @@ export const markAttendanceReducer = createReducer(
       ...state,
       loading: false,
       record: action.record,
-      error: null,
+      error: action.message,
     };
   }),
   on(markAttendaceFailedAction, (state, action) => {

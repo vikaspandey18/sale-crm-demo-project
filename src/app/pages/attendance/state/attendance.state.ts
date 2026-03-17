@@ -4,12 +4,10 @@ export interface AttendanceState {
   record: MarkAttendanceResponse | null;
   loading: boolean;
   error: string | null;
-  checkedIn: boolean;
 }
 
 export const initialState: AttendanceState = {
   record: null,
   loading: false,
   error: null,
-  checkedIn: false,
 };

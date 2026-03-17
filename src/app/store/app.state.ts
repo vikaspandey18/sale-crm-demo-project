@@ -26,6 +26,9 @@ import { OrderReportEffect } from "../pages/reports/order-report/state/order-rep
 import { CollectionReportState } from "../pages/reports/collection-report/state/collection-report.state";
 import { collectionReportReducer } from "../pages/reports/collection-report/state/collection-report.reducer";
 import { CollectionReportEffect } from "../pages/reports/collection-report/state/collection-report.effects";
+import { AttendanceState } from "../pages/attendance/state/attendance.state";
+import { markAttendanceReducer } from "../pages/attendance/state/attendance.reducer";
+import { MarkAttendaceEffect } from "../pages/attendance/state/attendance.effects";
 
 export interface AppState {
   auth: AuthState;
@@ -38,6 +41,7 @@ export interface AppState {
   router: RouterReducerState;
   orderReport: OrderReportState;
   collectionReport: CollectionReportState;
+  markAttendance: AttendanceState;
 }
 
 export const AppReducer = {
@@ -51,6 +55,7 @@ export const AppReducer = {
   router: routerReducer,
   orderReport: orderReportReducer,
   collectionReport: collectionReportReducer,
+  markAttendance: markAttendanceReducer,
 };
 
 export const AppEffect = [
@@ -63,4 +68,5 @@ export const AppEffect = [
   MyReportEffect,
   OrderReportEffect,
   CollectionReportEffect,
+  MarkAttendaceEffect,
 ];
