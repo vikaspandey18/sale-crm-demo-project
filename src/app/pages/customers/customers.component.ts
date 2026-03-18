@@ -22,7 +22,7 @@ import { AlertComponent } from "../../shared/components/ui/alert/alert.component
 
 @Component({
   selector: "app-customers",
-  imports: [AsyncPipe, AgGridAngular,AlertComponent],
+  imports: [AsyncPipe, AgGridAngular, AlertComponent],
   templateUrl: "./customers.component.html",
   styleUrl: "./customers.component.css",
 })
@@ -30,13 +30,6 @@ export class CustomersComponent implements OnInit {
   private store = inject(Store<AppState>);
 
   private gridApi!: GridApi<CustomerResponse>;
-
-  // themes = [
-  //   { label: "themeQuartz", theme: themeQuartz },
-  //   { label: "themeBalham", theme: themeBalham },
-  //   { label: "themeMaterial", theme: themeMaterial },
-  //   { label: "themeAlpine", theme: themeAlpine },
-  // ];
 
   public theme = themeAlpine;
 
@@ -47,36 +40,33 @@ export class CustomersComponent implements OnInit {
 
   columnDefs: ColDef<CustomerResponse>[] = [
     {
-      field: "customer_name",
-      headerName: "Customer Name",
-      sortable: true,
-      filter: true,
-      pinned: "left",
-      editable: true,
+      headerName: "No",
+      valueGetter: "node.rowIndex + 1",
+      width: 100,
     },
-    { field: "mobile_no", headerName: "Mobile", sortable: true, filter: true },
-    { field: "email", headerName: "Email", sortable: true, filter: true },
-    { field: "city", headerName: "City", sortable: true, filter: true },
-    { field: "state", headerName: "State", sortable: true, filter: true },
-    {
-      field: "followup_date",
-      headerName: "Followup Date",
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "last_order_date",
-      headerName: "Last Order",
-      sortable: true,
-      filter: true,
-    },
-    { field: "comment", headerName: "Comment", sortable: true, filter: true },
+    { field: "customer_name", headerName: "Customer Name" },
+    { field: "groups", headerName: "Groups" },
+    { field: "telephone_no", headerName: "Telephone No" },
+    { field: "incharge_person_name", headerName: "Incharge Person Name" },
+    { field: "mobile_no", headerName: "Mobile" },
+    { field: "email", headerName: "Email" },
+    { field: "city", headerName: "City" },
+    { field: "material", headerName: "Material" },
+    { field: "manufacturing", headerName: "Manufacturing" },
+    { field: "followup_date", headerName: "Followup Date" },
+    { field: "comment", headerName: "Comment" },
+    { field: "address", headerName: "Address" },
+    { field: "state", headerName: "State" },
+    { field: "sources", headerName: "Sources" },
+    { field: "activity_date", headerName: "Activity Date" },
+    { field: "last_comment", headerName: "Last Comment" },
+    { field: "last_order_date", headerName: "Last Order Date" },
   ];
 
   defaultColDef = {
+    sortable: true,
     filter: true,
     floatingFilter: true,
-    editable: true,
   };
 
   ngOnInit(): void {
