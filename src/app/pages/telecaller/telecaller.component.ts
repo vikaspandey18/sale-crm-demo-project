@@ -168,15 +168,25 @@ export class TelecallerComponent implements OnInit {
 
   // Fires when any cell value is changed
   onCellValueChanged(event: CellValueChangedEvent<TelecallerModel>) {
-    console.log("Field   :", event.colDef.field);
-    console.log("Old     :", event.oldValue);
-    console.log("New     :", event.newValue);
-    console.log("Row data:", event.data);
+    // console.log("Field   :", event.colDef.field);
+    // console.log("Old     :", event.oldValue);
+    // console.log("New     :", event.newValue);
+    // console.log("Row data:", event.data);
+
+    if (event.oldValue === event.newValue) return;
+
+    const field = event.colDef.field;
+
+    if (!field) {
+      return;
+    }
 
     // Dispatch update to store
     this.store.dispatch(
       updateTelecallerCustomerStartAction({
-        tellecaller: event.data,
+        id: event.data.id!,
+        field: field,
+        value: event.newValue,
       }),
     );
   }

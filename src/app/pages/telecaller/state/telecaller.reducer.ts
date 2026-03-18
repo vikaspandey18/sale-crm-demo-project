@@ -33,11 +33,11 @@ export const telecallerReducer = createReducer(
       error: null,
     };
   }),
-  on(updateTelecallerCustomerSuccessAction, (state, { customer }) => ({
+  on(updateTelecallerCustomerSuccessAction, (state, action) => ({
     ...state,
     loading: false,
     customers: state.customers.map((c) =>
-      c.id === customer.id ? { ...customer } : c,
+      c.id === action.id ? { ...c, [action.field]: action.value } : c,
     ),
   })),
   on(failedToGetTelecallerCustomerAction, (state, action) => {

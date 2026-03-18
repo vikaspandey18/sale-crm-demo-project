@@ -20,9 +20,15 @@ export class TelecallerService {
   }
 
   updateCustomer(
-    customer: TelecallerModel,
+    id: string,
+    field: string,
+    value: any,
   ): Observable<ApiResponse<TelecallerModel>> {
-    const url = `${this.apiUrl}/${customer.id}`;
-    return this.http.put<ApiResponse<TelecallerModel>>(url, customer);
+    const url = `${this.apiUrl}/customer/updateTelecallerCustomer.php/${id}`;
+    const body = {
+      field,
+      value,
+    };
+    return this.http.put<ApiResponse<TelecallerModel>>(url, body);
   }
 }

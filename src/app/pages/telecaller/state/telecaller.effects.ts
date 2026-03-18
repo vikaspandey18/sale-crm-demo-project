@@ -51,20 +51,24 @@ export class TelecallerEffect {
     return this.actions$.pipe(
       ofType(updateTelecallerCustomerStartAction),
       mergeMap((action) => {
-        return this.telecallerService.updateCustomer(action.tellecaller).pipe(
-          map((response) => {
-            return updateTelecallerCustomerSuccessAction({
-              customer: response.data,
-            });
-          }),
-          catchError((error) => {
-            return of(
-              updateTelecallerCustomerFailureAction({
-                error: error?.error?.message || error?.message,
-              }),
-            );
-          }),
-        );
+        return this.telecallerService
+          .updateCustomer(action.id, action.field, action.value)
+          .pipe(
+            map(() => {
+              return updateTelecallerCustomerSuccessAction({
+                id: action.id,
+                field: action.field,
+                value: action.value,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                updateTelecallerCustomerFailureAction({
+                  error: error?.error?.message || error?.message,
+                }),
+              );
+            }),
+          );
       }),
     );
   });

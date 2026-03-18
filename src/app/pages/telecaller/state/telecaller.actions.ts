@@ -17,12 +17,12 @@ export const failedToGetTelecallerCustomerAction = createAction(
 
 export const updateTelecallerCustomerStartAction = createAction(
   "[telecaller] update start",
-  props<{ tellecaller: TelecallerModel }>(),
+  props<{ id: string; field: string; value: any }>(),
 );
 
 export const updateTelecallerCustomerSuccessAction = createAction(
   "[Telecaller] Update Customer Success",
-  props<{ customer: TelecallerModel }>(),
+  props<{ id: string; field: string; value: any }>(),
 );
 
 export const updateTelecallerCustomerFailureAction = createAction(
