@@ -1,5 +1,5 @@
 export interface TelecallerModel {
-  id: string;
+  id?: string;
   groups?: string;
   employee_group?: string;
   customer_name?: string;
@@ -10,14 +10,14 @@ export interface TelecallerModel {
   city?: string;
   material?: string;
   manufacturing?: string;
-  followup_date?: Date;
+  followup_date?: string;
   comment?: string;
   address?: string;
   state?: string;
   types?: string;
   sources?: string;
   status?: string;
-  activity_date?: Date;
+  activity_date?: string;
   last_activity?: string;
   last_comment?: string;
   last_order_date?: Date;
