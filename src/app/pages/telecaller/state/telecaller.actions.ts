@@ -14,3 +14,18 @@ export const failedToGetTelecallerCustomerAction = createAction(
   "[telecaller] customer fetch failed",
   props<{ error: string }>(),
 );
+
+export const updateTelecallerCustomerStartAction = createAction(
+  "[telecaller] update start",
+  props<{ tellecaller: TelecallerModel }>(),
+);
+
+export const updateTelecallerCustomerSuccessAction = createAction(
+  "[Telecaller] Update Customer Success",
+  props<{ customer: TelecallerModel }>(),
+);
+
+export const updateTelecallerCustomerFailureAction = createAction(
+  "[Telecaller] Update Customer Failure",
+  props<{ error: string }>(),
+);

@@ -1,8 +1,11 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
-import { getTelecallerCustomerStartAction } from "./state/telecaller.actions";
-import { Observable } from "rxjs";
+import {
+  getTelecallerCustomerStartAction,
+  updateTelecallerCustomerStartAction,
+} from "./state/telecaller.actions";
+import { map, Observable } from "rxjs";
 import { TelecallerModel } from "../../models/telecaller.model";
 import {
   getTelecallerCustomer,
@@ -154,9 +157,28 @@ export class TelecallerComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getTelecallerCustomerStartAction());
 
-    this.customers$ = this.store.select(getTelecallerCustomer);
+    // this.customers$ = this.store.select(getTelecallerCustomer);
+    // Clone data to avoid NgRx immutability error
+    this.customers$ = this.store
+      .select(getTelecallerCustomer)
+      .pipe(map((customers) => customers.map((c) => ({ ...c }))));
     this.loading$ = this.store.select(getTelecallerLoadingState);
     this.error$ = this.store.select(getTelecallerErorrState);
+  }
+
+  // Fires when any cell value is changed
+  onCellValueChanged(event: CellValueChangedEvent<TelecallerModel>) {
+    console.log("Field   :", event.colDef.field);
+    console.log("Old     :", event.oldValue);
+    console.log("New     :", event.newValue);
+    console.log("Row data:", event.data);
+
+    // Dispatch update to store
+    this.store.dispatch(
+      updateTelecallerCustomerStartAction({
+        tellecaller: event.data,
+      }),
+    );
   }
 
   // Example user data (could be made dynamic)

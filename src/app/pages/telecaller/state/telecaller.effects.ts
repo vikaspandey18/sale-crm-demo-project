@@ -3,11 +3,14 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../../../store/app.state";
 import { TelecallerService } from "../services/telecaller.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of, switchMap } from "rxjs";
 import {
   failedToGetTelecallerCustomerAction,
   getTelecallerCustomerStartAction,
   getTelecallerCustomerSuccessAction,
+  updateTelecallerCustomerFailureAction,
+  updateTelecallerCustomerStartAction,
+  updateTelecallerCustomerSuccessAction,
 } from "./telecaller.actions";
 import { getTelecallerCustomer } from "./telecaller.selectors";
 import { concatLatestFrom } from "@ngrx/operators";
@@ -36,6 +39,28 @@ export class TelecallerEffect {
             return of(
               failedToGetTelecallerCustomerAction({
                 error: error.error.message,
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  });
+
+  updateCustomer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateTelecallerCustomerStartAction),
+      mergeMap((action) => {
+        return this.telecallerService.updateCustomer(action.tellecaller).pipe(
+          map((response) => {
+            return updateTelecallerCustomerSuccessAction({
+              customer: response.data,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              updateTelecallerCustomerFailureAction({
+                error: error?.error?.message || error?.message,
               }),
             );
           }),
