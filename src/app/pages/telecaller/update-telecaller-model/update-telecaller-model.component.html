@@ -1,5 +1,15 @@
 <!-- {{ selectedCustomer | json }} -->
 <!-- Modal -->
+@if (productError$ | async; as error) {
+  <div class="alertMessage">
+    <app-alert
+      variant="error"
+      title="Failed To Fetch Product"
+      [message]="error"
+    />
+  </div>
+}
+
 <app-modal
   [isOpen]="isOpen"
   (close)="closeModal()"
@@ -8,34 +18,133 @@
   <div
     class="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-2 dark:bg-gray-900 lg:p-11"
   >
-    <form class="flex flex-col" (ngSubmit)="handleSave()">
+    <form
+      [formGroup]="telecallerForm"
+      class="flex flex-col"
+      (ngSubmit)="handleSave()"
+    >
       <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
         <div class="">
           <h5
-            class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6"
+            class="mb-5 text-md font-medium text-gray-600 dark:text-white/90 lg:mb-6"
           >
-            Customer Details
+            Customer - {{ selectedCustomer.customer_name }}
           </h5>
           <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
             <div class="col-span-2 lg:col-span-1">
-              <label>Customer Name</label>
-              <app-input-field type="text" />
+              <label>Activity</label>
+              <div class="relative">
+                <select
+                  class="appearance-none bg-transparent border border-gray-300 dark:bg-dark-900 dark:bg-gray-900 dark:border-gray-700 dark:focus:border-brand-800 dark:placeholder:text-white/30 dark:text-gray-400 dark:text-white/90 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 h-11 placeholder:text-gray-400 pr-11 px-4 py-2.5 rounded-lg shadow-theme-xs text-gray-400 text-sm w-full"
+                  formControlName="activity"
+                >
+                  <option value="">Select</option>
+                  @for (activity of dropdonwActivity; track $index) {
+                    <option [value]="activity">{{ activity }}</option>
+                  }</select
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="absolute text-gray-700 dark:text-gray-400 right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                >
+                  <path
+                    d="M4.79175 8.02075L10.0001 13.2291L15.2084 8.02075"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </div>
             </div>
             <div class="col-span-2 lg:col-span-1">
-              <label>Last Name</label>
-              <app-input-field type="text" [value]="user.lastName" />
+              <label>Enter Group</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  placeholder="Enter Group of Customer"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="newCustomerGroup"
+                />
+              </div>
             </div>
-            <div class="col-span-2 lg:col-span-1">
-              <label>Email Address</label>
-              <app-input-field type="text" [value]="user.email" />
-            </div>
-            <div class="col-span-2 lg:col-span-1">
-              <label>Phone</label>
-              <app-input-field type="text" [value]="user.phone" />
+            @if (telecallerForm.get("activity")?.value === "Order") {
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Select Product</label>
+                <div class="relative">
+                  <select
+                    class="appearance-none bg-transparent border border-gray-300 dark:bg-dark-900 dark:bg-gray-900 dark:border-gray-700 dark:focus:border-brand-800 dark:placeholder:text-white/30 dark:text-gray-400 dark:text-white/90 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 h-20 placeholder:text-gray-400 pr-11 px-4 py-2.5 rounded-lg shadow-theme-xs text-gray-400 text-sm w-full"
+                    formControlName="products"
+                    multiple
+                  >
+                    <option value="">Select</option>
+                    @for (product of products$ | async; track $index) {
+                      <option [value]="product.product_name">
+                        {{ product.product_name }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Amount</label>
+                <input
+                  type="text"
+                  placeholder="Enter Amount"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="amount"
+                />
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Payment Done</label>
+                <input
+                  type="text"
+                  placeholder="Enter Payment Done"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="paymentDone"
+                />
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Purchaser</label>
+                <input
+                  type="text"
+                  placeholder="Enter Purchaser"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="purchaser"
+                />
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Party Old/New</label>
+                <input
+                  type="text"
+                  placeholder="Enter Party Type"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="partyType"
+                />
+              </div>
+            }
+            <div class="col-span-2">
+              <label>Followup Up</label>
+              <input
+                type="date"
+                placeholder="Enter FollowUp Date"
+                class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                formControlName="followupDate"
+              />
             </div>
             <div class="col-span-2">
-              <label>Bio</label>
-              <app-input-field type="text" [value]="user.bio" />
+              <label>Comment</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  placeholder="Enter Comment"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="comment"
+                /><!--container-->
+              </div>
             </div>
           </div>
         </div>

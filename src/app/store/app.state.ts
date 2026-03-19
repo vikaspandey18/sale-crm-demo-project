@@ -29,6 +29,9 @@ import { CollectionReportEffect } from "../pages/reports/collection-report/state
 import { AttendanceState } from "../pages/attendance/state/attendance.state";
 import { markAttendanceReducer } from "../pages/attendance/state/attendance.reducer";
 import { MarkAttendaceEffect } from "../pages/attendance/state/attendance.effects";
+import { SharedState } from "../shared/state/shared.state";
+import { sharedReducer } from "../shared/state/shared.reducer";
+import { SharedEffect } from "../shared/state/shared.effects";
 
 export interface AppState {
   auth: AuthState;
@@ -42,6 +45,7 @@ export interface AppState {
   orderReport: OrderReportState;
   collectionReport: CollectionReportState;
   markAttendance: AttendanceState;
+  shared: SharedState;
 }
 
 export const AppReducer = {
@@ -56,6 +60,7 @@ export const AppReducer = {
   orderReport: orderReportReducer,
   collectionReport: collectionReportReducer,
   markAttendance: markAttendanceReducer,
+  shared: sharedReducer,
 };
 
 export const AppEffect = [
@@ -69,4 +74,5 @@ export const AppEffect = [
   OrderReportEffect,
   CollectionReportEffect,
   MarkAttendaceEffect,
+  SharedEffect,
 ];
