@@ -71,7 +71,10 @@
                 />
               </div>
             </div>
-            @if (telecallerForm.get("activity")?.value === "Order") {
+            @if (
+              telecallerForm.get("activity")?.value === "Order" ||
+              telecallerForm.get("activity")?.value === "Lead"
+            ) {
               <div class="col-span-2 lg:col-span-1">
                 <label for="">Select Product</label>
                 <div class="relative">
@@ -89,15 +92,8 @@
                   </select>
                 </div>
               </div>
-              <div class="col-span-2 lg:col-span-1">
-                <label for="">Amount</label>
-                <input
-                  type="text"
-                  placeholder="Enter Amount"
-                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
-                  formControlName="amount"
-                />
-              </div>
+            }
+            @if (telecallerForm.get("activity")?.value === "Order") {
               <div class="col-span-2 lg:col-span-1">
                 <label for="">Payment Done</label>
                 <input
@@ -124,6 +120,100 @@
                   class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
                   formControlName="partyType"
                 />
+              </div>
+            }
+            @if (
+              telecallerForm.get("activity")?.value === "Order" ||
+              telecallerForm.get("activity")?.value === "Payment" ||
+              telecallerForm.get("activity")?.value === "Lead"
+            ) {
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Amount</label>
+                <input
+                  type="text"
+                  placeholder="Enter Amount"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="amount"
+                />
+              </div>
+            }
+            @if (telecallerForm.get("activity")?.value === "Lead") {
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Lead Grade</label>
+                <input
+                  type="text"
+                  placeholder="Enter Lead Grade"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800"
+                  formControlName="leadGrade"
+                />
+              </div>
+            }
+            @if (telecallerForm.get("activity")?.value === "Payment") {
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Payment Status</label>
+                <div class="relative">
+                  <select
+                    class="appearance-none bg-transparent border border-gray-300 dark:bg-dark-900 dark:bg-gray-900 dark:border-gray-700 dark:focus:border-brand-800 dark:placeholder:text-white/30 dark:text-gray-400 dark:text-white/90 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 h-11 placeholder:text-gray-400 pr-11 px-4 py-2.5 rounded-lg shadow-theme-xs text-gray-400 text-sm w-full"
+                    formControlName="paymentStatus"
+                  >
+                    <option value="">Select Payment Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="pending">Paid</option>
+                    <option value="partial">Partial</option>
+                  </select>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="absolute text-gray-700 dark:text-gray-400 right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  >
+                    <path
+                      d="M4.79175 8.02075L10.0001 13.2291L15.2084 8.02075"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            }
+            @if (telecallerForm.get("activity")?.value === "Follow Up") {
+              <div class="col-span-2 lg:col-span-1">
+                <label for="">Response</label>
+                <div class="relative">
+                  <select
+                    class="appearance-none bg-transparent border border-gray-300 dark:bg-dark-900 dark:bg-gray-900 dark:border-gray-700 dark:focus:border-brand-800 dark:placeholder:text-white/30 dark:text-gray-400 dark:text-white/90 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 h-11 placeholder:text-gray-400 pr-11 px-4 py-2.5 rounded-lg shadow-theme-xs text-gray-400 text-sm w-full"
+                    formControlName="followupResponse"
+                  >
+                    <option value="">Select Response</option>
+                    <option value="ringing">Ringing</option>
+                    <option value="not_reachable">Not Reachable</option>
+                    <option value="busy">Busy</option>
+                    <option value="call_back">Call Back</option>
+                    <option value="wrong_number">Wrong Number</option>
+                    <option value="not_interested">Not Interested</option>
+                    <option value="invalid">Invalid</option>
+                  </select>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="absolute text-gray-700 dark:text-gray-400 right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  >
+                    <path
+                      d="M4.79175 8.02075L10.0001 13.2291L15.2084 8.02075"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
               </div>
             }
             <div class="col-span-2">
