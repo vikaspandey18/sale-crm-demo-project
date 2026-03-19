@@ -88,6 +88,10 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
       paymentDone: new FormControl(""),
       purchaser: new FormControl(""),
       partyType: new FormControl(""),
+      leadGrade: new FormControl(""),
+      paymentStatus: new FormControl(""),
+      followupResponse: new FormControl(""),
+
     });
   }
 
