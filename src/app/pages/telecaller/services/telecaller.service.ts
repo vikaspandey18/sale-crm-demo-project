@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { ApiResponse } from "../../../models/api-response.model";
 import { TelecallerModel } from "../../../models/telecaller.model";
 import { environment } from "../../../../environments/environment";
+import { TeleRequest } from "../../../models/tele-update.model";
 
 @Injectable({
   providedIn: "root",
@@ -30,5 +31,10 @@ export class TelecallerService {
       value,
     };
     return this.http.put<ApiResponse<TelecallerModel>>(url, body);
+  }
+
+  addRecord(teleData: TeleRequest) {
+    const url = `${this.apiUrl}/customer/`;
+    return this.http.post(url, teleData);
   }
 }
