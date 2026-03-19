@@ -19,14 +19,9 @@ import {
   CellValueChangedEvent,
 } from "ag-grid-community";
 import { AsyncPipe } from "@angular/common";
-
 import { AgGridAngular } from "ag-grid-angular";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
-import { ModalComponent } from "../../shared/components/ui/modal/modal.component";
-import { ModalService } from "../../shared/services/modal.service";
-import { InputFieldComponent } from "../../shared/components/form/input/input-field.component";
-import { ButtonComponent } from "../../shared/components/ui/button/button.component";
-import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { UpdateTelecallerModelComponent } from "./update-telecaller-model/update-telecaller-model.component";
 
 @Component({
   selector: "app-telecaller",
@@ -34,71 +29,22 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
     AsyncPipe,
     AlertComponent,
     AgGridAngular,
-    ModalComponent,
-    InputFieldComponent,
-    ButtonComponent,
-    ReactiveFormsModule,
+    UpdateTelecallerModelComponent,
   ],
   templateUrl: "./telecaller.component.html",
   styleUrl: "./telecaller.component.css",
 })
 export class TelecallerComponent implements OnInit {
-  constructor(public modal: ModalService) {}
-
   private store: Store = inject(Store<AppState>);
   customers$!: Observable<TelecallerModel[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
-  isOpen = false;
-  openModal(customer: TelecallerModel) {
-    this.editForm.patchValue({
-      id: customer.id ?? "",
-      groups: customer.groups ?? "",
-      customer_name: customer.customer_name ?? "",
-      telephone_no: customer.telephone_no ?? "",
-      incharge_person_name: customer.incharge_person_name ?? "",
-      mobile_no: customer.mobile_no ?? "",
-      email: customer.email ?? "",
-      city: customer.city ?? "",
-      material: customer.material ?? "",
-      manufacturing: customer.manufacturing ?? "",
-      followup_date: customer.followup_date ?? "",
-      comment: customer.comment ?? "",
-      address: customer.address ?? "",
-      state: customer.state ?? "",
-      types: customer.types ?? "",
-      sources: customer.sources ?? "",
-    });
-    this.isOpen = true;
-  }
-  closeModal() {
-    this.isOpen = false;
-    this.editForm.reset();
-  }
-
-  editForm = new FormGroup({
-    id: new FormControl(""),
-    groups: new FormControl(""),
-    customer_name: new FormControl(""),
-    telephone_no: new FormControl(""),
-    incharge_person_name: new FormControl(""),
-    mobile_no: new FormControl(""),
-    email: new FormControl(""),
-    city: new FormControl(""),
-    material: new FormControl(""),
-    manufacturing: new FormControl(""),
-    followup_date: new FormControl(""),
-    comment: new FormControl(""),
-    address: new FormControl(""),
-    state: new FormControl(""),
-    types: new FormControl(""),
-    sources: new FormControl(""),
-  });
-
   private gridApi!: GridApi<TelecallerModel>;
 
   public theme = themeAlpine;
+
+  selectedCustomer!: TelecallerModel;
 
   columnDefs: ColDef<TelecallerModel>[] = [
     {
@@ -120,7 +66,8 @@ export class TelecallerComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.openModal(params.data);
+          this.selectedCustomer = params.data;
+          // this.openModal(params.data);
         }
       },
     },
@@ -168,11 +115,6 @@ export class TelecallerComponent implements OnInit {
 
   // Fires when any cell value is changed
   onCellValueChanged(event: CellValueChangedEvent<TelecallerModel>) {
-    // console.log("Field   :", event.colDef.field);
-    // console.log("Old     :", event.oldValue);
-    // console.log("New     :", event.newValue);
-    // console.log("Row data:", event.data);
-
     if (event.oldValue === event.newValue) return;
 
     const field = event.colDef.field;
@@ -189,34 +131,5 @@ export class TelecallerComponent implements OnInit {
         value: event.newValue,
       }),
     );
-  }
-
-  // Example user data (could be made dynamic)
-  user = {
-    firstName: "Musharof",
-    lastName: "Chowdhury",
-    role: "Team Manager",
-    location: "Arizona, United States",
-    avatar: "/images/user/owner.jpg",
-    social: {
-      facebook: "https://www.facebook.com/PimjoHQ",
-      x: "https://x.com/PimjoHQ",
-      linkedin: "https://www.linkedin.com/company/pimjo",
-      instagram: "https://instagram.com/PimjoHQ",
-    },
-    email: "randomuser@pimjo.com",
-    phone: "+09 363 398 46",
-    bio: "Team Manager",
-  };
-
-  handleSave() {
-    if (this.editForm.valid) {
-      const updatedCustomer = this.editForm.value;
-      this.closeModal();
-    }
-
-    // Handle save logic here
-    // console.log("Saving changes...");
-    // this.modal.closeModal();
   }
 }
