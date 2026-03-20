@@ -1,3 +1,4 @@
+import { AsyncPipe } from "@angular/common";
 import {
   Component,
   inject,
@@ -6,32 +7,31 @@ import {
   OnInit,
   SimpleChanges,
 } from "@angular/core";
-import { ModalComponent } from "../../../shared/components/ui/modal/modal.component";
-import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
+import { AlertComponent } from "../../../shared/components/ui/alert/alert.component";
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { ModalService } from "../../../shared/services/modal.service";
-import { TelecallerModel } from "../../../models/telecaller.model";
-import { Observable } from "rxjs";
-import { ProductResponse } from "../../../models/products.model";
-import { AppState } from "../../../store/app.state";
+import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
+import { ModalComponent } from "../../../shared/components/ui/modal/modal.component";
 import { Store } from "@ngrx/store";
+import { AppState } from "../../../store/app.state";
+import { TelecallerService } from "../../telecaller/services/telecaller.service";
+import { ModalService } from "../../../shared/services/modal.service";
+import { IndiaMartCustomer } from "../../../models/india-mart.model";
+import { ProductResponse } from "../../../models/products.model";
+import { Observable } from "rxjs";
+import { getProductStartAction } from "../../../shared/state/shared.actions";
 import {
   getProductErrorSelector,
   getProductLoadingSelector,
   getProductSelector,
 } from "../../../shared/state/shared.selectors";
-import { AlertComponent } from "../../../shared/components/ui/alert/alert.component";
-import { AsyncPipe } from "@angular/common";
-import { getProductStartAction } from "../../../shared/state/shared.actions";
-import { TelecallerService } from "../services/telecaller.service";
 
 @Component({
-  selector: "app-update-telecaller-model",
+  selector: "app-update-india-mart-model",
   imports: [
     ModalComponent,
     ButtonComponent,
@@ -39,15 +39,15 @@ import { TelecallerService } from "../services/telecaller.service";
     AlertComponent,
     AsyncPipe,
   ],
-  templateUrl: "./update-telecaller-model.component.html",
-  styleUrl: "./update-telecaller-model.component.css",
+  templateUrl: "./update-india-mart-model.component.html",
+  styleUrl: "./update-india-mart-model.component.css",
 })
-export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
+export class UpdateIndiaMartModelComponent implements OnChanges, OnInit {
   private store = inject(Store<AppState>);
   private teleService = inject(TelecallerService);
   constructor(public modal: ModalService) {}
 
-  @Input({ required: true }) selectedCustomer!: TelecallerModel;
+  @Input({ required: true }) selectedCustomer!: IndiaMartCustomer;
 
   isOpen = false;
   openModal() {
@@ -57,7 +57,7 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
     this.isOpen = false;
   }
 
-  telecallerForm!: FormGroup;
+  indiaMartForm!: FormGroup;
 
   dropdonwActivity = [
     "Order",
@@ -82,7 +82,7 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
     this.apiSuccessResponse = "";
     this.apiErrorResponse = "";
 
-    this.telecallerForm = new FormGroup({
+    this.indiaMartForm = new FormGroup({
       customerId: new FormControl(this.selectedCustomer?.id),
       activity: new FormControl("", [Validators.required]),
       newCustomerGroup: new FormControl(""),
@@ -108,7 +108,7 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
   }
 
   activityRequired() {
-    const activityController = this.telecallerForm.get("activity");
+    const activityController = this.indiaMartForm.get("activity");
     if (
       (activityController?.touched || activityController?.dirty) &&
       activityController.hasError("required")
@@ -119,12 +119,12 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
   }
 
   handleSave() {
-    const telData = this.telecallerForm.value;
+    const telData = this.indiaMartForm.value;
 
     this.teleService.addRecord(telData).subscribe({
       next: (response) => {
         this.apiSuccessResponse = response.message;
-        this.telecallerForm.reset();
+        this.indiaMartForm.reset();
         // this.closeModal();
       },
       error: (err) => {

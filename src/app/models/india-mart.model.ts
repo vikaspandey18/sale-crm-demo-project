@@ -13,9 +13,11 @@ export interface IndiaMartCustomer {
   followup_date?: string;
   comment?: string;
   address?: string;
-  activity_date?: Date;
+  activity_date?: string;
   last_activity?: string;
   last_comment?: string;
-  last_order_date?: Date;
+  last_order_date?: string;
   india_mart_employee_group?: string;
+  state?: string;
+  sources?: string;
 }

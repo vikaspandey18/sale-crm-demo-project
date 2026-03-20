@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, JsonPipe } from "@angular/common";
 import { AgGridAngular } from "ag-grid-angular";
 import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
 import { CustomerResponse } from "../../models/customer.model";
@@ -14,10 +14,16 @@ import {
   getIndiaMartCustomersSelector,
 } from "./state/indiamart.selectors";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
+import { UpdateIndiaMartModelComponent } from "./update-india-mart-model/update-india-mart-model.component";
 
 @Component({
   selector: "app-indiamart",
-  imports: [AsyncPipe, AgGridAngular, AlertComponent],
+  imports: [
+    AsyncPipe,
+    AgGridAngular,
+    AlertComponent,
+    UpdateIndiaMartModelComponent,
+  ],
   templateUrl: "./indiamart.component.html",
   styleUrl: "./indiamart.component.css",
 })
@@ -32,36 +38,60 @@ export class IndiamartComponent implements OnInit {
   loadCustomer$!: Observable<boolean>;
   errorCustomer$!: Observable<string | null>;
 
+  selectedCustomer!: IndiaMartCustomer;
+
   columnDefs: ColDef<IndiaMartCustomer>[] = [
+    {
+      headerName: "No",
+      valueGetter: "node.rowIndex + 1",
+      width: 100,
+      pinned: "left",
+    },
+    {
+      headerName: "Actions",
+      width: 120,
+      filter: false,
+      editable: false,
+      pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-4 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Update</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.selectedCustomer = params.data;
+        }
+      },
+    },
     {
       field: "customer_name",
       headerName: "Customer Name",
-      sortable: true,
-      filter: true,
-      pinned: "left",
-      editable: true,
     },
-    { field: "mobile_no", headerName: "Mobile", sortable: true, filter: true },
-    { field: "email", headerName: "Email", sortable: true, filter: true },
-    { field: "city", headerName: "City", sortable: true, filter: true },
-    {
-      field: "followup_date",
-      headerName: "Followup Date",
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "last_order_date",
-      headerName: "Last Order",
-      sortable: true,
-      filter: true,
-    },
-    { field: "comment", headerName: "Comment", sortable: true, filter: true },
+    { field: "groups", headerName: "Groups" },
+    { field: "telephone_no", headerName: "Telephone No" },
+    { field: "incharge_person_name", headerName: "Incharge Person Name" },
+    { field: "mobile_no", headerName: "Mobile" },
+    { field: "email", headerName: "Email" },
+    { field: "city", headerName: "City" },
+    { field: "material", headerName: "Material" },
+    { field: "manufacturing", headerName: "Manufacturing" },
+    { field: "followup_date", headerName: "Followup Date" },
+    { field: "comment", headerName: "Comment" },
+    { field: "address", headerName: "Address" },
+    { field: "state", headerName: "State" },
+    { field: "sources", headerName: "Sources" },
+    { field: "activity_date", headerName: "Activity Date" },
+    { field: "last_activity", headerName: "Last Activity" },
+    { field: "last_comment", headerName: "Last Comment" },
+    { field: "last_order_date", headerName: "Last Order Date" },
   ];
 
   defaultColDef = {
     filter: true,
     floatingFilter: true,
+    sortable: true,
+    editable: true,
   };
 
   ngOnInit(): void {

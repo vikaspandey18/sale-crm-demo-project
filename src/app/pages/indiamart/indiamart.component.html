@@ -1,11 +1,26 @@
-@if(errorCustomer$ | async; as error){
-<div class="alerts">
-    <app-alert variant="error" title="India Mart Customer Fetch Failed" [message]="error" />
-</div>
+@if (errorCustomer$ | async; as error) {
+  <div class="alerts">
+    <app-alert
+      variant="error"
+      title="India Mart Customer Fetch Failed"
+      [message]="error"
+    />
+  </div>
 }
 
-
-<ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: 70vh" [theme]="theme"
-    [rowData]="indiamartCustomers$ | async" [columnDefs]="columnDefs" [pagination]="true"
-    [defaultColDef]="defaultColDef" [paginationPageSize]="100" [loading]="loadCustomer$ | async">
+<ag-grid-angular
+  class="ag-theme-quartz"
+  style="width: 100%; height: 100vh"
+  [theme]="theme"
+  [rowData]="indiamartCustomers$ | async"
+  [columnDefs]="columnDefs"
+  [pagination]="true"
+  [defaultColDef]="defaultColDef"
+  [paginationPageSize]="100"
+  [loading]="loadCustomer$ | async"
+>
 </ag-grid-angular>
+
+@if (selectedCustomer) {
+  <app-update-india-mart-model [selectedCustomer]="selectedCustomer" />
+}
