@@ -59,6 +59,7 @@
                   ></path>
                 </svg>
               </div>
+              <span class="text-sm text-red-400">{{ activityRequired() }}</span>
             </div>
             <div class="col-span-2 lg:col-span-1">
               <label>Enter Group</label>
@@ -238,6 +239,12 @@
             </div>
           </div>
         </div>
+        @if (apiSuccessResponse) {
+          <h4 class="text-md text-green-400">{{ apiSuccessResponse }}</h4>
+        }
+        @if (apiErrorResponse) {
+          <h4 class="text-md text-red-400">{{ apiErrorResponse }}</h4>
+        }
       </div>
       <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
         <app-button size="sm" variant="outline" (btnClick)="closeModal()">

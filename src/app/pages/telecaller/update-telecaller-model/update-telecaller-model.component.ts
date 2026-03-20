@@ -29,6 +29,7 @@ import { AlertComponent } from "../../../shared/components/ui/alert/alert.compon
 import { AsyncPipe } from "@angular/common";
 import { MultiSelectComponent } from "../../../shared/components/form/multi-select/multi-select.component";
 import { getProductStartAction } from "../../../shared/state/shared.actions";
+import { TelecallerService } from "../services/telecaller.service";
 
 @Component({
   selector: "app-update-telecaller-model",
@@ -44,6 +45,7 @@ import { getProductStartAction } from "../../../shared/state/shared.actions";
 })
 export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
   private store = inject(Store<AppState>);
+  private teleService = inject(TelecallerService);
   constructor(public modal: ModalService) {}
 
   @Input({ required: true }) selectedCustomer!: TelecallerModel;
@@ -71,11 +73,15 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
   products$!: Observable<ProductResponse[] | []>;
   productLoading$!: Observable<boolean>;
   productError$!: Observable<string | null>;
+  apiSuccessResponse!: string;
+  apiErrorResponse!: string;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["selectedCustomer"]) {
       this.isOpen = true;
     }
+    this.apiSuccessResponse = "";
+    this.apiErrorResponse = "";
 
     this.telecallerForm = new FormGroup({
       customerId: new FormControl(this.selectedCustomer?.id),
@@ -91,20 +97,42 @@ export class UpdateTelecallerModelComponent implements OnChanges, OnInit {
       leadGrade: new FormControl(""),
       paymentStatus: new FormControl(""),
       followupResponse: new FormControl(""),
-
     });
   }
 
-    ngOnInit(): void {
-      this.store.dispatch(getProductStartAction());
+  ngOnInit(): void {
+    this.store.dispatch(getProductStartAction());
 
-      this.products$ = this.store.select(getProductSelector);
-      this.productLoading$ = this.store.select(getProductLoadingSelector);
-      this.productError$ = this.store.select(getProductErrorSelector);
+    this.products$ = this.store.select(getProductSelector);
+    this.productLoading$ = this.store.select(getProductLoadingSelector);
+    this.productError$ = this.store.select(getProductErrorSelector);
+  }
+
+  activityRequired() {
+    const activityController = this.telecallerForm.get("activity");
+    if (
+      (activityController?.touched || activityController?.dirty) &&
+      activityController.hasError("required")
+    ) {
+      return "Activity is required";
     }
+    return;
+  }
 
   handleSave() {
-    console.log(this.telecallerForm.value);
+    const telData = this.telecallerForm.value;
+
+    this.teleService.addRecord(telData).subscribe({
+      next: (response) => {
+        this.apiSuccessResponse = response.message;
+        this.telecallerForm.reset();
+        // this.closeModal();
+      },
+      error: (err) => {
+        this.apiErrorResponse =
+          err.error?.message || "Something went wrong. Please try again.";
+      },
+    });
     // this.closeModal();
   }
 }
