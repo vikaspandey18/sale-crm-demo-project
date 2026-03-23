@@ -9,6 +9,8 @@ import {
   loadUserSuccessAction,
 } from "./user.actions";
 import { catchError, exhaustMap, map, of } from "rxjs";
+import { concatLatestFrom } from "@ngrx/operators";
+import { selectUserData } from "./user.selectors";
 
 export class UserEffect {
   private store = inject(Store<AppState>);
@@ -18,7 +20,11 @@ export class UserEffect {
   getUserData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadUserStartAction),
-      exhaustMap((action) => {
+      concatLatestFrom(() => this.store.select(selectUserData)),
+      exhaustMap(([action, user]) => {
+        if (user) {
+          return of(loadUserSuccessAction({ user }));
+        }
         return this.userService.getUser().pipe(
           map((response) => {
             return loadUserSuccessAction({ user: response.data });
