@@ -1,11 +1,23 @@
+@if(error$ | async; as error){
+<div class="alerts">
+  <app-alert variant="error" title="Customer Fetch Failed" [message]="error" />
+</div>
+}
+
+@if(loading$ | async){
+<app-page-breadcrumb pageTitle="Loading ...." />
+}
+@else {
 <app-page-breadcrumb pageTitle="Profile" />
 <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
   <h3 class="hidden mb-5 text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-7">
     Profile
   </h3>
   <div class="space-y-6">
-    <div><app-user-meta-card/></div>
-    <div><app-user-info-card/></div>
-    <div><app-user-address-card/></div>
+    <div><app-user-meta-card [user]='user$ |async' /></div>
+    <div><app-user-info-card /></div>
+    <div><app-user-address-card /></div>
   </div>
 </div>
+
+}
