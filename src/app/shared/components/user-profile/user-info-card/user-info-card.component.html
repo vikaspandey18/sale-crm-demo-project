@@ -67,59 +67,40 @@
         <h4 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
           Edit Personal Information
         </h4>
-        <p class="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-          Update your details to keep your profile up-to-date.
-        </p>
       </div>
-      <form class="flex flex-col" (ngSubmit)="handleSave()">
+      <form [formGroup]="userForm" class="flex flex-col" (ngSubmit)="handleSave()">
         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
-          <div>
-            <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
-              Social Links
-            </h5>
-            <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-              <div>
-                <app-label>Facebook</app-label>
-                <!-- <app-input-field type="text" [value]="user.social.facebook" /> -->
-              </div>
-              <div>
-                <app-label>X.com</app-label>
-                <!-- <app-input-field type="text" [value]="user.social.x" /> -->
-              </div>
-              <div>
-                <app-label>Linkedin</app-label>
-                <!-- <app-input-field type="text" [value]="user.social.linkedin" /> -->
-              </div>
-              <div>
-                <app-label>Instagram</app-label>
-                <!-- <app-input-field type="text" [value]="user.social.instagram" /> -->
-              </div>
-            </div>
-          </div>
-          <div class="mt-7">
+          <div class="mt-2">
             <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
               Personal Information
             </h5>
             <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div class="col-span-2 lg:col-span-1">
-                <app-label>First Name</app-label>
-                <!-- <app-input-field type="text" [value]="user.firstName" /> -->
+                <app-label>Full Name</app-label>
+                <div class="relative">
+                  <input type="text" formControlName="name" placeholder="Enter Your Name"
+                    class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800">
+                </div>
               </div>
               <div class="col-span-2 lg:col-span-1">
-                <app-label>Last Name</app-label>
-                <!-- <app-input-field type="text" [value]="user.lastName" /> -->
+                <app-label>Employee Group</app-label>
+                <input type="text" readonly formControlName="employee_group"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800 bg-red-400">
               </div>
               <div class="col-span-2 lg:col-span-1">
                 <app-label>Email Address</app-label>
-                <!-- <app-input-field type="text" [value]="user.email" /> -->
+                <input type="text" id="" placeholder="Enter Email Address" formControlName="email"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800">
               </div>
               <div class="col-span-2 lg:col-span-1">
-                <app-label>Phone</app-label>
-                <!-- <app-input-field type="text" [value]="user.phone" /> -->
+                <app-label>Mobile No</app-label>
+                <input type="text" id="" placeholder="Enter Mobile No" formControlName="mobile"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800">
               </div>
-              <div class="col-span-2">
-                <app-label>Bio</app-label>
-                <!-- <app-input-field type="text" [value]="user.bio" /> -->
+              <div class="col-span-2 lg:col-span-1">
+                <app-label>Designation</app-label>
+                <input type="text" id="" placeholder="Enter Designation" formControlName="designation"
+                  class="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700 dark:focus:border-brand-800">
               </div>
             </div>
           </div>

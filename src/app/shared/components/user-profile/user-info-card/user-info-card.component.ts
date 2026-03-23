@@ -1,27 +1,40 @@
-import { Component, Input } from "@angular/core";
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { ModalService } from "../../../services/modal.service";
 
-import { InputFieldComponent } from "../../form/input/input-field.component";
 import { ButtonComponent } from "../../ui/button/button.component";
 import { LabelComponent } from "../../form/label/label.component";
 import { ModalComponent } from "../../ui/modal/modal.component";
 import { UserRespone } from "../../../../models/user.model";
 import { CommonModule } from "@angular/common";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../../../store/app.state";
+import { selectUserData } from "../../../../pages/profile/state/user.selectors";
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-user-info-card",
   imports: [
-    InputFieldComponent,
     ButtonComponent,
     LabelComponent,
     ModalComponent,
     CommonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: "./user-info-card.component.html",
   styles: ``,
 })
-export class UserInfoCardComponent {
+export class UserInfoCardComponent implements  OnChanges {
   constructor(public modal: ModalService) {}
+
+  private store = inject(Store<AppState>);
+  private fb = inject(NonNullableFormBuilder);
 
   @Input({ required: true }) user!: UserRespone | null;
 
@@ -33,23 +46,26 @@ export class UserInfoCardComponent {
     this.isOpen = false;
   }
 
-  users = {
-    firstName: "Musharof",
-    lastName: "Chowdhury",
-    email: "randomuser@pimjo.com",
-    phone: "+09 363 398 46",
-    bio: "Team Manager",
-    social: {
-      facebook: "https://www.facebook.com/PimjoHQ",
-      x: "https://x.com/PimjoHQ",
-      linkedin: "https://www.linkedin.com/company/pimjo",
-      instagram: "https://instagram.com/PimjoHQ",
-    },
-  };
+  userForm = this.fb.group({
+    name: [""],
+    employee_group: [{ value: "", disabled: true }],
+    email: [""],
+    mobile: [""],
+    designation: [""],
+  });
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["user"] && this.user) {
+      this.userForm.patchValue(this.user);
+    }
+  }
 
   handleSave() {
     // Handle save logic here
-    console.log("Saving changes...");
-    this.modal.closeModal();
+    if (this.userForm.valid) {
+      const data = this.userForm.getRawValue(); // includes disabled
+      console.log('Saving:', data);
+    }
+    // this.modal.closeModal();
   }
 }

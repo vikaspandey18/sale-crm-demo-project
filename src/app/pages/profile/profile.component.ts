@@ -22,9 +22,8 @@ import { AlertComponent } from "../../shared/components/ui/alert/alert.component
     PageBreadcrumbComponent,
     UserMetaCardComponent,
     UserInfoCardComponent,
-    UserAddressCardComponent,
     AsyncPipe,
-    AlertComponent
+    AlertComponent,
   ],
   templateUrl: "./profile.component.html",
   styles: ``,
