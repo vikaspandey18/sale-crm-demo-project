@@ -16,4 +16,9 @@ export class UserService {
     const url = `${this.apiUrl}/user/getUser.php`;
     return this.http.get<ApiResponse<UserRespone>>(url);
   }
+
+  updateUser(formData: FormData): Observable<ApiResponse<UserRespone>> {
+    const url = `${this.apiUrl}/user/updateUser.php`;
+    return this.http.post<ApiResponse<UserRespone>>(url, formData);
+  }
 }

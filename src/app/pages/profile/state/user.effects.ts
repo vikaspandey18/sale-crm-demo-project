@@ -7,6 +7,9 @@ import {
   loadUserFailedAction,
   loadUserStartAction,
   loadUserSuccessAction,
+  updateUserFailedAction,
+  updateUserStartAction,
+  updateUserSuccessAction,
 } from "./user.actions";
 import { catchError, exhaustMap, map, of } from "rxjs";
 import { concatLatestFrom } from "@ngrx/operators";
@@ -40,4 +43,26 @@ export class UserEffect {
       }),
     );
   });
+
+  updateUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateUserStartAction),
+      exhaustMap((action) => {
+        return this.userService.updateUser(action.formData).pipe(
+          map((response) => {
+            return updateUserSuccessAction({ user: response.data });
+          }),
+          catchError((error) => {
+            return of(
+              updateUserFailedAction({
+                error: error.error.message || error.message,
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  });
+
+  
 }

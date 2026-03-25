@@ -15,8 +15,19 @@ import { UserRespone } from "../../../../models/user.model";
 import { CommonModule } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../store/app.state";
-import { selectUserData } from "../../../../pages/profile/state/user.selectors";
-import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from "@angular/forms";
+import {
+  selectUserData,
+  selectUserError,
+  selectUserLoading,
+} from "../../../../pages/profile/state/user.selectors";
+import {
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+} from "@angular/forms";
+import { updateUserStartAction } from "../../../../pages/profile/state/user.actions";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-user-info-card",
@@ -30,7 +41,7 @@ import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } f
   templateUrl: "./user-info-card.component.html",
   styles: ``,
 })
-export class UserInfoCardComponent implements  OnChanges {
+export class UserInfoCardComponent implements OnChanges {
   constructor(public modal: ModalService) {}
 
   private store = inject(Store<AppState>);
@@ -39,6 +50,11 @@ export class UserInfoCardComponent implements  OnChanges {
   @Input({ required: true }) user!: UserRespone | null;
 
   isOpen = false;
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
+  isLoading$: Observable<boolean> = this.store.select(selectUserLoading);
+  isError$: Observable<string | null> = this.store.select(selectUserError);
+
   openModal() {
     this.isOpen = true;
   }
@@ -47,10 +63,11 @@ export class UserInfoCardComponent implements  OnChanges {
   }
 
   userForm = this.fb.group({
+    id:[""], 
     name: [""],
     employee_group: [{ value: "", disabled: true }],
     email: [""],
-    mobile: [""],
+    mobile: [{ value: "", disabled: true }],
     designation: [""],
   });
 
@@ -60,11 +77,44 @@ export class UserInfoCardComponent implements  OnChanges {
     }
   }
 
+  onFileSelect(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedFile = file;
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
   handleSave() {
-    // Handle save logic here
     if (this.userForm.valid) {
-      const data = this.userForm.getRawValue(); // includes disabled
-      console.log('Saving:', data);
+      const formValue = this.userForm.getRawValue();
+
+      const formData = new FormData();
+
+      formData.append("name", formValue.name || "");
+      formData.append("email", formValue.email || "");
+      formData.append("designation", formValue.designation || "");
+
+      // optional fields
+      formData.append("employee_group", formValue.employee_group || "");
+      formData.append("mobile", formValue.mobile || "");
+
+      // 🔥 append file
+      if (this.selectedFile) {
+        formData.append("photo", this.selectedFile);
+      }
+
+      // 🔥 dispatch action
+      this.store.dispatch(updateUserStartAction({ formData }));
     }
     // this.modal.closeModal();
   }

@@ -4,7 +4,7 @@ import { CommonModule, UpperCasePipe } from "@angular/common";
 
 @Component({
   selector: "app-user-meta-card",
-  imports: [UpperCasePipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: "./user-meta-card.component.html",
   styles: ``,
 })
