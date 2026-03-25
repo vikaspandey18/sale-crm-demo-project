@@ -78,7 +78,19 @@ export class OrderReportComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchOrderReportStartAction());
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(today.getMonth() - 1);
+
+    this.fromDate = this.formatDate(oneMonthAgo);
+    this.toDate = this.formatDate(today);
+
+    this.store.dispatch(
+      fetchOrderReportStartAction({
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+      }),
+    );
 
     this.customers$ = this.store.select(getOrderReportSelector);
     this.loading$ = this.store.select(getOrderReportLoadingSelector);
@@ -93,13 +105,18 @@ export class OrderReportComponent {
     this.toDate = event.dateStr;
   }
 
+  formatDate(date: Date): string {
+    return date.toISOString().split("T")[0];
+  }
+
   applyDateFilter() {
-    this.gridApi.setFilterModel({
-      createDate: {
-        type: "inRange",
-        dateFrom: this.fromDate,
-        dateTo: this.toDate,
-      },
-    });
+    if (!this.fromDate || !this.toDate) return;
+
+    this.store.dispatch(
+      fetchOrderReportStartAction({
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+      }),
+    );
   }
 }

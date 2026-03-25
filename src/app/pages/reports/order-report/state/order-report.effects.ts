@@ -21,23 +21,25 @@ export class OrderReportEffect {
   orderReport$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fetchOrderReportStartAction),
-      concatLatestFrom(() => this.store.select(getOrderReportSelector)),
-      concatMap(([action, orders]) => {
-        if (orders.length > 0) {
-          return of(fetchOrderReportSuccessAction({ orders }));
-        }
-        return this.orderReportService.getOrderReport().pipe(
-          map((response) => {
-            return fetchOrderReportSuccessAction({ orders: response.data });
-          }),
-          catchError((error) => {
-            return of(
-              fetchOrderReportFailedAction({
-                error: error?.error.message || error.message,
-              }),
-            );
-          }),
-        );
+      // concatLatestFrom(() => this.store.select(getOrderReportSelector)),
+      concatMap((action) => {
+        // if (orders.length > 0) {
+        //   return of(fetchOrderReportSuccessAction({ orders }));
+        // }
+        return this.orderReportService
+          .getOrderReport(action.fromDate, action.toDate)
+          .pipe(
+            map((response) => {
+              return fetchOrderReportSuccessAction({ orders: response.data });
+            }),
+            catchError((error) => {
+              return of(
+                fetchOrderReportFailedAction({
+                  error: error?.error.message || error.message,
+                }),
+              );
+            }),
+          );
       }),
     );
   });

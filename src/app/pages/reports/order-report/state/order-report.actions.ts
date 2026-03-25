@@ -3,6 +3,7 @@ import { OrderReportResponse } from "../../../../models/order-report.model";
 
 export const fetchOrderReportStartAction = createAction(
   "[order-report] fetch start",
+  props<{ fromDate: string; toDate: string }>(),
 );
 export const fetchOrderReportSuccessAction = createAction(
   "[order-report] fetch success",

@@ -3,6 +3,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiResponse } from "../../../../models/api-response.model";
 import { OrderReportResponse } from "../../../../models/order-report.model";
+import { environment } from "../../../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -10,8 +11,17 @@ import { OrderReportResponse } from "../../../../models/order-report.model";
 export class OrderReportService {
   private http: HttpClient = inject(HttpClient);
 
-  getOrderReport(): Observable<ApiResponse<OrderReportResponse[]>> {
-    const url = "https://rushabh.vizitlog.com/newapi/order/getOrder.php";
-    return this.http.get<ApiResponse<OrderReportResponse[]>>(url);
+  private baseUrl = environment.apiUrl;
+
+  getOrderReport(
+    fromDate: string,
+    toDate: string,
+  ): Observable<ApiResponse<OrderReportResponse[]>> {
+    const url = `${this.baseUrl}/order/getOrder.php`;
+    const body = {
+      fromDate,
+      toDate,
+    };
+    return this.http.post<ApiResponse<OrderReportResponse[]>>(url, body);
   }
 }
