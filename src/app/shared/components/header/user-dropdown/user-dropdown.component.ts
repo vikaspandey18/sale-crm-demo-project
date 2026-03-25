@@ -8,6 +8,9 @@ import { AppState } from "../../../../store/app.state";
 import { getAuthName } from "../../auth/state/auth.selectors";
 import { logoutAction } from "../../auth/state/auth.actions";
 import { Observable } from "rxjs";
+import { loadUserStartAction } from "../../../../pages/profile/state/user.actions";
+import { UserRespone } from "../../../../models/user.model";
+import { selectUserData } from "../../../../pages/profile/state/user.selectors";
 
 @Component({
   selector: "app-user-dropdown",
@@ -20,7 +23,7 @@ import { Observable } from "rxjs";
     AsyncPipe,
   ],
 })
-export class UserDropdownComponent {
+export class UserDropdownComponent implements OnInit {
   isOpen = false;
 
   private store = inject(Store<AppState>);
@@ -28,12 +31,20 @@ export class UserDropdownComponent {
   readonly username$: Observable<string | null> =
     this.store.select(getAuthName);
 
+  user$!: Observable<UserRespone | null>;
+
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
 
   closeDropdown() {
     this.isOpen = false;
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(loadUserStartAction());
+
+    this.user$ = this.store.select(selectUserData);
   }
 
   onSignout() {
