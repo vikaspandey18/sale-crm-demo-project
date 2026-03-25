@@ -63,7 +63,7 @@ export class UserInfoCardComponent implements OnChanges {
   }
 
   userForm = this.fb.group({
-    id:[""], 
+    id: [""],
     name: [""],
     employee_group: [{ value: "", disabled: true }],
     email: [""],
@@ -100,6 +100,7 @@ export class UserInfoCardComponent implements OnChanges {
 
       const formData = new FormData();
 
+      formData.append("id", formValue.id || "");
       formData.append("name", formValue.name || "");
       formData.append("email", formValue.email || "");
       formData.append("designation", formValue.designation || "");

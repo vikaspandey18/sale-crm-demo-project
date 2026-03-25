@@ -104,6 +104,7 @@
         [formGroup]="userForm"
         class="flex flex-col"
         (ngSubmit)="handleSave()"
+        enctype="multipart/form-data"
       >
         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
           <div class="mt-2">
@@ -183,7 +184,7 @@
 
               <div class="col-span-2 lg:col-span-1">
                 @if (isError$ | async; as error) {
-                  <span class="text-danger text-md">{{ error }}</span>
+                  <span class="text-red-500 text-md">{{ error }}</span>
                 }
               </div>
             </div>

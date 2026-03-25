@@ -6,6 +6,6 @@ export interface UserRespone {
   assign_emp?: string;
   designation?: string;
   email?: string;
-  password?: string;
   photo?: string;
+  photoUrl?: string;
 }
