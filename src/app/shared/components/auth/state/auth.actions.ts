@@ -8,7 +8,7 @@ export const loginStartAction = createAction(
 
 export const loginSuccessAction = createAction(
   "[auth] login success",
-  props<{ auth: AuthResponse }>(),
+  props<{ auth: AuthResponse; redirect: boolean }>(),
 );
 
 export const loginFailureAction = createAction(

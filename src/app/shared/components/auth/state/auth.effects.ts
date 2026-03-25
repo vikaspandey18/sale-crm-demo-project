@@ -15,6 +15,7 @@ import {
   mergeMap,
   EMPTY,
   switchMap,
+  tap,
 } from "rxjs";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
@@ -34,7 +35,10 @@ export class AuthEffect {
           .pipe(
             map((response) => {
               this.authService.saveAuthInfoInLocalStorage(response.data);
-              return loginSuccessAction({ auth: response.data });
+              return loginSuccessAction({
+                auth: response.data,
+                redirect: true,
+              });
             }),
             catchError((error) => {
               return of(
@@ -52,8 +56,11 @@ export class AuthEffect {
     () => {
       return this.actions$.pipe(
         ofType(loginSuccessAction),
-        mergeMap((action) => {
-          return this.router.navigate(["/"]);
+        tap((action) => {
+          if (action.redirect) {
+            return this.router.navigate(["/"]);
+          }
+          return;
         }),
       );
     },
@@ -82,7 +89,7 @@ export class AuthEffect {
           this.router.navigate(["signin"]);
           return EMPTY;
         }
-        return of(loginSuccessAction({ auth: user }));
+        return of(loginSuccessAction({ auth: user, redirect: false }));
       }),
     );
   });
