@@ -20,11 +20,11 @@ export class UserEffect {
   getUserData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadUserStartAction),
-      concatLatestFrom(() => this.store.select(selectUserData)),
-      exhaustMap(([action, user]) => {
-        if (user) {
-          return of(loadUserSuccessAction({ user }));
-        }
+      // concatLatestFrom(() => this.store.select(selectUserData)),
+      exhaustMap((action) => {
+        // if (user) {
+        //   return of(loadUserSuccessAction({ user }));
+        // }
         return this.userService.getUser().pipe(
           map((response) => {
             return loadUserSuccessAction({ user: response.data });
