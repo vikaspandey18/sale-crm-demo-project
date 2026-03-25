@@ -13,10 +13,11 @@ import {
   getOrderReportLoadingSelector,
   getOrderReportSelector,
 } from "./state/order-report.selectors";
+import { DatePickerComponent } from "../../../shared/components/form/date-picker/date-picker.component";
 
 @Component({
   selector: "app-order-report",
-  imports: [AsyncPipe, AlertComponent, AgGridAngular],
+  imports: [AsyncPipe, AlertComponent, AgGridAngular, DatePickerComponent],
   templateUrl: "./order-report.component.html",
   styleUrl: "./order-report.component.css",
 })
@@ -25,18 +26,30 @@ export class OrderReportComponent {
   customers$!: Observable<OrderReportResponse[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
+  fromDate: string | null = null;
+  toDate: string | null = null;
 
   gridApi!: GridApi;
 
   public theme = themeAlpine;
 
   columnDefs: ColDef<OrderReportResponse>[] = [
-    { field: "createDate", headerName: "Date" },
+    {
+      headerName: "No",
+      valueGetter: "node.rowIndex + 1",
+      width: 50,
+      filter: false,
+    },
+    { field: "createDate", headerName: "Date", filter: "agDateColumnFilter" },
     { field: "customer_name", headerName: "Customer" },
     { field: "employee_name", headerName: "Employee" },
     {
       field: "order_value",
       headerName: "Amount",
+      valueFormatter: (params) => {
+        if (params.value == null) return "";
+        return new Intl.NumberFormat("en-IN").format(params.value);
+      },
       cellClassRules: {
         "cell-error": (params) => params.value < 0,
       },
@@ -70,5 +83,23 @@ export class OrderReportComponent {
     this.customers$ = this.store.select(getOrderReportSelector);
     this.loading$ = this.store.select(getOrderReportLoadingSelector);
     this.error$ = this.store.select(getOrderReportErrorSelector);
+  }
+
+  onFromDateChange(event: any) {
+    this.fromDate = event.dateStr;
+  }
+
+  onToDateChange(event: any) {
+    this.toDate = event.dateStr;
+  }
+
+  applyDateFilter() {
+    this.gridApi.setFilterModel({
+      createDate: {
+        type: "inRange",
+        dateFrom: this.fromDate,
+        dateTo: this.toDate,
+      },
+    });
   }
 }

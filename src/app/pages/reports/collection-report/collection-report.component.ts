@@ -31,6 +31,12 @@ export class CollectionReportComponent implements OnInit {
   public theme = themeAlpine;
 
   columnDefs: ColDef<CollectionReportResponse>[] = [
+    {
+      headerName: "No",
+      valueGetter: "node.rowIndex + 1",
+      width: 50,
+      filter: false,
+    },
     { field: "createDate", headerName: "Date" },
     { field: "customer_name", headerName: "Customer" },
     { field: "employee_name", headerName: "Employee" },

@@ -1,25 +1,27 @@
 @if (error$ | async; as error) {
-  <div class="alertMessage">
-    <app-alert
-      variant="error"
-      title="Failed To Fetch My Report"
-      [message]="error"
-    />
-  </div>
+<div class="alertMessage">
+  <app-alert variant="error" title="Failed To Fetch My Report" [message]="error" />
+</div>
 }
 
-<button (click)="clearFilters()">Clear Filters</button>
 
-<ag-grid-angular
-  class="ag-theme-quartz"
-  style="width: 100%; height: 500px"
-  [theme]="theme"
-  [rowData]="customers$ | async"
-  [columnDefs]="columnDefs"
-  [defaultColDef]="defaultColDef"
-  [pagination]="true"
-  [paginationPageSize]="100"
-  [loading]="loading$ | async"
-  (gridReady)="onGridReady($event)"
->
+
+<div class="flex gap-3 mb-3">
+  <app-date-picker id="fromDate" label="From Date" (dateChange)="onFromDateChange($event)">
+  </app-date-picker>
+
+  <app-date-picker id="toDate" label="To Date" (dateChange)="onToDateChange($event)">
+  </app-date-picker>
+
+  <button (click)="applyDateFilter()"
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Apply</button>
+
+  <button type="button" (click)="clearFilters()"
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Clear
+    Filters</button>
+</div>
+
+<ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: 500px;margin-top: 10px;" [theme]="theme"
+  [rowData]="customers$ | async" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
+  [paginationPageSize]="100" [loading]="loading$ | async" (gridReady)="onGridReady($event)">
 </ag-grid-angular>

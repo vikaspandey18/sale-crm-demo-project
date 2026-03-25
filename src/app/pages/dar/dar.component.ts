@@ -41,19 +41,7 @@ export class DarComponent implements OnInit {
       headerName: "No",
       valueGetter: "node.rowIndex + 1",
       width: 50,
-      sortable: false,
       filter: false,
-    },
-    {
-      headerName: "Actions",
-      width: 200,
-      filter: false,
-      cellRenderer: () => {
-        return `
-      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-4 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Edit</button>
-      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-4 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Delete</button>
-    `;
-      },
     },
     {
       field: "employee_name",
@@ -67,8 +55,14 @@ export class DarComponent implements OnInit {
       field: "purpose",
       headerName: "Purpose",
     },
-    { field: "comment", headerName: "Comment" },
-    { field: "types", headerName: "Types" },
+    {
+      field: "comment",
+      headerName: "Comment",
+    },
+    {
+      field: "types",
+      headerName: "Types",
+    },
     {
       field: "amount",
       headerName: "Amount",
@@ -105,7 +99,6 @@ export class DarComponent implements OnInit {
   // onQuickFilter(event: any) {
   //   this.gridApi.setQuickFilter(event.target.value);
   // }
-
 
   ngOnInit(): void {
     this.store.dispatch(fetchDarStartAction());
