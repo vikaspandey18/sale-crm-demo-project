@@ -3,6 +3,7 @@ import { CollectionReportResponse } from "../../../../models/collection-report.m
 
 export const fetchCollectionReportStartAction = createAction(
   "[collection-report] fetch start",
+  props<{ fromDate: string; toDate: string }>(),
 );
 
 export const fetchCollectionReportSuccessAction = createAction(

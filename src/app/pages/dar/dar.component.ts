@@ -44,6 +44,10 @@ export class DarComponent implements OnInit {
       filter: false,
     },
     {
+      field: "createDate",
+      headerName: "Create Date",
+    },
+    {
       field: "employee_name",
       headerName: "Employee Name",
     },
@@ -77,10 +81,6 @@ export class DarComponent implements OnInit {
     {
       field: "followupresponse",
       headerName: "Followup Response",
-    },
-    {
-      field: "createDate",
-      headerName: "Create Date",
     },
   ];
 

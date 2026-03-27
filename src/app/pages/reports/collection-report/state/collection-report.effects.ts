@@ -17,26 +17,28 @@ export class CollectionReportEffect {
     return this.actions$.pipe(
       ofType(fetchCollectionReportStartAction),
       switchMap((action) => {
-        return this.collectionReportService.getCollectionReport().pipe(
-          map((response) => {
-            if (response.data?.length > 0) {
-              return fetchCollectionReportSuccessAction({
-                collections: response.data,
-              });
-            } else {
-              return fetchCollectionReportFailedAction({
-                error: response.message,
-              });
-            }
-          }),
-          catchError((error) => {
-            return of(
-              fetchCollectionReportFailedAction({
-                error: error?.error.message || error.message,
-              }),
-            );
-          }),
-        );
+        return this.collectionReportService
+          .getCollectionReport(action.fromDate, action.toDate)
+          .pipe(
+            map((response) => {
+              if (response.data?.length > 0) {
+                return fetchCollectionReportSuccessAction({
+                  collections: response.data,
+                });
+              } else {
+                return fetchCollectionReportFailedAction({
+                  error: response.message,
+                });
+              }
+            }),
+            catchError((error) => {
+              return of(
+                fetchCollectionReportFailedAction({
+                  error: error?.error.message || error.message,
+                }),
+              );
+            }),
+          );
       }),
     );
   });

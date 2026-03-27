@@ -28,6 +28,7 @@ export const collectionReportReducer = createReducer(
       ...state,
       loading: false,
       error: action.error,
+      collections: [],
     };
   }),
 );

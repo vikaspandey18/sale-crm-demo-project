@@ -13,18 +13,23 @@ import {
   getCollectionReportLoadingSelector,
   getCollectionReportSelector,
 } from "./state/collection-report.selectors";
+import { DatePickerComponent } from "../../../shared/components/form/date-picker/date-picker.component";
 
 @Component({
   selector: "app-collection-report",
-  imports: [AsyncPipe, AlertComponent, AgGridAngular],
+  imports: [AsyncPipe, AlertComponent, AgGridAngular, DatePickerComponent],
   templateUrl: "./collection-report.component.html",
   styleUrl: "./collection-report.component.css",
 })
 export class CollectionReportComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
+
   customers$!: Observable<CollectionReportResponse[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
+
+  fromDate: string | null = null;
+  toDate: string | null = null;
 
   gridApi!: GridApi;
 
@@ -67,10 +72,45 @@ export class CollectionReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(fetchCollectionReportStartAction());
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(today.getMonth() - 1);
+
+    this.fromDate = this.formateDate(oneMonthAgo);
+    this.toDate = this.formateDate(today);
+
+    this.store.dispatch(
+      fetchCollectionReportStartAction({
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+      }),
+    );
 
     this.customers$ = this.store.select(getCollectionReportSelector);
     this.loading$ = this.store.select(getCollectionReportLoadingSelector);
     this.error$ = this.store.select(getCollectionReportErrorSelector);
+  }
+
+  formateDate(date: Date): string {
+    return date.toISOString().split("T")[0];
+  }
+
+  onFromDateChange(event: any) {
+    this.fromDate = event.dateStr;
+  }
+
+  onToDateChange(event: any) {
+    this.toDate = event.dateStr;
+  }
+
+  applyDateFilter() {
+    if (!this.fromDate || !this.toDate) return;
+
+    this.store.dispatch(
+      fetchCollectionReportStartAction({
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+      }),
+    );
   }
 }
