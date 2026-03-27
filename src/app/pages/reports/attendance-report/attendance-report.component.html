@@ -1,1 +1,114 @@
-<p>attendance-report works!</p>
+<div class="flex gap-3 mb-3">
+  <app-date-picker
+    id="fromDate"
+    label=""
+    [defaultDate]="fromDate ?? undefined"
+    (dateChange)="onFromDateChange($event)"
+  >
+  </app-date-picker>
+
+  <app-date-picker
+    id="toDate"
+    label=""
+    [defaultDate]="toDate ?? undefined"
+    (dateChange)="onToDateChange($event)"
+  >
+  </app-date-picker>
+
+  <button
+    (click)="applyDateFilter()"
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300"
+  >
+    Apply
+  </button>
+</div>
+<div
+  class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]"
+>
+  <div class="px-4 pt-4 sm:px-6">
+    <div
+      class="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+          My Attendace
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-full overflow-x-auto">
+    <table class="w-full">
+      <thead class="border-gray-100 border-y dark:border-white/[0.05]">
+        <tr>
+          <th
+            scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+          >
+            Products
+          </th>
+          <th
+            scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+          >
+            Category
+          </th>
+          <th
+            scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+          >
+            Country
+          </th>
+          <th
+            scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+          >
+            CR
+          </th>
+          <th
+            scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+          >
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
+        @for (product of tableData; track $index) {
+          <tr>
+            <td
+              class="px-4 py-3 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ product.name }}
+            </td>
+            <td
+              class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400"
+            >
+              {{ product.category }}
+            </td>
+            <td
+              class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400"
+            >
+              <div class="w-5 h-5 overflow-hidden rounded-full">
+                <img
+                  width="20"
+                  height="20"
+                  [src]="product.country"
+                  class="w-5 h-5 rounded-full"
+                  alt="country"
+                />
+              </div>
+            </td>
+            <td
+              class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400"
+            >
+              {{ product.cr }}
+            </td>
+            <td class="px-4 text-theme-sm sm:px-6 text-start text-success-600">
+              ${{ product.value }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
