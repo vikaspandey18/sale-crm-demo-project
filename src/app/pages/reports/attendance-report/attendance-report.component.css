@@ -1,0 +1,105 @@
+/* attendance-report.component.css */
+.attendance-wrapper {
+  padding: 24px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Date Filter */
+.date-filter {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.apply-btn {
+  padding: 10px 24px;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  height: 40px;
+}
+
+.apply-btn:hover {
+  background: #4f46e5;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 140px;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.card .count {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+}
+.card .label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+.card.green {
+  background: #22c55e;
+}
+.card.red {
+  background: #ef4444;
+}
+.card.blue {
+  background: #3b82f6;
+}
+
+/* Calendar */
+.calendar-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Event cells */
+.day-event {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  line-height: 1.6;
+  width: 100%;
+}
+
+.day-event.present {
+  background: #22c55e;
+}
+.day-event.absent {
+  background: #ef4444;
+}
+.day-event .status {
+  font-weight: 700;
+  color: #fff;
+}
+.day-event .time {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 10px;
+}
+.day-event .hours {
+  color: #fff;
+  font-weight: 600;
+}

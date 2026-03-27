@@ -1,10 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { DatePickerComponent } from "../../../shared/components/form/date-picker/date-picker.component";
 import { AsyncPipe } from "@angular/common";
+import { FullCalendarModule } from "@fullcalendar/angular";
+import { AttendanceReportResponse } from "../../../models/attendance-report.model";
+import { CalendarOptions, EventContentArg } from "@fullcalendar/core/index.js";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
 @Component({
   selector: "app-attendance-report",
-  imports: [DatePickerComponent, AsyncPipe],
+  imports: [DatePickerComponent, AsyncPipe, FullCalendarModule],
   templateUrl: "./attendance-report.component.html",
   styleUrl: "./attendance-report.component.css",
 })
@@ -12,74 +16,62 @@ export class AttendanceReportComponent implements OnInit {
   fromDate: string | null = null;
   toDate: string | null = null;
 
-  tableData = [
+  selectedMonth = new Date();
+  totalPresentDays = 0;
+  totalAbsentDays = 0;
+  totalHoursWorked = 0;
+
+  // 🔁 Replace with data from your NgRx store / API
+  attendanceData: AttendanceReportResponse[] = [
     {
-      id: 1,
-      name: "TailGrids",
-      category: "UI Kits",
-      country: "/images/country/country-01.svg",
-      cr: "Dashboard",
-      value: "12,499",
+      date: "2025-03-01",
+      isPresent: true,
+      checkIn: "09:00 AM",
+      checkOut: "06:00 PM",
+      totalHours: 9,
     },
     {
-      id: 2,
-      name: "GrayGrids",
-      category: "Templates",
-      country: "/images/country/country-02.svg",
-      cr: "Dashboard",
-      value: "5498",
+      date: "2025-03-02",
+      isPresent: false,
+      checkIn: "-",
+      checkOut: "-",
+      totalHours: 0,
     },
     {
-      id: 3,
-      name: "Uideck",
-      category: "Templates",
-      country: "/images/country/country-03.svg",
-      cr: "Dashboard",
-      value: "4621",
+      date: "2025-03-03",
+      isPresent: true,
+      checkIn: "09:30 AM",
+      checkOut: "07:00 PM",
+      totalHours: 9.5,
     },
     {
-      id: 4,
-      name: "FormBold",
-      category: "SaaS",
-      country: "/images/country/country-04.svg",
-      cr: "Dashboard",
-      value: "13843",
+      date: "2025-03-04",
+      isPresent: true,
+      checkIn: "08:50 AM",
+      checkOut: "05:50 PM",
+      totalHours: 9,
     },
     {
-      id: 5,
-      name: "NextAdmin",
-      category: "Templates",
-      country: "/images/country/country-05.svg",
-      cr: "Dashboard",
-      value: "7523",
-    },
-    {
-      id: 6,
-      name: "Form Builder",
-      category: "Templates",
-      country: "/images/country/country-06.svg",
-      cr: "Dashboard",
-      value: "1,377",
-    },
-    {
-      id: 7,
-      name: "AyroUI",
-      category: "Templates",
-      country: "/images/country/country-07.svg",
-      cr: "Dashboard",
-      value: "599,00",
+      date: "2025-03-05",
+      isPresent: false,
+      checkIn: "-",
+      checkOut: "-",
+      totalHours: 0,
     },
   ];
 
-  handleFilter() {
-    console.log("Filter clicked");
-    // Add your filter logic here
-  }
-
-  handleSeeAll() {
-    console.log("See all clicked");
-    // Add your see all logic here
-  }
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin],
+    initialView: "dayGridMonth",
+    headerToolbar: {
+      left: "prev,next today",
+      center: "title",
+      right: "",
+    },
+    height: "auto",
+    eventContent: (arg: EventContentArg) => this.renderEventContent(arg),
+    events: [],
+  };
 
   ngOnInit(): void {
     const today = new Date();
@@ -88,6 +80,60 @@ export class AttendanceReportComponent implements OnInit {
 
     this.fromDate = this.formatedDate(oneMonthAgo);
     this.toDate = this.formatedDate(today);
+
+    this.loadCalendar();
+  }
+
+  loadCalendar(): void {
+    this.calculateSummary();
+    this.mapToCalendarEvents();
+  }
+
+  calculateSummary(): void {
+    this.totalPresentDays = this.attendanceData.filter(
+      (r) => r.isPresent,
+    ).length;
+    this.totalAbsentDays = this.attendanceData.filter(
+      (r) => !r.isPresent,
+    ).length;
+    this.totalHoursWorked = this.attendanceData.reduce(
+      (sum, r) => sum + r.totalHours,
+      0,
+    );
+  }
+
+  mapToCalendarEvents(): void {
+    const events = this.attendanceData.map((record) => ({
+      date: record.date,
+      backgroundColor: record.isPresent ? "#22c55e" : "#ef4444",
+      borderColor: record.isPresent ? "#16a34a" : "#dc2626",
+      textColor: "#ffffff",
+      extendedProps: {
+        isPresent: record.isPresent,
+        checkIn: record.checkIn,
+        checkOut: record.checkOut,
+        totalHours: record.totalHours,
+      },
+    }));
+
+    // ✅ Spread to trigger change detection
+    this.calendarOptions = { ...this.calendarOptions, events };
+  }
+
+  renderEventContent(arg: EventContentArg) {
+    const { isPresent, checkIn, checkOut, totalHours } =
+      arg.event.extendedProps;
+    return {
+      html: isPresent
+        ? `<div class="day-event present">
+             <span class="status">✅ Present</span>
+             <span class="time">🕘 ${checkIn} - ${checkOut}</span>
+             <span class="hours">⏱ ${totalHours}h</span>
+           </div>`
+        : `<div class="day-event absent">
+             <span class="status">❌ Absent</span>
+           </div>`,
+    };
   }
 
   formatedDate(date: Date): string {
@@ -97,8 +143,36 @@ export class AttendanceReportComponent implements OnInit {
   onFromDateChange(event: any) {}
   onToDateChange(event: any) {}
 
-  applyDateFilter() {
-    if(!this.fromDate || !this.toDate) return;
-    
+  applyDateFilter(): void {
+    if (!this.fromDate || !this.toDate) return;
+
+    // ✅ Assign to local const — TypeScript now knows they are string, not null
+    const fromDate = this.fromDate;
+    const toDate = this.toDate;
+
+    const filtered = this.attendanceData.filter((record) => {
+      if (!record.date) return false; //
+      const date = new Date(record.date);
+      return date >= new Date(fromDate) && date <= new Date(toDate);
+    });
+
+    this.totalPresentDays = filtered.filter((r) => r.isPresent).length;
+    this.totalAbsentDays = filtered.filter((r) => !r.isPresent).length;
+    this.totalHoursWorked = filtered.reduce((sum, r) => sum + r.totalHours, 0);
+
+    const events = filtered.map((record) => ({
+      date: record.date,
+      backgroundColor: record.isPresent ? "#22c55e" : "#ef4444",
+      borderColor: record.isPresent ? "#16a34a" : "#dc2626",
+      textColor: "#ffffff",
+      extendedProps: {
+        isPresent: record.isPresent,
+        checkIn: record.checkIn,
+        checkOut: record.checkOut,
+        totalHours: record.totalHours,
+      },
+    }));
+
+    this.calendarOptions = { ...this.calendarOptions, events };
   }
 }

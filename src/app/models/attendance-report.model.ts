@@ -1,4 +1,7 @@
 export interface AttendanceReportResponse {
-  date?: string;
-  value?: string;
+  date: string;
+  checkIn?: string;
+  checkOut?: string;
+  isPresent: boolean;
+  totalHours: number;
 }
