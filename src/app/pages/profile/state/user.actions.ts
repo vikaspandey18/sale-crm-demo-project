@@ -27,3 +27,7 @@ export const updateUserFailedAction = createAction(
   "[user] update user failed",
   props<{ error: string }>(),
 );
+
+export const removeUserAction = createAction(
+  "[user] removed data form store when logout",
+)

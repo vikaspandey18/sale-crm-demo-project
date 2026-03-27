@@ -1,34 +1,18 @@
 <div class="flex gap-3 mb-3">
-  <app-date-picker
-    id="fromDate"
-    label=""
-    [defaultDate]="fromDate ?? undefined"
-    (dateChange)="onFromDateChange($event)"
-  >
+  <app-date-picker id="fromDate" label="" [defaultDate]="fromDate ?? undefined" (dateChange)="onFromDateChange($event)">
   </app-date-picker>
 
-  <app-date-picker
-    id="toDate"
-    label=""
-    [defaultDate]="toDate ?? undefined"
-    (dateChange)="onToDateChange($event)"
-  >
+  <app-date-picker id="toDate" label="" [defaultDate]="toDate ?? undefined" (dateChange)="onToDateChange($event)">
   </app-date-picker>
 
-  <button
-    (click)="applyDateFilter()"
-    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300"
-  >
+  <button (click)="applyDateFilter()"
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">
     Apply
   </button>
 </div>
-<div
-  class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]"
->
+<div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
   <div class="px-4 pt-4 sm:px-6">
-    <div
-      class="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between"
-    >
+    <div class="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
           My Attendace
@@ -40,101 +24,101 @@
     <table class="w-full">
       <thead class="border-gray-100 border-y dark:border-white/[0.05]">
         <tr>
-          <th
-            scope="col"
-            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
-          >
-            Products
+          <th scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+            Date
           </th>
-          <th
-            scope="col"
-            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
-          >
-            Category
+          <th scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+            Check In
           </th>
-          <th
-            scope="col"
-            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
-          >
-            Country
+          <th scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+            Check Out
           </th>
-          <th
-            scope="col"
-            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
-          >
-            CR
+          <th scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+            Present/Absent
           </th>
-          <th
-            scope="col"
-            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
-          >
-            Value
+          <th scope="col"
+            class="px-4 py-3 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+            Total Hours
           </th>
         </tr>
       </thead>
-      <!-- <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
-        @for (product of tableData; track $index) {
-          <tr>
-            <td
-              class="px-4 py-3 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
-            >
-              {{ product.name }}
-            </td>
-            <td
-              class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400"
-            >
-              {{ product.category }}
-            </td>
-            <td
-              class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400"
-            >
-              <div class="w-5 h-5 overflow-hidden rounded-full">
-                <img
-                  width="20"
-                  height="20"
-                  [src]="product.country"
-                  class="w-5 h-5 rounded-full"
-                  alt="country"
-                />
-              </div>
-            </td>
-            <td
-              class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400"
-            >
-              {{ product.cr }}
-            </td>
-            <td class="px-4 text-theme-sm sm:px-6 text-start text-success-600">
-              ${{ product.value }}
-            </td>
-          </tr>
+
+      <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
+
+        @if (loading$ | async) {
+
+        <!-- 🔄 Loading -->
+        <tr>
+          <td colspan="5" class="text-center py-6">
+            <div class="flex justify-center items-center">
+              <div class="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+            </div>
+          </td>
+        </tr>
+
+        } @else if (error$ | async; as error) {
+
+        <!-- ❌ Error -->
+        <tr>
+          <td colspan="5" class="text-center py-4 text-red-500">
+            {{ error }}
+          </td>
+        </tr>
+
+        } @else if (attendanceData$ | async; as attendanceData) {
+
+        @if (attendanceData.length > 0) {
+
+        @for (attendance of attendanceData; track $index) {
+        <tr>
+          <td class="px-4 py-3 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+            {{ attendance.date }}
+          </td>
+
+          <td class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400">
+            {{ attendance.checkIn || '-' }}
+          </td>
+
+          <td class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400">
+            {{ attendance.checkOut || '-' }}
+          </td>
+
+          <!-- 🎨 Status Badge -->
+          <td class="px-4 text-theme-sm sm:px-6 text-start">
+            <span [ngClass]="{
+              'text-green-600': attendance.isPresent === 'Present',
+              'text-red-600': attendance.isPresent === 'Absent',
+              'text-yellow-600': attendance.isPresent === 'Leave',
+              'text-blue-600': attendance.isPresent === 'Holiday'
+            }">
+              {{ attendance.isPresent }}
+            </span>
+          </td>
+
+          <td class="px-4 py-3 text-gray-500 sm:px-6 text-start text-theme-sm dark:text-gray-400">
+            {{ attendance.totalHours || '00:00:00' }}
+          </td>
+        </tr>
         }
-      </tbody> -->
+
+        } @else {
+
+        <!-- 📭 Empty -->
+        <tr>
+          <td colspan="5" class="text-center py-4 text-gray-500">
+            No attendance found
+          </td>
+        </tr>
+
+        }
+
+        }
+
+      </tbody>
     </table>
   </div>
-</div>
-
-<!-- attendance-report.component.html -->
-<div class="attendance-wrapper">
-
-  <!-- Summary Cards -->
-  <div class="summary-cards">
-    <div class="card green">
-      <span class="count">{{ totalPresentDays }}</span>
-      <span class="label">✅ Present Days</span>
-    </div>
-    <div class="card red">
-      <span class="count">{{ totalAbsentDays }}</span>
-      <span class="label">❌ Absent Days</span>
-    </div>
-    <div class="card blue">
-      <span class="count">{{ totalHoursWorked }}h</span>
-      <span class="label">⏱ Total Hours</span>
-    </div>
-  </div>
-
-  <!-- Calendar -->
-  <div class="calendar-container">
-    <full-calendar [options]="calendarOptions"></full-calendar>
-  </div>
-
 </div>

@@ -2,6 +2,6 @@ export interface AttendanceReportResponse {
   date: string;
   checkIn?: string;
   checkOut?: string;
-  isPresent: boolean;
+  isPresent: "Present" | "Absent" | "Holiday" | "Leave";
   totalHours: number;
 }

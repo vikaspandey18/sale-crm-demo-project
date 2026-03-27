@@ -1,10 +1,18 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./user.state";
-import { loadUserFailedAction, loadUserStartAction, loadUserSuccessAction, updateUserFailedAction, updateUserStartAction, updateUserSuccessAction } from "./user.actions";
+import {
+  loadUserFailedAction,
+  loadUserStartAction,
+  loadUserSuccessAction,
+  removeUserAction,
+  updateUserFailedAction,
+  updateUserStartAction,
+  updateUserSuccessAction,
+} from "./user.actions";
 
 export const userReducer = createReducer(
   initialState,
-  
+
   //Load User
   on(loadUserStartAction, (state, action) => {
     return {
@@ -48,4 +56,5 @@ export const userReducer = createReducer(
     loading: false,
     error: action.error,
   })),
+  on(removeUserAction, (state, action) => initialState),
 );

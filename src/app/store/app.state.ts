@@ -35,6 +35,9 @@ import { SharedEffect } from "../shared/state/shared.effects";
 import { UserState } from "../pages/profile/state/user.state";
 import { userReducer } from "../pages/profile/state/user.reducer";
 import { UserEffect } from "../pages/profile/state/user.effects";
+import { AttendanceReportState } from "../pages/reports/attendance-report/state/attedance-report.state";
+import { attendanceReportReducer } from "../pages/reports/attendance-report/state/attedance-report.reducer";
+import { AttendaceResportEffect } from "../pages/reports/attendance-report/state/attedance-report.effects";
 
 export interface AppState {
   auth: AuthState;
@@ -50,6 +53,7 @@ export interface AppState {
   markAttendance: AttendanceState;
   shared: SharedState;
   user: UserState;
+  attendanceReport: AttendanceReportState;
 }
 
 export const AppReducer = {
@@ -66,6 +70,7 @@ export const AppReducer = {
   markAttendance: markAttendanceReducer,
   shared: sharedReducer,
   user: userReducer,
+  attendanceReport: attendanceReportReducer,
 };
 
 export const AppEffect = [
@@ -81,4 +86,5 @@ export const AppEffect = [
   MarkAttendaceEffect,
   SharedEffect,
   UserEffect,
+  AttendaceResportEffect,
 ];

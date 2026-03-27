@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AttendanceReportState } from "./attedance-report.state";
 
 const attendanceReportSelect =
-  createFeatureSelector<AttendanceReportState>("attendaceReport");
+  createFeatureSelector<AttendanceReportState>("attendanceReport");
 
 export const selectLoadingAttendaceReport = createSelector(
   attendanceReportSelect,

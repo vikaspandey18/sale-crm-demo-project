@@ -8,7 +8,7 @@ import { AppState } from "../../../../store/app.state";
 import { getAuthName } from "../../auth/state/auth.selectors";
 import { logoutAction } from "../../auth/state/auth.actions";
 import { Observable } from "rxjs";
-import { loadUserStartAction } from "../../../../pages/profile/state/user.actions";
+import { loadUserStartAction, removeUserAction } from "../../../../pages/profile/state/user.actions";
 import { UserRespone } from "../../../../models/user.model";
 import { selectUserData } from "../../../../pages/profile/state/user.selectors";
 
@@ -49,5 +49,6 @@ export class UserDropdownComponent implements OnInit {
 
   onSignout() {
     this.store.dispatch(logoutAction());
+    this.store.dispatch(removeUserAction());
   }
 }
