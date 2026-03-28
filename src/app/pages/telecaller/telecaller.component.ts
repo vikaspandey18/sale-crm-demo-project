@@ -52,6 +52,7 @@ export class TelecallerComponent implements OnInit {
       valueGetter: "node.rowIndex + 1",
       width: 100,
       pinned: "left",
+      filter: false,
     },
     {
       headerName: "Actions",
