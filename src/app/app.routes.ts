@@ -29,6 +29,7 @@ import { OrderReportComponent } from "./pages/reports/order-report/order-report.
 import { CollectionReportComponent } from "./pages/reports/collection-report/collection-report.component";
 import { AttendanceReportComponent } from "./pages/reports/attendance-report/attendance-report.component";
 import { authGuard } from "./shared/components/auth/services/auth.guard";
+import { FollowupsComponent } from "./pages/followups/followups.component";
 
 export const routes: Routes = [
   {
@@ -162,6 +163,11 @@ export const routes: Routes = [
         path: "attendance-report",
         component: AttendanceReportComponent,
         title: "Attendance Report",
+      },
+      {
+        path: "followup",
+        component: FollowupsComponent,
+        title: "Follow Up",
       },
     ],
   },

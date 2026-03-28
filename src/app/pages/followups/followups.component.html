@@ -1,0 +1,15 @@
+@if (error$ | async; as error) {
+<div class="alertMessage">
+    <app-alert variant="error" title="Failed To Fetch Telecaller Customer" [message]="error" />
+</div>
+}
+
+<ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: calc(100vh - 60px);" [theme]="theme"
+    [rowData]="customers$ | async" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
+    [paginationPageSize]="100" [paginationPageSizeSelector]="[100, 250, 500, 1000]" [loading]="loading$ | async"
+    (cellValueChanged)="onCellValueChanged($event)">
+</ag-grid-angular>
+
+@if (selectedCustomer) {
+<app-update-telecaller-model [selectedCustomer]="selectedCustomer" />
+}
