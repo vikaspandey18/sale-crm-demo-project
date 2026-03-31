@@ -22,6 +22,7 @@ import {
   getTelecallerErorrState,
   getTelecallerLoadingState,
 } from "../telecaller/state/telecaller.selectors";
+import { loadFollowUpCustomerStartAction } from "./state/followup.actions";
 
 @Component({
   selector: "app-followups",
@@ -103,10 +104,8 @@ export class FollowupsComponent {
   };
 
   ngOnInit(): void {
-    this.store.dispatch(getTelecallerCustomerStartAction());
+    this.store.dispatch(loadFollowUpCustomerStartAction());
 
-    // this.customers$ = this.store.select(getTelecallerCustomer);
-    // Clone data to avoid NgRx immutability error
     this.customers$ = this.store
       .select(getTelecallerCustomer)
       .pipe(map((customers) => customers.map((c) => ({ ...c }))));
