@@ -38,6 +38,9 @@ import { UserEffect } from "../pages/profile/state/user.effects";
 import { AttendanceReportState } from "../pages/reports/attendance-report/state/attedance-report.state";
 import { attendanceReportReducer } from "../pages/reports/attendance-report/state/attedance-report.reducer";
 import { AttendaceResportEffect } from "../pages/reports/attendance-report/state/attedance-report.effects";
+import { FollowUpState } from "../pages/followups/state/followup.state";
+import { followUpReducer } from "../pages/followups/state/followup.reducer";
+import { FollowUpEffect } from "../pages/followups/state/followup.effects";
 
 export interface AppState {
   auth: AuthState;
@@ -54,6 +57,7 @@ export interface AppState {
   shared: SharedState;
   user: UserState;
   attendanceReport: AttendanceReportState;
+  followup: FollowUpState;
 }
 
 export const AppReducer = {
@@ -71,6 +75,7 @@ export const AppReducer = {
   shared: sharedReducer,
   user: userReducer,
   attendanceReport: attendanceReportReducer,
+  followUp: followUpReducer,
 };
 
 export const AppEffect = [
@@ -87,4 +92,5 @@ export const AppEffect = [
   SharedEffect,
   UserEffect,
   AttendaceResportEffect,
+  FollowUpEffect,
 ];
