@@ -16,7 +16,7 @@ export const followUpReducer = createReducer(
       ...state,
       loading: true,
       error: null,
-      customers: [],
+      
     };
   }),
   on(loadFollowUpCustomerSuccessAction, (state, action) => {
@@ -32,7 +32,6 @@ export const followUpReducer = createReducer(
       ...state,
       loading: false,
       error: action.error,
-      customers: [],
     };
   }),
   on(updateFollowUpCustomerStartAction, (state, action) => {
@@ -40,7 +39,6 @@ export const followUpReducer = createReducer(
       ...state,
       loading: true,
       error: null,
-      customers: [],
     };
   }),
   on(updateFollowUpCustomerSuccessAction, (state, action) => {
@@ -58,7 +56,6 @@ export const followUpReducer = createReducer(
       ...state,
       loading: false,
       error: action.error,
-      customers: [],
     };
   }),
 );

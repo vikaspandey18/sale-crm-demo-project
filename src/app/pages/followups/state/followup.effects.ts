@@ -5,6 +5,7 @@ import {
   loadFollowUpCustomerFailedAction,
   loadFollowUpCustomerStartAction,
   loadFollowUpCustomerSuccessAction,
+  updateFollowUpCustomerFailedAction,
   updateFollowUpCustomerStartAction,
   updateFollowUpCustomerSuccessAction,
 } from "./followup.actions";
@@ -57,7 +58,7 @@ export class FollowUpEffect {
             }),
             catchError((error) => {
               return of(
-                loadFollowUpCustomerFailedAction({
+                updateFollowUpCustomerFailedAction({
                   error: error.error.message || error.message,
                 }),
               );
