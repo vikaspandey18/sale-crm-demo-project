@@ -17,4 +17,17 @@ export class FollowupService {
     const url = `${this.baseUrl}/customer/getFollowUpCustomer.php`;
     return this.http.get<ApiResponse<FollowUpResponse[]>>(url);
   }
+
+  updateCustomer(
+    id: string,
+    field: string,
+    value: any,
+  ): Observable<ApiResponse<FollowUpResponse>> {
+    const url = `${this.baseUrl}/customer/updateFollowUpCustomer.php/${id}`;
+    const body = {
+      field,
+      value,
+    };
+    return this.http.put<ApiResponse<FollowUpResponse>>(url, body);
+  }
 }

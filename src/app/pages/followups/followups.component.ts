@@ -1,4 +1,4 @@
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { AgGridAngular } from "ag-grid-angular";
@@ -13,16 +13,16 @@ import {
   GridApi,
   themeAlpine,
 } from "ag-grid-community";
-import {
-  getTelecallerCustomerStartAction,
-  updateTelecallerCustomerStartAction,
-} from "../telecaller/state/telecaller.actions";
-import {
-  getTelecallerCustomer,
-  getTelecallerErorrState,
-  getTelecallerLoadingState,
-} from "../telecaller/state/telecaller.selectors";
+import { updateTelecallerCustomerStartAction } from "../telecaller/state/telecaller.actions";
 import { loadFollowUpCustomerStartAction } from "./state/followup.actions";
+import { FollowUpResponse } from "../../models/followup.model";
+import {
+  selectFollowUpCustomer,
+  selectFollowUpErrorCustomer,
+  selectFollowUpLoadingCustomer,
+} from "./state/followup.selectors";
+
+type Tab = "today" | "previous" | "upcomming";
 
 @Component({
   selector: "app-followups",
@@ -31,23 +31,44 @@ import { loadFollowUpCustomerStartAction } from "./state/followup.actions";
     AlertComponent,
     AgGridAngular,
     UpdateTelecallerModelComponent,
+    CommonModule,
   ],
   templateUrl: "./followups.component.html",
   styleUrl: "./followups.component.css",
 })
 export class FollowupsComponent {
   private store: Store = inject(Store<AppState>);
-  customers$!: Observable<TelecallerModel[] | []>;
+
+  todayCustomers$!: Observable<FollowUpResponse[]>;
+  previousCustomers$!: Observable<FollowUpResponse[]>;
+  upcomingCustomers$!: Observable<FollowUpResponse[]>;
+
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
-  private gridApi!: GridApi<TelecallerModel>;
+  private gridApi!: GridApi<FollowUpResponse>;
 
   public theme = themeAlpine;
 
-  selectedCustomer!: TelecallerModel;
+  selectedCustomer!: FollowUpResponse;
 
-  columnDefs: ColDef<TelecallerModel>[] = [
+  activeTab: Tab = "today";
+
+  tabs: { id: Tab; label: string }[] = [
+    { id: "today", label: "Today" },
+    { id: "previous", label: "Previous" },
+    { id: "upcomming", label: "Upcomming" },
+  ];
+
+  switchTab(tab: Tab): void {
+    this.activeTab = tab;
+  }
+
+  isActive(tab: Tab): boolean {
+    return this.activeTab === tab;
+  }
+
+  columnDefs: ColDef<FollowUpResponse>[] = [
     {
       headerName: "No",
       valueGetter: "node.rowIndex + 1",
@@ -73,10 +94,12 @@ export class FollowupsComponent {
         }
       },
     },
+
     {
       field: "customer_name",
       headerName: "Customer Name",
     },
+    { field: "journeryDate", headerName: "Journery Date" },
     { field: "groups", headerName: "Groups" },
     { field: "telephone_no", headerName: "Telephone No" },
     { field: "incharge_person_name", headerName: "Incharge Person Name" },
@@ -106,15 +129,28 @@ export class FollowupsComponent {
   ngOnInit(): void {
     this.store.dispatch(loadFollowUpCustomerStartAction());
 
-    this.customers$ = this.store
-      .select(getTelecallerCustomer)
-      .pipe(map((customers) => customers.map((c) => ({ ...c }))));
-    this.loading$ = this.store.select(getTelecallerLoadingState);
-    this.error$ = this.store.select(getTelecallerErorrState);
+    const today = new Date().toISOString().split("T")[0];
+
+    const all$ = this.store.select(selectFollowUpCustomer);
+
+    this.todayCustomers$ = all$.pipe(
+      map((list) => list.filter((c) => c.journeryDate === today)),
+    );
+
+    this.previousCustomers$ = all$.pipe(
+      map((list) => list.filter((c) => c.journeryDate < today)),
+    );
+
+    this.upcomingCustomers$ = all$.pipe(
+      map((list) => list.filter((c) => c.journeryDate > today)),
+    );
+
+    this.loading$ = this.store.select(selectFollowUpLoadingCustomer);
+    this.error$ = this.store.select(selectFollowUpErrorCustomer);
   }
 
   // Fires when any cell value is changed
-  onCellValueChanged(event: CellValueChangedEvent<TelecallerModel>) {
+  onCellValueChanged(event: CellValueChangedEvent<FollowUpResponse>) {
     if (event.oldValue === event.newValue) return;
 
     const field = event.colDef.field;

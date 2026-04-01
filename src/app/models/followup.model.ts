@@ -1,5 +1,7 @@
 export interface FollowUpResponse {
   id?: string;
+  journeryId?: string;
+  journeryDate: string;
   groups?: string;
   employee_group?: string;
   customer_name?: string;
