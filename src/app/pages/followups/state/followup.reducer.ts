@@ -4,6 +4,9 @@ import {
   loadFollowUpCustomerFailedAction,
   loadFollowUpCustomerStartAction,
   loadFollowUpCustomerSuccessAction,
+  updateFollowUpCustomerFailedAction,
+  updateFollowUpCustomerStartAction,
+  updateFollowUpCustomerSuccessAction,
 } from "./followup.actions";
 
 export const followUpReducer = createReducer(
@@ -25,6 +28,32 @@ export const followUpReducer = createReducer(
     };
   }),
   on(loadFollowUpCustomerFailedAction, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      error: action.error,
+      customers: [],
+    };
+  }),
+  on(updateFollowUpCustomerStartAction, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+      customers: [],
+    };
+  }),
+  on(updateFollowUpCustomerSuccessAction, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      error: null,
+      customers: state.customers.map((c) =>
+        c.id === action.id ? { ...c, [action.field]: action.value } : c,
+      ),
+    };
+  }),
+  on(updateFollowUpCustomerFailedAction, (state, action) => {
     return {
       ...state,
       loading: false,

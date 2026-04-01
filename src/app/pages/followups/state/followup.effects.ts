@@ -5,8 +5,10 @@ import {
   loadFollowUpCustomerFailedAction,
   loadFollowUpCustomerStartAction,
   loadFollowUpCustomerSuccessAction,
+  updateFollowUpCustomerStartAction,
+  updateFollowUpCustomerSuccessAction,
 } from "./followup.actions";
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of, switchMap } from "rxjs";
 
 export class FollowUpEffect {
   private actions$ = inject(Actions);
@@ -30,6 +32,37 @@ export class FollowUpEffect {
             );
           }),
         );
+      }),
+    );
+  });
+
+  updateCustomer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateFollowUpCustomerStartAction),
+      mergeMap((action) => {
+        return this.followUpService
+          .updateCustomer(
+            action.id,
+            action.field,
+            action.value,
+            action.journeryId,
+          )
+          .pipe(
+            map((response) => {
+              return updateFollowUpCustomerSuccessAction({
+                id: action.id,
+                field: action.field,
+                value: action.value,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                loadFollowUpCustomerFailedAction({
+                  error: error.error.message || error.message,
+                }),
+              );
+            }),
+          );
       }),
     );
   });

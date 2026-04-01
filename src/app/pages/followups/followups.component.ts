@@ -1,20 +1,21 @@
 import { AsyncPipe, CommonModule } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { AgGridAngular } from "ag-grid-angular";
 import { UpdateTelecallerModelComponent } from "../telecaller/update-telecaller-model/update-telecaller-model.component";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
 import { map, Observable } from "rxjs";
-import { TelecallerModel } from "../../models/telecaller.model";
 import {
   CellValueChangedEvent,
   ColDef,
   GridApi,
   themeAlpine,
 } from "ag-grid-community";
-import { updateTelecallerCustomerStartAction } from "../telecaller/state/telecaller.actions";
-import { loadFollowUpCustomerStartAction } from "./state/followup.actions";
+import {
+  loadFollowUpCustomerStartAction,
+  updateFollowUpCustomerStartAction,
+} from "./state/followup.actions";
 import { FollowUpResponse } from "../../models/followup.model";
 import {
   selectFollowUpCustomer,
@@ -36,7 +37,7 @@ type Tab = "today" | "previous" | "upcomming";
   templateUrl: "./followups.component.html",
   styleUrl: "./followups.component.css",
 })
-export class FollowupsComponent {
+export class FollowupsComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
 
   todayCustomers$!: Observable<FollowUpResponse[]>;
@@ -131,7 +132,11 @@ export class FollowupsComponent {
 
     const today = new Date().toISOString().split("T")[0];
 
-    const all$ = this.store.select(selectFollowUpCustomer);
+    // const all$ = this.store.select(selectFollowUpCustomer);
+
+    const all$ = this.store.select(selectFollowUpCustomer).pipe(
+      map((list) => list.map((c) => ({ ...c }))), // ✅ unfreezes each object
+    );
 
     this.todayCustomers$ = all$.pipe(
       map((list) => list.filter((c) => c.journeryDate === today)),
@@ -161,10 +166,11 @@ export class FollowupsComponent {
 
     // Dispatch update to store
     this.store.dispatch(
-      updateTelecallerCustomerStartAction({
+      updateFollowUpCustomerStartAction({
         id: event.data.id!,
         field: field,
         value: event.newValue,
+        journeryId: event.data.journeryId!,
       }),
     );
   }

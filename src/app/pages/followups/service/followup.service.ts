@@ -22,11 +22,13 @@ export class FollowupService {
     id: string,
     field: string,
     value: any,
+    journeryId: string,
   ): Observable<ApiResponse<FollowUpResponse>> {
     const url = `${this.baseUrl}/customer/updateFollowUpCustomer.php/${id}`;
     const body = {
       field,
       value,
+      journeryId,
     };
     return this.http.put<ApiResponse<FollowUpResponse>>(url, body);
   }
