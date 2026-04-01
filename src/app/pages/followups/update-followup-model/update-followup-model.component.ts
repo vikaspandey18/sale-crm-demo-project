@@ -1,18 +1,34 @@
-import { Component, inject, Input, OnInit, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { ModalComponent } from "../../../shared/components/ui/modal/modal.component";
 import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 import { AlertComponent } from "../../../shared/components/ui/alert/alert.component";
 import { AsyncPipe } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../store/app.state";
-import { TelecallerService } from "../../telecaller/services/telecaller.service";
 import { ModalService } from "../../../shared/services/modal.service";
-import { TelecallerModel } from "../../../models/telecaller.model";
 import { ProductResponse } from "../../../models/products.model";
 import { Observable } from "rxjs";
 import { getProductStartAction } from "../../../shared/state/shared.actions";
-import { getProductErrorSelector, getProductLoadingSelector, getProductSelector } from "../../../shared/state/shared.selectors";
+import {
+  getProductErrorSelector,
+  getProductLoadingSelector,
+  getProductSelector,
+} from "../../../shared/state/shared.selectors";
+import { FollowupService } from "../service/followup.service";
+import { FollowUpResponse } from "../../../models/followup.model";
 
 @Component({
   selector: "app-update-followup-model",
@@ -26,12 +42,12 @@ import { getProductErrorSelector, getProductLoadingSelector, getProductSelector 
   templateUrl: "./update-followup-model.component.html",
   styleUrl: "./update-followup-model.component.css",
 })
-export class UpdateFollowupModelComponent implements OnInit {
+export class UpdateFollowupModelComponent implements OnInit, OnChanges {
   private store = inject(Store<AppState>);
-  private teleService = inject(TelecallerService);
+  private followUpService = inject(FollowupService);
   constructor(public modal: ModalService) {}
 
-  @Input({ required: true }) selectedCustomer!: TelecallerModel;
+  @Input({ required: true }) selectedCustomer!: FollowUpResponse;
 
   isOpen = false;
   openModal() {
@@ -80,6 +96,7 @@ export class UpdateFollowupModelComponent implements OnInit {
       leadGrade: new FormControl(""),
       paymentStatus: new FormControl(""),
       followupResponse: new FormControl(""),
+      journeryId: new FormControl(this.selectedCustomer?.journeryId),
     });
   }
 
@@ -105,7 +122,7 @@ export class UpdateFollowupModelComponent implements OnInit {
   handleSave() {
     const telData = this.telecallerForm.value;
 
-    this.teleService.addRecord(telData).subscribe({
+    this.followUpService.addRecord(telData).subscribe({
       next: (response) => {
         this.apiSuccessResponse = response.message;
         this.telecallerForm.reset();

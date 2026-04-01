@@ -4,6 +4,12 @@ import { environment } from "../../../../environments/environment";
 import { Observable } from "rxjs";
 import { ApiResponse } from "../../../models/api-response.model";
 import { FollowUpResponse } from "../../../models/followup.model";
+import { TeleRequest } from "../../../models/tele-update.model";
+
+interface PlainApiRespone {
+  status: string;
+  message: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -31,5 +37,10 @@ export class FollowupService {
       journeryId,
     };
     return this.http.put<ApiResponse<FollowUpResponse>>(url, body);
+  }
+
+  addRecord(teleData: TeleRequest): Observable<PlainApiRespone> {
+    const url = `${this.baseUrl}/customer/addFollowup.php`;
+    return this.http.post<PlainApiRespone>(url, teleData);
   }
 }

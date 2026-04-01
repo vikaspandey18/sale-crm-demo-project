@@ -2,7 +2,6 @@ import { AsyncPipe, CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { AgGridAngular } from "ag-grid-angular";
-import { UpdateTelecallerModelComponent } from "../telecaller/update-telecaller-model/update-telecaller-model.component";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
 import { map, Observable } from "rxjs";
@@ -22,6 +21,7 @@ import {
   selectFollowUpErrorCustomer,
   selectFollowUpLoadingCustomer,
 } from "./state/followup.selectors";
+import { UpdateFollowupModelComponent } from "./update-followup-model/update-followup-model.component";
 
 type Tab = "today" | "previous" | "upcomming";
 
@@ -31,8 +31,8 @@ type Tab = "today" | "previous" | "upcomming";
     AsyncPipe,
     AlertComponent,
     AgGridAngular,
-    UpdateTelecallerModelComponent,
     CommonModule,
+    UpdateFollowupModelComponent,
   ],
   templateUrl: "./followups.component.html",
   styleUrl: "./followups.component.css",
@@ -67,6 +67,12 @@ export class FollowupsComponent implements OnInit {
 
   isActive(tab: Tab): boolean {
     return this.activeTab === tab;
+  }
+
+  getRowId = (params: any) => params.data.id;
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
   }
 
   columnDefs: ColDef<FollowUpResponse>[] = [
