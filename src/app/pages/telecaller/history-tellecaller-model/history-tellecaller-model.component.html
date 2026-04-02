@@ -1,1 +1,11 @@
-<p>history-tellecaller-model works!</p>
+<!-- {{ selectedCustomer | json }} -->
+<!-- Modal -->
+<app-modal [isOpen]="isOpen" (close)="closeModal()" className="max-w-[700px] m-4">
+    <div
+        class="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-2 dark:bg-gray-900 lg:p-11">
+        <h5 class="mb-5 text-md font-medium text-gray-600 dark:text-white/90 lg:mb-6">
+            Customer - History
+        </h5>
+        <p>Pending....</p>
+    </div>
+</app-modal>

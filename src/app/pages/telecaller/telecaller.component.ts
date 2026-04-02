@@ -22,6 +22,8 @@ import { AsyncPipe } from "@angular/common";
 import { AgGridAngular } from "ag-grid-angular";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { UpdateTelecallerModelComponent } from "./update-telecaller-model/update-telecaller-model.component";
+import { DetailTellecallerModelComponent } from "./detail-tellecaller-model/detail-tellecaller-model.component";
+import { HistoryTellecallerModelComponent } from "./history-tellecaller-model/history-tellecaller-model.component";
 
 @Component({
   selector: "app-telecaller",
@@ -30,6 +32,8 @@ import { UpdateTelecallerModelComponent } from "./update-telecaller-model/update
     AlertComponent,
     AgGridAngular,
     UpdateTelecallerModelComponent,
+    DetailTellecallerModelComponent,
+    HistoryTellecallerModelComponent,
   ],
   templateUrl: "./telecaller.component.html",
   styleUrl: "./telecaller.component.css",
@@ -45,6 +49,8 @@ export class TelecallerComponent implements OnInit {
   public theme = themeAlpine;
 
   selectedCustomer!: TelecallerModel;
+  detailCustomer!: TelecallerModel;
+  historyCustomer!: TelecallerModel;
 
   columnDefs: ColDef<TelecallerModel>[] = [
     {
@@ -85,7 +91,7 @@ export class TelecallerComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.selectedCustomer = params.data;
+          this.detailCustomer = params.data;
           // this.openModal(params.data);
         }
       },
@@ -103,7 +109,7 @@ export class TelecallerComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.selectedCustomer = params.data;
+          this.historyCustomer = params.data;
           // this.openModal(params.data);
         }
       },
