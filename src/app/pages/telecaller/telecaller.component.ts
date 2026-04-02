@@ -50,19 +50,55 @@ export class TelecallerComponent implements OnInit {
     {
       headerName: "No",
       valueGetter: "node.rowIndex + 1",
-      width: 100,
+      width: 80,
       pinned: "left",
       filter: false,
     },
     {
-      headerName: "Actions",
-      width: 120,
+      headerName: "Update",
+      width: 100,
       filter: false,
       editable: false,
-      pinned: "left",
+      // pinned: "left",
       cellRenderer: () => {
         return `
-          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-4 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Update</button>
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Update</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.selectedCustomer = params.data;
+          // this.openModal(params.data);
+        }
+      },
+    },
+    {
+      headerName: "Detail",
+      width: 90,
+      filter: false,
+      editable: false,
+      // pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Detail</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.selectedCustomer = params.data;
+          // this.openModal(params.data);
+        }
+      },
+    },
+    {
+      headerName: "History",
+      width: 100,
+      filter: false,
+      editable: false,
+      // pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">History</button>
         `;
       },
       onCellClicked: (params) => {
