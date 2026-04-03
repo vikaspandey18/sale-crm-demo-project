@@ -73,8 +73,10 @@ export class TelecallerComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.selectedCustomer = params.data;
-          // this.openModal(params.data);
+          this.selectedCustomer = null!;
+          setTimeout(() => {
+            this.selectedCustomer = { ...params.data };
+          }, 0);
         }
       },
     },
@@ -91,8 +93,10 @@ export class TelecallerComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.detailCustomer = params.data;
-          // this.openModal(params.data);
+          this.detailCustomer = null!; // reset first
+          setTimeout(() => {
+            this.detailCustomer = { ...params.data }; // new reference
+          }, 0);
         }
       },
     },
@@ -109,8 +113,10 @@ export class TelecallerComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.historyCustomer = params.data;
-          // this.openModal(params.data);
+          this.historyCustomer = null!;
+          setTimeout(() => {
+            this.historyCustomer = { ...params.data };
+          }, 0);
         }
       },
     },
