@@ -5,6 +5,7 @@ import { ApiResponse } from "../../../models/api-response.model";
 import { TelecallerModel } from "../../../models/telecaller.model";
 import { environment } from "../../../../environments/environment";
 import { TeleRequest } from "../../../models/tele-update.model";
+import { DarResponse } from "../../../models/dar.model";
 
 interface PlainApiRespone {
   status: string;
@@ -41,5 +42,11 @@ export class TelecallerService {
   addRecord(teleData: TeleRequest): Observable<PlainApiRespone> {
     const url = `${this.apiUrl}/customer/addTeleRecord.php`;
     return this.http.post<PlainApiRespone>(url, teleData);
+  }
+
+  fetchCustomerHistory(id: string): Observable<ApiResponse<DarResponse[]>> {
+    const url = `${this.apiUrl}/dar/customerDarDetail.php`;
+    const body = { customerId: id };
+    return this.http.post<ApiResponse<DarResponse[]>>(url, body);
   }
 }
