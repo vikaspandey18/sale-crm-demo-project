@@ -30,6 +30,8 @@ import { CollectionReportComponent } from "./pages/reports/collection-report/col
 import { AttendanceReportComponent } from "./pages/reports/attendance-report/attendance-report.component";
 import { authGuard } from "./shared/components/auth/services/auth.guard";
 import { FollowupsComponent } from "./pages/followups/followups.component";
+import { AddCustomerComponent } from "./pages/customers/add-customer/add-customer.component";
+import { DeleteCustomerComponent } from "./pages/customers/delete-customer/delete-customer.component";
 
 export const routes: Routes = [
   {
@@ -168,6 +170,16 @@ export const routes: Routes = [
         path: "followup",
         component: FollowupsComponent,
         title: "Follow Up",
+      },
+      {
+        path: "add-customer",
+        component: AddCustomerComponent,
+        title: "Add Customer",
+      },
+      {
+        path: "delete-customer",
+        component: DeleteCustomerComponent,
+        title: "Delete Customer",
       },
     ],
   },

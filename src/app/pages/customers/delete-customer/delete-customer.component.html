@@ -1,1 +1,22 @@
-<p>delete-customer works!</p>
+@if (errorCustomer$ | async; as error) {
+  <div class="alerts">
+    <app-alert
+      variant="error"
+      title="Customer Fetch Failed"
+      [message]="error"
+    />
+  </div>
+}
+
+<ag-grid-angular
+  class="ag-theme-quartz"
+  style="width: 100%; height: 700px"
+  [theme]="theme"
+  [rowData]="customers$ | async"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [pagination]="true"
+  [paginationPageSize]="100"
+  [loading]="loadingCustomer$ | async"
+>
+</ag-grid-angular>
