@@ -1,3 +1,15 @@
+<div class="text-right mb-2">
+  <a
+    routerLink="/add-customer"
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 mr-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300"
+    >Add Customer</a
+  >
+  <a
+    routerLink="/delete-customer"
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300"
+    >Delete Customer</a
+  >
+</div>
 @if (errorCustomer$ | async; as error) {
   <div class="alerts">
     <app-alert
@@ -23,4 +35,11 @@
 
 @if (selectedCustomer) {
   <app-update-india-mart-model [selectedCustomer]="selectedCustomer" />
+}
+
+@if (detailCustomer) {
+  <app-detail-indiamart-model [detailCustomer]="detailCustomer" />
+}
+@if (historyCustomer) {
+  <app-history-indiamart-model [historyCustomer]="historyCustomer" />
 }

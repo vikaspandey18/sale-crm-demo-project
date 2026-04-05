@@ -1,5 +1,5 @@
 export interface IndiaMartCustomer {
-  id: string;
+  id?: string;
   groups?: string;
   employee_group?: string;
   customer_name?: string;
@@ -20,4 +20,6 @@ export interface IndiaMartCustomer {
   india_mart_employee_group?: string;
   state?: string;
   sources?: string;
+  types?: string;
+  status?: string;
 }
