@@ -12,11 +12,11 @@ import { AppState } from "../../../store/app.state";
 import { TelecallerService } from "../services/telecaller.service";
 import { ModalService } from "../../../shared/services/modal.service";
 import { DarResponse } from "../../../models/dar.model";
-import { DatePipe, UpperCasePipe } from "@angular/common";
+import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
 
 @Component({
   selector: "app-history-tellecaller-model",
-  imports: [ModalComponent, UpperCasePipe,DatePipe],
+  imports: [ModalComponent, UpperCasePipe, DatePipe, CurrencyPipe],
   templateUrl: "./history-tellecaller-model.component.html",
   styleUrl: "./history-tellecaller-model.component.css",
 })
