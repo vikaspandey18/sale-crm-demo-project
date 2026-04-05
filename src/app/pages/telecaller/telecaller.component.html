@@ -1,22 +1,48 @@
-@if (error$ | async; as error) {
-<div class="alertMessage">
-  <app-alert variant="error" title="Failed To Fetch Telecaller Customer" [message]="error" />
+<div class="text-right mb-2">
+  <a
+    routerLink=""
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 mr-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300"
+    >Add Customer</a
+  >
+  <a
+    routerLink=""
+    class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300"
+    >Delete Customer</a
+  >
 </div>
+
+@if (error$ | async; as error) {
+  <div class="alertMessage">
+    <app-alert
+      variant="error"
+      title="Failed To Fetch Telecaller Customer"
+      [message]="error"
+    />
+  </div>
 }
 
-<ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: 700px" [theme]="theme"
-  [rowData]="customers$ | async" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
-  [paginationPageSize]="100" [paginationPageSizeSelector]="[100, 250, 500, 1000]" [loading]="loading$ | async"
-  (cellValueChanged)="onCellValueChanged($event)">
+<ag-grid-angular
+  class="ag-theme-quartz"
+  style="width: 100%; height: 700px"
+  [theme]="theme"
+  [rowData]="customers$ | async"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [pagination]="true"
+  [paginationPageSize]="100"
+  [paginationPageSizeSelector]="[100, 250, 500, 1000]"
+  [loading]="loading$ | async"
+  (cellValueChanged)="onCellValueChanged($event)"
+>
 </ag-grid-angular>
 
 @if (selectedCustomer) {
-<app-update-telecaller-model [selectedCustomer]="selectedCustomer" />
+  <app-update-telecaller-model [selectedCustomer]="selectedCustomer" />
 }
 
 @if (detailCustomer) {
-<app-detail-tellecaller-model [detailCustomer]="detailCustomer" />
+  <app-detail-tellecaller-model [detailCustomer]="detailCustomer" />
 }
 @if (historyCustomer) {
-<app-history-tellecaller-model [historyCustomer]="historyCustomer" />
+  <app-history-tellecaller-model [historyCustomer]="historyCustomer" />
 }
