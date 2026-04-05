@@ -32,6 +32,7 @@ import { authGuard } from "./shared/components/auth/services/auth.guard";
 import { FollowupsComponent } from "./pages/followups/followups.component";
 import { AddCustomerComponent } from "./pages/customers/add-customer/add-customer.component";
 import { DeleteCustomerComponent } from "./pages/customers/delete-customer/delete-customer.component";
+import { noAuthGuardGuard } from "./guard/no-auth-guard.guard";
 
 export const routes: Routes = [
   {
@@ -188,6 +189,7 @@ export const routes: Routes = [
     path: "signin",
     component: SignInComponent,
     title: "Sign In",
+    canActivate: [noAuthGuardGuard],
   },
   {
     path: "signup",
