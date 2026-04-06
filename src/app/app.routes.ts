@@ -195,6 +195,7 @@ export const routes: Routes = [
     path: "signup",
     component: SignUpComponent,
     title: "Sign Up",
+    canActivate: [noAuthGuardGuard],
   },
   // error pages
   {
