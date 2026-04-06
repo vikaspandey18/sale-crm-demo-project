@@ -13,3 +13,11 @@
 @if (selectedCustomer) {
 <app-show-history-model [selectedCustomer]="selectedCustomer" />
 }
+
+@if (addLeadStatus) {
+<app-add-lead-status [selectedCustomer]="addLeadStatus" />
+}
+
+@if (addLeadFollowup) {
+<app-add-followup-lead [selectedCustomer]="addLeadFollowup" />
+}

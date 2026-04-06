@@ -10,3 +10,12 @@ export interface LeadResponse {
   followup_date?: string;
   createDate?: string;
 }
+
+export interface LeadHistory {
+  id?: string;
+  lead_id?: string;
+  status?: string;
+  followup?: string;
+  comment?: string;
+  createDate?: string;
+}

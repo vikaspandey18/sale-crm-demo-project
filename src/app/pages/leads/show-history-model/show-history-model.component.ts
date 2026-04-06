@@ -1,21 +1,19 @@
-import { Component, inject, Input } from "@angular/core";
-import { AppState } from "../../../store/app.state";
-import { TelecallerService } from "../../telecaller/services/telecaller.service";
+import { Component, inject, Input, OnDestroy, OnInit } from "@angular/core";
 import { ModalService } from "../../../shared/services/modal.service";
-import { Store } from "@ngrx/store";
-import { LeadResponse } from "../../../models/lead.model";
+import { LeadHistory, LeadResponse } from "../../../models/lead.model";
 import { ModalComponent } from "../../../shared/components/ui/modal/modal.component";
 import { SafeDatePipe } from "../../../shared/pipe/safe-date.pipe";
-import { getCurrentInjector } from "@angular/core/primitives/di";
-import { CurrencyPipe } from "@angular/common";
+
+import { LeadService } from "../services/lead.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-show-history-model",
-  imports: [ModalComponent, SafeDatePipe,CurrencyPipe],
+  imports: [ModalComponent, SafeDatePipe],
   templateUrl: "./show-history-model.component.html",
   styleUrl: "./show-history-model.component.css",
 })
-export class ShowHistoryModelComponent {
+export class ShowHistoryModelComponent implements OnInit, OnDestroy {
   @Input({ required: true })
   set selectedCustomer(value: LeadResponse) {
     if (value) {
@@ -28,9 +26,14 @@ export class ShowHistoryModelComponent {
   }
 
   private _detailCustomer!: LeadResponse;
+  private leadService = inject(LeadService);
 
-  private store = inject(Store<AppState>);
-  private teleService = inject(TelecallerService);
+  private subscription!: Subscription;
+
+  leadHistory!: LeadHistory[] | [];
+  loading: boolean = false;
+  error: string = "";
+
   constructor(public modal: ModalService) {}
 
   isOpen = false;
@@ -39,5 +42,30 @@ export class ShowHistoryModelComponent {
   }
   closeModal() {
     this.isOpen = false;
+  }
+
+  ngOnInit(): void {
+    if (this.detailCustomer.id) {
+      this.loading = true;
+      this.error = "";
+
+      this.subscription = this.leadService
+        .getLeadHistory(this.detailCustomer?.id)
+        .subscribe({
+          next: (response) => {
+            this.loading = false;
+            this.leadHistory = response.data || [];
+          },
+          error: (error) => {
+            this.loading = false;
+            this.error =
+              error.message || "An error occurred while fetching lead history.";
+          },
+        });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

@@ -14,6 +14,8 @@ import {
 } from "./state/lead.selectors";
 import { Observable } from "rxjs";
 import { ShowHistoryModelComponent } from "./show-history-model/show-history-model.component";
+import { AddLeadStatusComponent } from "./add-lead-status/add-lead-status.component";
+import { AddFollowupLeadComponent } from "./add-followup-lead/add-followup-lead.component";
 
 @Component({
   selector: "app-leads",
@@ -22,6 +24,8 @@ import { ShowHistoryModelComponent } from "./show-history-model/show-history-mod
     AlertComponent,
     AgGridAngular,
     ShowHistoryModelComponent,
+    AddLeadStatusComponent,
+    AddFollowupLeadComponent,
   ],
   templateUrl: "./leads.component.html",
   styleUrl: "./leads.component.css",
@@ -33,6 +37,8 @@ export class LeadsComponent implements OnInit {
   error$!: Observable<string | null>;
 
   selectedCustomer!: LeadResponse;
+  addLeadStatus!: LeadResponse;
+  addLeadFollowup!: LeadResponse;
 
   private gridApi!: GridApi<LeadResponse>;
 
@@ -79,9 +85,9 @@ export class LeadsComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.selectedCustomer = null!;
+          this.addLeadStatus = null!;
           setTimeout(() => {
-            this.selectedCustomer = { ...params.data };
+            this.addLeadStatus = { ...params.data };
           }, 0);
         }
       },
@@ -99,9 +105,9 @@ export class LeadsComponent implements OnInit {
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.selectedCustomer = null!;
+          this.addLeadFollowup = null!;
           setTimeout(() => {
-            this.selectedCustomer = { ...params.data };
+            this.addLeadFollowup = { ...params.data };
           }, 0);
         }
       },
