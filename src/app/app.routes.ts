@@ -30,6 +30,9 @@ import { CollectionReportComponent } from "./pages/reports/collection-report/col
 import { AttendanceReportComponent } from "./pages/reports/attendance-report/attendance-report.component";
 import { authGuard } from "./shared/components/auth/services/auth.guard";
 import { FollowupsComponent } from "./pages/followups/followups.component";
+import { AddCustomerComponent } from "./pages/customers/add-customer/add-customer.component";
+import { DeleteCustomerComponent } from "./pages/customers/delete-customer/delete-customer.component";
+import { noAuthGuardGuard } from "./guard/no-auth-guard.guard";
 
 export const routes: Routes = [
   {
@@ -169,6 +172,16 @@ export const routes: Routes = [
         component: FollowupsComponent,
         title: "Follow Up",
       },
+      {
+        path: "add-customer",
+        component: AddCustomerComponent,
+        title: "Add Customer",
+      },
+      {
+        path: "delete-customer",
+        component: DeleteCustomerComponent,
+        title: "Delete Customer",
+      },
     ],
   },
   // auth pages
@@ -176,11 +189,13 @@ export const routes: Routes = [
     path: "signin",
     component: SignInComponent,
     title: "Sign In",
+    canActivate: [noAuthGuardGuard],
   },
   {
     path: "signup",
     component: SignUpComponent,
     title: "Sign Up",
+    canActivate: [noAuthGuardGuard],
   },
   // error pages
   {

@@ -6,7 +6,7 @@ import { CustomerResponse } from "../../models/customer.model";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
 import { IndiaMartCustomer } from "../../models/india-mart.model";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { getIndianMartCustomerAction } from "./state/indiamart.actions";
 import {
   getIndiaMartCustomersErrorSelector,
@@ -15,6 +15,8 @@ import {
 } from "./state/indiamart.selectors";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { UpdateIndiaMartModelComponent } from "./update-india-mart-model/update-india-mart-model.component";
+import { DetailIndiamartModelComponent } from "./detail-indiamart-model/detail-indiamart-model.component";
+import { HistoryIndiamartModelComponent } from "./history-indiamart-model/history-indiamart-model.component";
 
 @Component({
   selector: "app-indiamart",
@@ -23,6 +25,8 @@ import { UpdateIndiaMartModelComponent } from "./update-india-mart-model/update-
     AgGridAngular,
     AlertComponent,
     UpdateIndiaMartModelComponent,
+    DetailIndiamartModelComponent,
+    HistoryIndiamartModelComponent,
   ],
   templateUrl: "./indiamart.component.html",
   styleUrl: "./indiamart.component.css",
@@ -39,6 +43,8 @@ export class IndiamartComponent implements OnInit {
   errorCustomer$!: Observable<string | null>;
 
   selectedCustomer!: IndiaMartCustomer;
+  detailCustomer!: IndiaMartCustomer;
+  historyCustomer!: IndiaMartCustomer;
 
   columnDefs: ColDef<IndiaMartCustomer>[] = [
     {
@@ -46,21 +52,65 @@ export class IndiamartComponent implements OnInit {
       valueGetter: "node.rowIndex + 1",
       width: 100,
       pinned: "left",
+      filter: false,
     },
     {
-      headerName: "Actions",
-      width: 120,
+      headerName: "Update",
+      width: 100,
       filter: false,
       editable: false,
       pinned: "left",
       cellRenderer: () => {
         return `
-          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-4 py-1 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Update</button>
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Update</button>
         `;
       },
       onCellClicked: (params) => {
         if (params.data) {
-          this.selectedCustomer = params.data;
+          this.selectedCustomer = null!;
+          setTimeout(() => {
+            this.selectedCustomer = { ...params.data };
+          }, 0);
+        }
+      },
+    },
+    {
+      headerName: "Detail",
+      width: 90,
+      filter: false,
+      editable: false,
+      pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Detail</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.detailCustomer = null!; // reset first
+          setTimeout(() => {
+            this.detailCustomer = { ...params.data }; // new reference
+          }, 0);
+        }
+      },
+    },
+    {
+      headerName: "History",
+      width: 100,
+      filter: false,
+      editable: false,
+      pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">History</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.historyCustomer = null!;
+          setTimeout(() => {
+            this.historyCustomer = { ...params.data };
+          }, 0);
         }
       },
     },
@@ -97,7 +147,9 @@ export class IndiamartComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getIndianMartCustomerAction());
 
-    this.indiamartCustomers$ = this.store.select(getIndiaMartCustomersSelector);
+    this.indiamartCustomers$ = this.store
+      .select(getIndiaMartCustomersSelector)
+      .pipe(map((customers) => customers.map((c) => ({ ...c }))));
     this.loadCustomer$ = this.store.select(
       getIndiaMartCustomersLoadingSelector,
     );

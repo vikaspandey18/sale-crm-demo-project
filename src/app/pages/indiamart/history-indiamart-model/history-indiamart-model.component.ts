@@ -1,27 +1,20 @@
-import {
-  Component,
-  inject,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from "@angular/core";
-import { TelecallerModel } from "../../../models/telecaller.model";
+import { Component, inject, Input, SimpleChanges } from "@angular/core";
 import { ModalComponent } from "../../../shared/components/ui/modal/modal.component";
-import { Store } from "@ngrx/store";
-import { AppState } from "../../../store/app.state";
-import { TelecallerService } from "../services/telecaller.service";
-import { ModalService } from "../../../shared/services/modal.service";
-import { DarResponse } from "../../../models/dar.model";
+import { SafeDatePipe } from "../../../shared/pipe/safe-date.pipe";
 import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
+import { DarResponse } from "../../../models/dar.model";
+import { ModalService } from "../../../shared/services/modal.service";
+import { TelecallerService } from "../../telecaller/services/telecaller.service";
+import { IndiaMartCustomer } from "../../../models/india-mart.model";
 
 @Component({
-  selector: "app-history-tellecaller-model",
+  selector: "app-history-indiamart-model",
   imports: [ModalComponent, UpperCasePipe, DatePipe, CurrencyPipe],
-  templateUrl: "./history-tellecaller-model.component.html",
-  styleUrl: "./history-tellecaller-model.component.css",
+  templateUrl: "./history-indiamart-model.component.html",
+  styleUrl: "./history-indiamart-model.component.css",
 })
-export class HistoryTellecallerModelComponent implements OnChanges {
-  @Input({ required: true }) historyCustomer!: TelecallerModel;
+export class HistoryIndiamartModelComponent {
+  @Input({ required: true }) historyCustomer!: IndiaMartCustomer;
 
   private teleService = inject(TelecallerService);
 

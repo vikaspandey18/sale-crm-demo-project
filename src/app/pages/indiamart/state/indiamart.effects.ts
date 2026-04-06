@@ -6,8 +6,11 @@ import {
   failedIndiaMartCustomerAction,
   getIndiaMartCustomerSuccessAction,
   getIndianMartCustomerAction,
+  updateIndiaMartCustomerFailureAction,
+  updateIndiaMartCustomerSuccessAction,
+  updateIndiaMartStartAction,
 } from "./indiamart.actions";
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, map, mergeMap, of, switchMap } from "rxjs";
 import { IndiamartService } from "../services/indiamart.service";
 import { concatLatestFrom } from "@ngrx/operators";
 import { getIndiaMartCustomersSelector } from "./indiamart.selectors";
@@ -40,6 +43,32 @@ export class IndiaMartEffect {
             );
           }),
         );
+      }),
+    );
+  });
+
+  updateCustomer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateIndiaMartStartAction),
+      mergeMap((action) => {
+        return this.indiamartService
+          .updateCustomer(action.id, action.field, action.value)
+          .pipe(
+            map(() => {
+              return updateIndiaMartCustomerSuccessAction({
+                id: action.id,
+                field: action.field,
+                value: action.value,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                updateIndiaMartCustomerFailureAction({
+                  error: error?.error?.message || error?.message,
+                }),
+              );
+            }),
+          );
       }),
     );
   });

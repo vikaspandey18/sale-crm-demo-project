@@ -1,0 +1,262 @@
+<!-- Modal -->
+<app-modal
+  [isOpen]="isOpen"
+  (close)="closeModal()"
+  className="max-w-[700px] m-4"
+>
+  <div
+    class="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-2 dark:bg-gray-900 lg:p-11"
+  >
+    <h5
+      class="mb-5 text-md font-medium text-gray-600 dark:text-white/90 lg:mb-6"
+    >
+      Customer Detail
+    </h5>
+    <div class="max-w-full overflow-x-auto">
+      <table class="w-full">
+        <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Customer Name
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.customer_name }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Customer Group
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.groups }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Telephone No
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.telephone_no }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Incharge Name
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.incharge_person_name }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Mobile No
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.mobile_no }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Email
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.email }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              City
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.city }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Material
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.material }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Manufacturing
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.manufacturing }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Follow Up Date
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.followup_date | safeDate }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Comment
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.comment }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Address
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.address }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              State
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.state }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Types
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.types }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Sources
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.sources  }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Status
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.status === "1" ? "Active" : "Inactive" }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Activity Date
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.activity_date | safeDate }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Last Activity
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.last_activity }}
+            </td>
+          </tr>
+          <tr>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Last Comment
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.last_comment }}
+            </td>
+            <th
+              scope="col"
+              class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400"
+            >
+              Last Order Date
+            </th>
+            <td
+              class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90"
+            >
+              {{ detailCustomer.last_order_date | safeDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-modal>

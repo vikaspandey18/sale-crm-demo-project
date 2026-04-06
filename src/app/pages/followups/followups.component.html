@@ -1,21 +1,28 @@
 @if (error$ | async; as error) {
-<div class="alertMessage">
-  <app-alert variant="error" title="Failed To Fetch Follow Up Customer" [message]="error" />
-</div>
+  <div class="alertMessage">
+    <app-alert
+      variant="error"
+      title="Failed To Fetch Follow Up Customer"
+      [message]="error"
+    />
+  </div>
 }
 
 <!-- Tab Navigation -->
 <div class="border border-gray-200 bg-white">
   <div class="flex">
     @for (tab of tabs; track tab.id) {
-    <button (click)="switchTab(tab.id)"
-      class="flex-1 px-4 py-3 text-sm font-medium border-b-2 transition-colors duration-150" [ngClass]="
+      <button
+        (click)="switchTab(tab.id)"
+        class="flex-1 px-4 py-3 text-sm font-medium border-b-2 transition-colors duration-150"
+        [ngClass]="
           isActive(tab.id)
             ? 'text-blue-600 border-blue-600 bg-blue-50'
             : 'text-gray-500 border-transparent hover:text-gray-700 hover:bg-gray-50'
-        ">
-      {{ tab.label }}
-    </button>
+        "
+      >
+        {{ tab.label }}
+      </button>
     }
   </div>
 </div>
@@ -23,31 +30,60 @@
 <!-- Tab Panels -->
 <div class="p-2 border border-gray-200 bg-white">
   @if (activeTab === "today") {
-  <ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: calc(100vh - 60px)" [theme]="theme"
-    [rowData]="todayCustomers$ | async" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
-    [paginationPageSize]="100" [paginationPageSizeSelector]="[100, 250, 500, 1000]" [getRowId]="getRowId"
-    [loading]="(loading$ | async) ?? false" (cellValueChanged)="onCellValueChanged($event) ">
-  </ag-grid-angular>
+    <ag-grid-angular
+      class="ag-theme-quartz"
+      style="width: 100%; height: calc(100vh - 60px)"
+      [theme]="(gridTheme$ | async) ?? themeAlpine"
+      [rowData]="todayCustomers$ | async"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [pagination]="true"
+      [paginationPageSize]="100"
+      [paginationPageSizeSelector]="[100, 250, 500, 1000]"
+      [getRowId]="getRowId"
+      [loading]="(loading$ | async) ?? false"
+      (cellValueChanged)="onCellValueChanged($event)"
+    >
+    </ag-grid-angular>
   }
 
   @if (activeTab === "previous") {
-  <ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: calc(100vh - 60px)" [theme]="theme"
-    [rowData]="previousCustomers$ | async" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
-    [getRowId]="getRowId" [paginationPageSize]="100" [paginationPageSizeSelector]="[100, 250, 500, 1000]"
-    [loading]="(loading$ | async) ?? false" (cellValueChanged)="onCellValueChanged($event)">
-  </ag-grid-angular>
+    <ag-grid-angular
+      class="ag-theme-quartz"
+      style="width: 100%; height: calc(100vh - 60px)"
+      [theme]="(gridTheme$ | async) ?? themeAlpine"
+      [rowData]="previousCustomers$ | async"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [pagination]="true"
+      [getRowId]="getRowId"
+      [paginationPageSize]="100"
+      [paginationPageSizeSelector]="[100, 250, 500, 1000]"
+      [loading]="(loading$ | async) ?? false"
+      (cellValueChanged)="onCellValueChanged($event)"
+    >
+    </ag-grid-angular>
   }
 
   @if (activeTab === "upcomming") {
-  <ag-grid-angular class="ag-theme-quartz" style="width: 100%; height: calc(100vh - 60px)" [theme]="theme"
-    [getRowId]="getRowId" [rowData]="upcomingCustomers$ | async" [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef" [pagination]="true" [paginationPageSize]="100"
-    [paginationPageSizeSelector]="[100, 250, 500, 1000]" [loading]="(loading$ | async) ?? false"
-    (cellValueChanged)="onCellValueChanged($event)">
-  </ag-grid-angular>
+    <ag-grid-angular
+      class="ag-theme-quartz"
+      style="width: 100%; height: calc(100vh - 60px)"
+      [theme]="(gridTheme$ | async) ?? themeAlpine"
+      [getRowId]="getRowId"
+      [rowData]="upcomingCustomers$ | async"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [pagination]="true"
+      [paginationPageSize]="100"
+      [paginationPageSizeSelector]="[100, 250, 500, 1000]"
+      [loading]="(loading$ | async) ?? false"
+      (cellValueChanged)="onCellValueChanged($event)"
+    >
+    </ag-grid-angular>
   }
 </div>
 
 @if (selectedCustomer) {
-<app-update-followup-model [selectedCustomer]="selectedCustomer" />
+  <app-update-followup-model [selectedCustomer]="selectedCustomer" />
 }

@@ -10,6 +10,9 @@ import {
   ColDef,
   GridApi,
   themeAlpine,
+  themeQuartz,
+  colorSchemeDark,
+  colorSchemeLight,
 } from "ag-grid-community";
 import {
   loadFollowUpCustomerStartAction,
@@ -22,6 +25,7 @@ import {
   selectFollowUpLoadingCustomer,
 } from "./state/followup.selectors";
 import { UpdateFollowupModelComponent } from "./update-followup-model/update-followup-model.component";
+import { ThemeService } from "../../shared/services/theme.service";
 
 type Tab = "today" | "previous" | "upcomming";
 
@@ -39,6 +43,17 @@ type Tab = "today" | "previous" | "upcomming";
 })
 export class FollowupsComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
+  private themeService = inject(ThemeService);
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
 
   todayCustomers$!: Observable<FollowUpResponse[]>;
   previousCustomers$!: Observable<FollowUpResponse[]>;
@@ -48,8 +63,6 @@ export class FollowupsComponent implements OnInit {
   error$!: Observable<string | null>;
 
   private gridApi!: GridApi<FollowUpResponse>;
-
-  public theme = themeAlpine;
 
   selectedCustomer!: FollowUpResponse;
 

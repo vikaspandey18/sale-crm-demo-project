@@ -24,6 +24,7 @@ import { AlertComponent } from "../../shared/components/ui/alert/alert.component
 import { UpdateTelecallerModelComponent } from "./update-telecaller-model/update-telecaller-model.component";
 import { DetailTellecallerModelComponent } from "./detail-tellecaller-model/detail-tellecaller-model.component";
 import { HistoryTellecallerModelComponent } from "./history-tellecaller-model/history-tellecaller-model.component";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-telecaller",
@@ -34,6 +35,7 @@ import { HistoryTellecallerModelComponent } from "./history-tellecaller-model/hi
     UpdateTelecallerModelComponent,
     DetailTellecallerModelComponent,
     HistoryTellecallerModelComponent,
+    RouterLink,
   ],
   templateUrl: "./telecaller.component.html",
   styleUrl: "./telecaller.component.css",
