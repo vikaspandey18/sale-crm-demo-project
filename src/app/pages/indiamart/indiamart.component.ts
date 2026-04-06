@@ -17,6 +17,7 @@ import { AlertComponent } from "../../shared/components/ui/alert/alert.component
 import { UpdateIndiaMartModelComponent } from "./update-india-mart-model/update-india-mart-model.component";
 import { DetailIndiamartModelComponent } from "./detail-indiamart-model/detail-indiamart-model.component";
 import { HistoryIndiamartModelComponent } from "./history-indiamart-model/history-indiamart-model.component";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-indiamart",
@@ -27,6 +28,7 @@ import { HistoryIndiamartModelComponent } from "./history-indiamart-model/histor
     UpdateIndiaMartModelComponent,
     DetailIndiamartModelComponent,
     HistoryIndiamartModelComponent,
+    RouterLink,
   ],
   templateUrl: "./indiamart.component.html",
   styleUrl: "./indiamart.component.css",

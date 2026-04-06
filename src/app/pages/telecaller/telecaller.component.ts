@@ -17,6 +17,8 @@ import {
   GridApi,
   themeAlpine,
   CellValueChangedEvent,
+  colorSchemeDark,
+  colorSchemeLight,
 } from "ag-grid-community";
 import { AsyncPipe } from "@angular/common";
 import { AgGridAngular } from "ag-grid-angular";
@@ -25,6 +27,7 @@ import { UpdateTelecallerModelComponent } from "./update-telecaller-model/update
 import { DetailTellecallerModelComponent } from "./detail-tellecaller-model/detail-tellecaller-model.component";
 import { HistoryTellecallerModelComponent } from "./history-tellecaller-model/history-tellecaller-model.component";
 import { RouterLink } from "@angular/router";
+import { ThemeService } from "../../shared/services/theme.service";
 
 @Component({
   selector: "app-telecaller",
@@ -42,13 +45,26 @@ import { RouterLink } from "@angular/router";
 })
 export class TelecallerComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
+
+  private themeService = inject(ThemeService);
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
+
   customers$!: Observable<TelecallerModel[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
   private gridApi!: GridApi<TelecallerModel>;
 
-  public theme = themeAlpine;
+  
 
   selectedCustomer!: TelecallerModel;
   detailCustomer!: TelecallerModel;
