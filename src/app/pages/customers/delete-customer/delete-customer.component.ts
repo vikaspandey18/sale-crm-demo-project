@@ -5,14 +5,21 @@ import { AlertComponent } from "../../../shared/components/ui/alert/alert.compon
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../store/app.state";
 import { CustomerResponse } from "../../../models/customer.model";
-import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
-import { Observable } from "rxjs";
+import {
+  ColDef,
+  colorSchemeDark,
+  colorSchemeLight,
+  GridApi,
+  themeAlpine,
+} from "ag-grid-community";
+import { map, Observable } from "rxjs";
 import { getDeleteCustomer } from "./state/delete-customer.actions";
 import {
   selectDelCustomer,
   selectDelCustomerErrorStatus,
   selectDelCustomerLoadingStatus,
 } from "./state/delete-customer.selectors";
+import { ThemeService } from "../../../shared/services/theme.service";
 
 @Component({
   selector: "app-delete-customer",
@@ -22,8 +29,17 @@ import {
 })
 export class DeleteCustomerComponent implements OnInit {
   private store = inject(Store<AppState>);
+  private themeService = inject(ThemeService);
 
-  public theme = themeAlpine;
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
 
   customers$!: Observable<CustomerResponse[]>;
 
@@ -34,7 +50,8 @@ export class DeleteCustomerComponent implements OnInit {
     {
       headerName: "No",
       valueGetter: "node.rowIndex + 1",
-      width: 100,
+      filter: false,
+      width: 80,
     },
     { field: "customer_name", headerName: "Customer Name" },
     { field: "groups", headerName: "Groups" },
