@@ -1,149 +1,109 @@
 <!-- Modal -->
-<app-modal
-  [isOpen]="isOpen"
-  (close)="closeModal()"
-  className="max-w-[700px] m-4"
->
+<app-modal [isOpen]="isOpen" (close)="closeModal()" className="max-w-[700px] m-4">
   <div
-    class="no-scrollbar relative w-full max-w-[1000px] overflow-y-auto rounded-3xl bg-white p-2 dark:bg-gray-900 lg:p-11"
-  >
-    <h5
-      class="mb-5 text-md font-medium text-gray-600 dark:text-white/90 lg:mb-6"
-    >
+    class="no-scrollbar relative w-full max-w-[1000px] overflow-y-auto rounded-3xl bg-white p-2 dark:bg-gray-900 lg:p-11">
+    <h5 class="mb-5 text-md font-medium text-gray-600 dark:text-white/90 lg:mb-6">
       Customer - History
     </h5>
 
     <div class="max-w-full overflow-x-auto">
       <table class="w-full">
-        <thead
-          class="border-gray-100 border-y border-x dark:border-white/[0.05]"
-        >
+        <thead class="border-gray-100 border-y border-x dark:border-white/[0.05]">
           <tr>
-            <th
-              scope="col"
-              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Purpose
             </th>
-            <th
-              scope="col"
-              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Comment
             </th>
-            <th
-              scope="col"
-              class="px-2 py-1 border-xfont-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-xfont-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Types
             </th>
-            <th
-              scope="col"
-              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Amount
             </th>
-            <th
-              scope="col"
-              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Create Date
             </th>
-            <th
-              scope="col"
-              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Followup Date
             </th>
-            <th
-              scope="col"
-              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400"
-            >
+            <th scope="col"
+              class="px-2 py-1 border-x font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400">
               Followup Response
             </th>
           </tr>
         </thead>
 
-        <tbody
-          class="divide-y divide-gray-100 dark:divide-white/[0.05] border-y border-x"
-        >
+        <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05] border-y border-x">
           @if (isLoading) {
-            <!-- 🔄 Loading -->
-            <tr>
-              <td colspan="7" class="text-center py-6">
-                <div class="flex justify-center items-center">
-                  <div
-                    class="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"
-                  ></div>
-                </div>
-              </td>
-            </tr>
+          <!-- 🔄 Loading -->
+          <tr>
+            <td colspan="7" class="text-center py-6">
+              <div class="flex justify-center items-center">
+                <div class="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+              </div>
+            </td>
+          </tr>
           } @else if (isError) {
-            <!-- ❌ Error -->
-            <tr>
-              <td colspan="7" class="text-center py-4 text-red-500">
-                {{ isError }}
-              </td>
-            </tr>
+          <!-- ❌ Error -->
+          <tr>
+            <td colspan="7" class="text-center py-4 text-red-500">
+              {{ isError }}
+            </td>
+          </tr>
           } @else if (customerDetails) {
-            @if (customerDetails.length > 0) {
-              @for (customer of customerDetails; track $index) {
-                <tr>
-                  <td
-                    class="px-2 py-1 font-medium border-x text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90"
-                  >
-                    {{ (customer.purpose | uppercase) || "-" }}
-                  </td>
+          @if (customerDetails.length > 0) {
+          @for (customer of customerDetails; track $index) {
+          <tr>
+            <td
+              class="px-2 py-1 font-medium border-x text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90">
+              {{ (customer.purpose | uppercase) || "-" }}
+            </td>
 
-                  <td
-                    class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400"
-                  >
-                    {{ customer.comment || "-" }}
-                  </td>
+            <td class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400">
+              {{ customer.comment || "-" }}
+            </td>
 
-                  <td
-                    class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400"
-                  >
-                    {{ customer.types || "-" }}
-                  </td>
+            <td class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400">
+              {{ customer.types || "-" }}
+            </td>
 
-                  <td
-                    class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400"
-                  >
-                    {{ (customer.amount | currency: "INR" : "") || 0 }}
-                  </td>
+            <td class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400">
+              {{ (customer.amount | currency: "INR" : "") || 0 }}
+            </td>
 
-                  <td
-                    class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400"
-                  >
-                    {{ customer.createDate | date: "dd-MM-yyyy" }}
-                  </td>
+            <td class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400">
+              {{ customer.createDate | date: "dd-MM-yyyy" }}
+            </td>
 
-                  <td
-                    class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400"
-                  >
-                    {{
-                      customer.followup_date?.toString() === "0000-00-00"
-                        ? "-"
-                        : (customer.followup_date | date: "dd-MM-yyyy")
-                    }}
-                  </td>
+            <td class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400">
+              {{
+              customer.followup_date?.toString() === "0000-00-00"
+              ? "-"
+              : (customer.followup_date | date: "dd-MM-yyyy")
+              }}
+            </td>
 
-                  <td
-                    class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400"
-                  >
-                    {{ customer.followupresponse || "-" }}
-                  </td>
-                </tr>
-              }
-            } @else {
-              <!-- 📭 Empty -->
-              <tr>
-                <td colspan="5" class="text-center py-4 text-gray-500">
-                  No history found
-                </td>
-              </tr>
-            }
+            <td class="px-2 py-1 text-gray-500 border-x sm:px-2 text-start text-theme-sm dark:text-gray-400">
+              {{ customer.followupresponse || "-" }}
+            </td>
+          </tr>
+          }
+          } @else {
+          <!-- 📭 Empty -->
+          <tr>
+            <td colspan="7" class="text-center py-4 text-gray-500">
+              No history found
+            </td>
+          </tr>
+          }
           }
         </tbody>
       </table>

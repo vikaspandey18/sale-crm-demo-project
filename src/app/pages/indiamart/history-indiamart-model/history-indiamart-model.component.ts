@@ -1,11 +1,10 @@
 import { Component, inject, Input, SimpleChanges } from "@angular/core";
 import { ModalComponent } from "../../../shared/components/ui/modal/modal.component";
-import { SafeDatePipe } from "../../../shared/pipe/safe-date.pipe";
 import { CurrencyPipe, DatePipe, UpperCasePipe } from "@angular/common";
 import { DarResponse } from "../../../models/dar.model";
 import { ModalService } from "../../../shared/services/modal.service";
-import { TelecallerService } from "../../telecaller/services/telecaller.service";
 import { IndiaMartCustomer } from "../../../models/india-mart.model";
+import { IndiamartService } from "../services/indiamart.service";
 
 @Component({
   selector: "app-history-indiamart-model",
@@ -16,7 +15,7 @@ import { IndiaMartCustomer } from "../../../models/india-mart.model";
 export class HistoryIndiamartModelComponent {
   @Input({ required: true }) historyCustomer!: IndiaMartCustomer;
 
-  private teleService = inject(TelecallerService);
+  private indiaMartService = inject(IndiamartService);
 
   constructor(public modal: ModalService) {}
 
@@ -38,20 +37,22 @@ export class HistoryIndiamartModelComponent {
       this.isLoading = true;
       this.isError = null;
 
-      this.teleService.fetchCustomerHistory(this.historyCustomer.id).subscribe({
-        next: (res) => {
-          console.log(res.data);
+      this.indiaMartService
+        .fetchCustomerHistory(this.historyCustomer.id)
+        .subscribe({
+          next: (res) => {
+            console.log(res.data);
 
-          this.customerDetails = res.data;
-        },
-        error: (err) => {
-          this.isError = "Failed to load customer history";
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+            this.customerDetails = res.data;
+          },
+          error: (err) => {
+            this.isError = "Failed to load customer history";
+            this.isLoading = false;
+          },
+          complete: () => {
+            this.isLoading = false;
+          },
+        });
     }
   }
 }

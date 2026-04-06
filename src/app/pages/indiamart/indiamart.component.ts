@@ -1,13 +1,21 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { AsyncPipe, JsonPipe } from "@angular/common";
 import { AgGridAngular } from "ag-grid-angular";
-import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
+import {
+  CellValueChangedEvent,
+  ColDef,
+  GridApi,
+  themeAlpine,
+} from "ag-grid-community";
 import { CustomerResponse } from "../../models/customer.model";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
 import { IndiaMartCustomer } from "../../models/india-mart.model";
 import { map, Observable } from "rxjs";
-import { getIndianMartCustomerAction } from "./state/indiamart.actions";
+import {
+  getIndianMartCustomerAction,
+  updateIndiaMartStartAction,
+} from "./state/indiamart.actions";
 import {
   getIndiaMartCustomersErrorSelector,
   getIndiaMartCustomersLoadingSelector,
@@ -152,9 +160,30 @@ export class IndiamartComponent implements OnInit {
     this.indiamartCustomers$ = this.store
       .select(getIndiaMartCustomersSelector)
       .pipe(map((customers) => customers.map((c) => ({ ...c }))));
+
     this.loadCustomer$ = this.store.select(
       getIndiaMartCustomersLoadingSelector,
     );
+
     this.errorCustomer$ = this.store.select(getIndiaMartCustomersErrorSelector);
+  }
+
+  onCellValueChanged(event: CellValueChangedEvent<IndiaMartCustomer>) {
+    if (event.oldValue === event.newValue) return;
+
+    const field = event.colDef.field;
+
+    if (!field) {
+      return;
+    }
+
+    // Dispatch update to store
+    this.store.dispatch(
+      updateIndiaMartStartAction({
+        id: event.data.id!,
+        field: field,
+        value: event.newValue,
+      }),
+    );
   }
 }

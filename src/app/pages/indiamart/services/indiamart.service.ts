@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { ApiResponse } from "../../../models/api-response.model";
 import { IndiaMartCustomer } from "../../../models/india-mart.model";
 import { environment } from "../../../../environments/environment";
+import { DarResponse } from "../../../models/dar.model";
 
 @Injectable({
   providedIn: "root",
@@ -28,4 +29,11 @@ export class IndiamartService {
     };
     return this.http.put<ApiResponse<IndiaMartCustomer>>(url, body);
   }
+
+
+  fetchCustomerHistory(id: string): Observable<ApiResponse<DarResponse[]>> {
+      const url = `${environment.apiUrl}/dar/customerDarDetail.php`;
+      const body = { customerId: id };
+      return this.http.post<ApiResponse<DarResponse[]>>(url, body);
+    }
 }
