@@ -6,7 +6,7 @@ import { CustomerResponse } from "../../models/customer.model";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
 import { IndiaMartCustomer } from "../../models/india-mart.model";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { getIndianMartCustomerAction } from "./state/indiamart.actions";
 import {
   getIndiaMartCustomersErrorSelector,
@@ -15,8 +15,6 @@ import {
 } from "./state/indiamart.selectors";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { UpdateIndiaMartModelComponent } from "./update-india-mart-model/update-india-mart-model.component";
-import { DetailTellecallerModelComponent } from "../telecaller/detail-tellecaller-model/detail-tellecaller-model.component";
-import { HistoryTellecallerModelComponent } from "../telecaller/history-tellecaller-model/history-tellecaller-model.component";
 import { DetailIndiamartModelComponent } from "./detail-indiamart-model/detail-indiamart-model.component";
 import { HistoryIndiamartModelComponent } from "./history-indiamart-model/history-indiamart-model.component";
 
@@ -149,7 +147,9 @@ export class IndiamartComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getIndianMartCustomerAction());
 
-    this.indiamartCustomers$ = this.store.select(getIndiaMartCustomersSelector);
+    this.indiamartCustomers$ = this.store
+      .select(getIndiaMartCustomersSelector)
+      .pipe(map((customers) => customers.map((c) => ({ ...c }))));
     this.loadCustomer$ = this.store.select(
       getIndiaMartCustomersLoadingSelector,
     );
