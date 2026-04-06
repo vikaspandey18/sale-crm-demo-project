@@ -41,6 +41,9 @@ import { AttendaceResportEffect } from "../pages/reports/attendance-report/state
 import { FollowUpState } from "../pages/followups/state/followup.state";
 import { followUpReducer } from "../pages/followups/state/followup.reducer";
 import { FollowUpEffect } from "../pages/followups/state/followup.effects";
+import { DeleteCustomerState } from "../pages/customers/delete-customer/state/delet-customer.state";
+import { deleteCustomerReducer } from "../pages/customers/delete-customer/state/delete-customer.reducer";
+import { DeleteCustomerEffect } from "../pages/customers/delete-customer/state/delete-customer.effects";
 
 export interface AppState {
   auth: AuthState;
@@ -58,6 +61,7 @@ export interface AppState {
   user: UserState;
   attendanceReport: AttendanceReportState;
   followup: FollowUpState;
+  deleteCustomer: DeleteCustomerState;
 }
 
 export const AppReducer = {
@@ -76,6 +80,7 @@ export const AppReducer = {
   user: userReducer,
   attendanceReport: attendanceReportReducer,
   followUp: followUpReducer,
+  deleteCustomer: deleteCustomerReducer,
 };
 
 export const AppEffect = [
@@ -93,4 +98,5 @@ export const AppEffect = [
   UserEffect,
   AttendaceResportEffect,
   FollowUpEffect,
+  DeleteCustomerEffect,
 ];

@@ -7,8 +7,12 @@ import { AppState } from "../../../store/app.state";
 import { CustomerResponse } from "../../../models/customer.model";
 import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
 import { Observable } from "rxjs";
-import { getCustomer } from "../state/customer.actions";
-import { getCustomerErrorStatus, getCustomerLoadingStatus, getSelectorCustomers } from "../state/customer.selectors";
+import { getDeleteCustomer } from "./state/delete-customer.actions";
+import {
+  selectDelCustomer,
+  selectDelCustomerErrorStatus,
+  selectDelCustomerLoadingStatus,
+} from "./state/delete-customer.selectors";
 
 @Component({
   selector: "app-delete-customer",
@@ -18,8 +22,6 @@ import { getCustomerErrorStatus, getCustomerLoadingStatus, getSelectorCustomers 
 })
 export class DeleteCustomerComponent implements OnInit {
   private store = inject(Store<AppState>);
-
-  private gridApi!: GridApi<CustomerResponse>;
 
   public theme = themeAlpine;
 
@@ -60,10 +62,10 @@ export class DeleteCustomerComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.store.dispatch(getCustomer());
+    this.store.dispatch(getDeleteCustomer());
 
-    this.customers$ = this.store.select(getSelectorCustomers);
-    this.loadingCustomer$ = this.store.select(getCustomerLoadingStatus);
-    this.errorCustomer$ = this.store.select(getCustomerErrorStatus);
+    this.customers$ = this.store.select(selectDelCustomer);
+    this.loadingCustomer$ = this.store.select(selectDelCustomerLoadingStatus);
+    this.errorCustomer$ = this.store.select(selectDelCustomerErrorStatus);
   }
 }
