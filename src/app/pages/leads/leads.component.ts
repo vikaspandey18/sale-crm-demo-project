@@ -13,10 +13,16 @@ import {
   getLeadSelector,
 } from "./state/lead.selectors";
 import { Observable } from "rxjs";
+import { ShowHistoryModelComponent } from "./show-history-model/show-history-model.component";
 
 @Component({
   selector: "app-leads",
-  imports: [AsyncPipe, AlertComponent, AgGridAngular],
+  imports: [
+    AsyncPipe,
+    AlertComponent,
+    AgGridAngular,
+    ShowHistoryModelComponent,
+  ],
   templateUrl: "./leads.component.html",
   styleUrl: "./leads.component.css",
 })
@@ -26,58 +32,123 @@ export class LeadsComponent implements OnInit {
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
+  selectedCustomer!: LeadResponse;
+
   private gridApi!: GridApi<LeadResponse>;
 
   public theme = themeAlpine;
 
   columnDefs: ColDef<LeadResponse>[] = [
     {
+      field: "id",
+      headerName: "No",
+      filter: false,
+      width: 80,
+      valueGetter: "node.rowIndex + 1",
+    },
+    {
+      headerName: "History",
+      width: 100,
+      filter: false,
+      editable: false,
+      // pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">View</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.selectedCustomer = null!;
+          setTimeout(() => {
+            this.selectedCustomer = { ...params.data };
+          }, 0);
+        }
+      },
+    },
+    {
+      headerName: "Status",
+      width: 100,
+      filter: false,
+      editable: false,
+      // pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Status</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.selectedCustomer = null!;
+          setTimeout(() => {
+            this.selectedCustomer = { ...params.data };
+          }, 0);
+        }
+      },
+    },
+    {
+      headerName: "Follow Up",
+      width: 100,
+      filter: false,
+      editable: false,
+      // pinned: "left",
+      cellRenderer: () => {
+        return `
+          <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg transition px-2 py-0 text-sm bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300">Add</button>
+        `;
+      },
+      onCellClicked: (params) => {
+        if (params.data) {
+          this.selectedCustomer = null!;
+          setTimeout(() => {
+            this.selectedCustomer = { ...params.data };
+          }, 0);
+        }
+      },
+    },
+
+    {
       field: "employee_name",
       headerName: "Employee Name",
-      sortable: true,
-      filter: true,
     },
     {
       field: "customer_name",
       headerName: "Customer Name",
-      sortable: true,
-      filter: true,
-      pinned: "left",
-      editable: true,
     },
     {
       field: "order_value",
       headerName: "Amount",
-      sortable: true,
-      filter: true,
-      editable: true,
     },
-    { field: "products", headerName: "Product", sortable: true, filter: true },
-    { field: "status", headerName: "Status", sortable: true, filter: true },
-    { field: "comments", headerName: "Comment", sortable: true, filter: true },
+    {
+      field: "products",
+      headerName: "Product",
+    },
+    {
+      field: "status",
+      headerName: "Status",
+    },
+    {
+      field: "comments",
+      headerName: "Comment",
+    },
     {
       field: "lead_grade",
       headerName: "Lead Grade",
-      sortable: true,
-      filter: true,
     },
     {
       field: "followup_date",
       headerName: "Followup Date",
-      sortable: true,
-      filter: true,
     },
     {
       field: "createDate",
       headerName: "Create Date",
-      sortable: true,
-      filter: true,
     },
   ];
 
   defaultColDef = {
     filter: true,
     floatingFilter: true,
+    sortable: true,
   };
 
   ngOnInit(): void {

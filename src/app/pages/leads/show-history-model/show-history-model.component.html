@@ -1,0 +1,87 @@
+<!-- Modal -->
+<app-modal [isOpen]="isOpen" (close)="closeModal()" className="max-w-[700px] m-4">
+    <div
+        class="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-2 dark:bg-gray-900 lg:p-11">
+        <h5 class="mb-5 text-md font-medium text-gray-600 dark:text-white/90 lg:mb-6">
+            Customer Detail
+        </h5>
+        <div class="max-w-full overflow-x-auto">
+            <table class="w-full">
+                <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
+                    <tr>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Customer Name
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.customer_name }}
+                        </td>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Amount
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.order_value | currency: "INR": '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Product
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.products }}
+                        </td>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Status
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.status }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Comment
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.comments }}
+                        </td>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Lead Grade
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.lead_grade }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Followup Date
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.followup_date | safeDate }}
+                        </td>
+                        <th scope="col"
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            Create Date
+                        </th>
+                        <td
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            {{ detailCustomer.createDate | safeDate }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</app-modal>
