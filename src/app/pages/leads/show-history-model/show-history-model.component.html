@@ -6,27 +6,27 @@
             Customer Detail
         </h5>
         <div class="max-w-full overflow-x-auto">
-            <table class="w-full">
-                <thead>
+            <table class="w-full border-collapse text-left text-sm text-gray-500 dark:text-gray-400">
+                <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             No
                         </th>
                         <th scope="col"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             Status
                         </th>
                         <th scope="col"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             Followup Date
                         </th>
                         <th scope="col"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             Comment
                         </th>
                         <th scope="col"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             Created Date
                         </th>
                     </tr>
@@ -35,7 +35,7 @@
                     @if (loading) {
                     <tr>
                         <td colspan="5"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             Loading...
                         </td>
                     </tr>
@@ -43,7 +43,7 @@
                     @if(error){
                     <tr>
                         <td colspan="5"
-                            class="px-1 py-1 font-medium text-gray-500 sm:px-6 text-start text-theme-xs dark:text-gray-400">
+                            class="px-1 py-1 font-medium text-gray-500 sm:px-2 text-start text-theme-xs dark:text-gray-400 border">
                             {{ error }}
                         </td>
                     </tr>
@@ -51,24 +51,24 @@
                     @for (item of leadHistory; track $index) {
                     <tr>
                         <td
-                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90 border">
                             {{ $index + 1}}
                         </td>
                         <td
-                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
-                            {{ item.status }}
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90 border">
+                            {{ item.status || '-' }}
                         </td>
                         <td
-                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90 border">
                             {{ item.followup | safeDate}}
                         </td>
                         <td
-                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90 border">
                             {{ item.comment }}
                         </td>
                         <td
-                            class="px-1 py-1 font-medium text-gray-800 sm:px-6 text-start text-theme-sm dark:text-white/90">
-                            {{ item.createDate }}
+                            class="px-1 py-1 font-medium text-gray-800 sm:px-2 text-start text-theme-sm dark:text-white/90 border">
+                            {{ item.createDate | safeDate }}
                         </td>
                     </tr>
                     }
