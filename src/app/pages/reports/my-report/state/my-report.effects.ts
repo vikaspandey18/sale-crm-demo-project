@@ -21,7 +21,7 @@ export class MyReportEffect {
   getMyReport$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fetchMyReportStartAction),
-      // concatLatestFrom(() => this.store.select(getMyReportSelector)),
+      concatLatestFrom(() => this.store.select(getMyReportSelector)),
       concatMap(([action, reports]) => {
         if (reports.length) {
           return of(fetchMyReportSuccessAction({ reports }));

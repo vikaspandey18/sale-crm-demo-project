@@ -21,7 +21,7 @@ export const detailReportReducer = createReducer(
 
   on(getDetailReportFailureAction, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: false,
     error: action.error,
   })),
 );
