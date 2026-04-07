@@ -6,7 +6,13 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../../../store/app.state";
 import { map, Observable } from "rxjs";
 import { MyReportResponse } from "../../../models/my-report.model";
-import { ColDef, colorSchemeDark, colorSchemeLight, GridApi, themeAlpine } from "ag-grid-community";
+import {
+  ColDef,
+  colorSchemeDark,
+  colorSchemeLight,
+  GridApi,
+  themeAlpine,
+} from "ag-grid-community";
 import { fetchMyReportStartAction } from "./state/my-report.actions";
 import {
   getMyReportErrorSelector,
@@ -14,6 +20,7 @@ import {
   getMyReportSelector,
 } from "./state/my-report.selectors";
 import { ThemeService } from "../../../shared/services/theme.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-my-report",
@@ -25,25 +32,25 @@ import { ThemeService } from "../../../shared/services/theme.service";
 export class MyReportComponent {
   private store: Store = inject(Store<AppState>);
   private datePipe = inject(DatePipe);
+  private router = inject(Router);
 
   private themeService = inject(ThemeService);
-  
-    // Convert the Observable to a Signal
-    gridTheme$ = this.themeService.theme$.pipe(
-      map((theme) =>
-        theme === "dark"
-          ? themeAlpine.withPart(colorSchemeDark)
-          : themeAlpine.withPart(colorSchemeLight),
-      ),
-    );
-    protected readonly themeAlpine = themeAlpine;
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
 
   customers$!: Observable<MyReportResponse[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
   private gridApi!: GridApi<MyReportResponse>;
-
 
   columnDefs: ColDef<MyReportResponse>[] = [
     {
@@ -54,9 +61,18 @@ export class MyReportComponent {
     {
       field: "createDate",
       headerName: "Date",
-      valueFormatter: (params: any) => {
+      cellRenderer: (params: any) => {
         if (!params.value) return "";
-        return this.datePipe.transform(params.value, "dd-MM-yyyy") ?? "";
+
+        const formatted =
+          this.datePipe.transform(params.value, "dd-MM-yyyy") ?? "";
+
+        return `<span class="date-link">${formatted}</span>`;
+      },
+      onCellClicked: (params: any) => {
+        if (params.colDef.field === "createDate") {
+          this.goToDetail(params.data);
+        }
       },
     },
     { field: "call_count", headerName: "No of Call" },
@@ -76,6 +92,10 @@ export class MyReportComponent {
   defaultColDef = {
     sortable: true,
   };
+
+  goToDetail(row: any) {
+    this.router.navigate(["/detail-report", row.createDate]);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(fetchMyReportStartAction());

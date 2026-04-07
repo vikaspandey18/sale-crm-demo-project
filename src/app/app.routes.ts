@@ -33,6 +33,7 @@ import { FollowupsComponent } from "./pages/followups/followups.component";
 import { AddCustomerComponent } from "./pages/customers/add-customer/add-customer.component";
 import { DeleteCustomerComponent } from "./pages/customers/delete-customer/delete-customer.component";
 import { noAuthGuardGuard } from "./guard/no-auth-guard.guard";
+import { DetailReportComponent } from "./pages/reports/my-report/detail-report/detail-report.component";
 
 export const routes: Routes = [
   {
@@ -181,6 +182,11 @@ export const routes: Routes = [
         path: "delete-customer",
         component: DeleteCustomerComponent,
         title: "Delete Customer",
+      },
+      {
+        path: "detail-report/:date",
+        component: DetailReportComponent,
+        title: "Detail Report",
       },
     ],
   },
