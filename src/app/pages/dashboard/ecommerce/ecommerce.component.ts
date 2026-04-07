@@ -11,10 +11,10 @@ import { RecentOrdersComponent } from "../../../shared/components/ecommerce/rece
   imports: [
     EcommerceMetricsComponent,
     MonthlySalesChartComponent,
-    MonthlyTargetComponent,
-    StatisticsChartComponent,
-    DemographicCardComponent,
-    RecentOrdersComponent,
+    // MonthlyTargetComponent,
+    // StatisticsChartComponent,
+    // DemographicCardComponent,
+    // RecentOrdersComponent,
   ],
   templateUrl: "./ecommerce.component.html",
 })
