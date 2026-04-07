@@ -10,12 +10,12 @@ export const detailReportReducer = createReducer(
   initialState,
   on(getDetailReportStartAction, (state, action) => ({
     ...state,
-    isLoading: true,
+    loading: true,
   })),
 
   on(getDetailReportSuccessAction, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: false,
     detailReport: action.detailReports,
   })),
 

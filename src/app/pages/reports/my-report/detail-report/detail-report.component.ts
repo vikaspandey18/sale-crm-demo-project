@@ -18,6 +18,8 @@ import {
 import { AsyncPipe } from "@angular/common";
 import { AlertComponent } from "../../../../shared/components/ui/alert/alert.component";
 import { AgGridAngular } from "ag-grid-angular";
+import { getDetailReportStartAction } from "./state/detail-report.actions";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-detail-report",
@@ -29,6 +31,7 @@ export class DetailReportComponent implements OnInit {
   private store = inject(Store<AppState>);
   private themeService = inject(ThemeService);
   protected readonly themeAlpine = themeAlpine;
+  private route = inject(ActivatedRoute);
 
   gridTheme$ = this.themeService.theme$.pipe(
     map((theme) =>
@@ -43,6 +46,9 @@ export class DetailReportComponent implements OnInit {
   error$!: Observable<string | null>;
 
   ngOnInit(): void {
+    const date = this.route.snapshot.params["date"];
+    this.store.dispatch(getDetailReportStartAction({ date }));
+
     this.detailReport$ = this.store.select(selectDetailReportData);
     this.loading$ = this.store.select(selectDetailReportLoading);
     this.error$ = this.store.select(selectDetailReportError);
