@@ -1,37 +1,64 @@
 import { Component, inject } from "@angular/core";
 import { AgGridAngular } from "ag-grid-angular";
 import { AlertComponent } from "../../../shared/components/ui/alert/alert.component";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, DatePipe } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../store/app.state";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { MyReportResponse } from "../../../models/my-report.model";
-import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
+import { ColDef, colorSchemeDark, colorSchemeLight, GridApi, themeAlpine } from "ag-grid-community";
 import { fetchMyReportStartAction } from "./state/my-report.actions";
 import {
   getMyReportErrorSelector,
   getMyReportLoadingSelector,
   getMyReportSelector,
 } from "./state/my-report.selectors";
+import { ThemeService } from "../../../shared/services/theme.service";
 
 @Component({
   selector: "app-my-report",
   imports: [AsyncPipe, AlertComponent, AgGridAngular],
   templateUrl: "./my-report.component.html",
   styleUrl: "./my-report.component.css",
+  providers: [DatePipe],
 })
 export class MyReportComponent {
   private store: Store = inject(Store<AppState>);
+  private datePipe = inject(DatePipe);
+
+  private themeService = inject(ThemeService);
+  
+    // Convert the Observable to a Signal
+    gridTheme$ = this.themeService.theme$.pipe(
+      map((theme) =>
+        theme === "dark"
+          ? themeAlpine.withPart(colorSchemeDark)
+          : themeAlpine.withPart(colorSchemeLight),
+      ),
+    );
+    protected readonly themeAlpine = themeAlpine;
+
   customers$!: Observable<MyReportResponse[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
   private gridApi!: GridApi<MyReportResponse>;
 
-  public theme = themeAlpine;
 
   columnDefs: ColDef<MyReportResponse>[] = [
-    { field: "createDate", headerName: "Date" },
+    {
+      headerName: "No",
+      valueGetter: "node.rowIndex + 1",
+      width: 80,
+    },
+    {
+      field: "createDate",
+      headerName: "Date",
+      valueFormatter: (params: any) => {
+        if (!params.value) return "";
+        return this.datePipe.transform(params.value, "dd-MM-yyyy") ?? "";
+      },
+    },
     { field: "call_count", headerName: "No of Call" },
     { field: "order_count", headerName: "No of Order" },
     { field: "order_total", headerName: "Total Order" },

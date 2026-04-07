@@ -64,7 +64,6 @@ export class TelecallerComponent implements OnInit {
 
   private gridApi!: GridApi<TelecallerModel>;
 
-  
 
   selectedCustomer!: TelecallerModel;
   detailCustomer!: TelecallerModel;
