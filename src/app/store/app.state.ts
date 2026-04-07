@@ -53,7 +53,6 @@ export interface AppState {
   lead: LeadState;
   dar: DarState;
   myReport: MyReportState;
-  router: RouterReducerState;
   orderReport: OrderReportState;
   collectionReport: CollectionReportState;
   markAttendance: AttendanceState;
@@ -62,6 +61,7 @@ export interface AppState {
   attendanceReport: AttendanceReportState;
   followup: FollowUpState;
   deleteCustomer: DeleteCustomerState;
+  router: RouterReducerState;
 }
 
 export const AppReducer = {
