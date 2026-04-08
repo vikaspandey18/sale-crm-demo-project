@@ -1,7 +1,8 @@
 ##  Website Preview
 
 ### LOGIN PAGE
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/565f9876-b78f-4c22-b6f1-119e0ac9a308" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/16a724eb-0e7d-45d2-b714-6df0b591eaf8" />
+
 
 ### DASHBOARD
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/aa7e253e-3580-436c-95f0-3ec7be6e3bc6" />
