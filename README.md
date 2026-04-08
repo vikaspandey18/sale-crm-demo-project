@@ -1,34 +1,63 @@
-##  Website Preview
-🚀 Overview
+# 📊 Sale CRM Demo Project
 
-The Sale CRM Demo Project is a customer relationship management system designed to streamline and monitor daily business operations. It helps organizations efficiently track employee activities, manage customer interactions, and maintain records of sales processes in one centralized platform.
+🔗 **Repository:** https://github.com/vikaspandey18/sale-crm-demo-project
 
-🎯 Key Features
-👨‍💼 Employee Activity Tracking
-Monitor daily work updates and performance of employees.
-📦 Order Management
-Create, update, and manage customer orders with ease.
-💳 Payment Tracking
-Keep a detailed record of all customer payments and transactions.
-📈 Lead Management
-Capture and manage potential customer leads effectively.
-🗓️ Attendance Tracking
-Maintain employee attendance records for better workforce management.
-📑 Report Generation
-Generate insightful reports for:
-Orders
-Payments
-Leads
-Attendance
+---
 
-🛠️ Purpose
+## 🚀 Overview
 
-This project serves as a demo CRM system to showcase how businesses can digitize and organize their sales and operational workflows for improved productivity and decision-making.
+The **Sale CRM Demo Project** is a web-based Customer Relationship Management (CRM) system designed to streamline business operations. It helps organizations track employee activities, manage customer interactions, and handle sales processes efficiently in one centralized platform.
 
-💡 Use Cases
-Small to medium businesses managing sales pipelines
-Teams needing structured tracking of employee activities
-Organizations looking for basic CRM functionality with reporting
+---
+
+## 🎯 Features
+
+- 👨‍💼 Employee Activity Tracking  
+- 📦 Order Management  
+- 💳 Payment Tracking  
+- 📈 Lead Management  
+- 🗓️ Attendance Management  
+- 📑 Report Generation (Orders, Payments, Leads, Attendance)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Angular 12  
+- **Backend:** (Add your backend here)  
+- **Database:** (Add your database here)  
+- **Version Control:** Git & GitHub  
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
+
+```
+git clone https://github.com/vikaspandey18/sale-crm-demo-project.git
+
+cd sale-crm-demo-project
+```
+
+### 2. Install dependencies
+
+``` npm install ```
+
+### 3. Run the application
+``` ng serve ```
+
+
+Open in browser:  
+http://localhost:4200/
+
+---
+
+## 🔐 Environment Configuration
+
+Create your environment file:
+
+## 📸 Screenshots
 
 
 ### LOGIN PAGE
@@ -75,6 +104,36 @@ Organizations looking for basic CRM functionality with reporting
 ### COLLECTION REPORT
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/11232819-9d0f-4824-9617-5cc51e44de1b" />
 
+## 💡 Use Cases
 
+- Small to medium businesses  
+- Sales tracking systems  
+- CRM demo/learning project  
+
+---
+
+## 📌 Future Enhancements
+
+- Dashboard analytics  
+- Role-based authentication  
+- Email/SMS notifications  
+- Payment gateway integration  
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork this repo and submit a pull request.
+
+---
+
+## 👨‍💻 Author
+
+**Vikas Pandey**  
+https://github.com/vikaspandey18
+
+---
+
+⭐ If you like this project, give it a star!
 
 
