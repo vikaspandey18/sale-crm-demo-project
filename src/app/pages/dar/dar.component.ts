@@ -1,12 +1,14 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { DarResponse } from "../../models/dar.model";
 import { AsyncPipe } from "@angular/common";
 import { AgGridAngular } from "ag-grid-angular";
 import {
   ColDef,
+  colorSchemeDark,
+  colorSchemeLight,
   GridApi,
   GridReadyEvent,
   themeAlpine,
@@ -18,6 +20,7 @@ import {
   getDarSelector,
 } from "./state/dar.selectors";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
+import { ThemeService } from "../../shared/services/theme.service";
 
 @Component({
   selector: "app-dar",
@@ -27,14 +30,23 @@ import { AlertComponent } from "../../shared/components/ui/alert/alert.component
 })
 export class DarComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
+  private themeService = inject(ThemeService);
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
 
   customers$!: Observable<DarResponse[]>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
   private gridApi!: GridApi<DarResponse>;
-
-  public theme = themeAlpine;
 
   columnDefs: ColDef<DarResponse>[] = [
     {
