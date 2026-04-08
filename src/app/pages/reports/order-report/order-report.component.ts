@@ -4,9 +4,15 @@ import { AlertComponent } from "../../../shared/components/ui/alert/alert.compon
 import { AsyncPipe } from "@angular/common";
 import { AppState } from "../../../store/app.state";
 import { Store } from "@ngrx/store";
-import { filter, Observable } from "rxjs";
+import { filter, map, Observable } from "rxjs";
 import { OrderReportResponse } from "../../../models/order-report.model";
-import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
+import {
+  ColDef,
+  colorSchemeDark,
+  colorSchemeLight,
+  GridApi,
+  themeAlpine,
+} from "ag-grid-community";
 import { fetchOrderReportStartAction } from "./state/order-report.actions";
 import {
   getOrderReportErrorSelector,
@@ -14,6 +20,7 @@ import {
   getOrderReportSelector,
 } from "./state/order-report.selectors";
 import { DatePickerComponent } from "../../../shared/components/form/date-picker/date-picker.component";
+import { ThemeService } from "../../../shared/services/theme.service";
 
 @Component({
   selector: "app-order-report",
@@ -23,6 +30,19 @@ import { DatePickerComponent } from "../../../shared/components/form/date-picker
 })
 export class OrderReportComponent {
   private store: Store = inject(Store<AppState>);
+
+  private themeService = inject(ThemeService);
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
+
   customers$!: Observable<OrderReportResponse[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
@@ -30,8 +50,6 @@ export class OrderReportComponent {
   toDate: string | null = null;
 
   gridApi!: GridApi;
-
-  public theme = themeAlpine;
 
   columnDefs: ColDef<OrderReportResponse>[] = [
     {

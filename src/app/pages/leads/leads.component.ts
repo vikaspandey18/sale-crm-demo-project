@@ -4,7 +4,13 @@ import { AlertComponent } from "../../shared/components/ui/alert/alert.component
 import { AgGridAngular } from "ag-grid-angular";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
-import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
+import {
+  ColDef,
+  colorSchemeDark,
+  colorSchemeLight,
+  GridApi,
+  themeAlpine,
+} from "ag-grid-community";
 import { LeadResponse } from "../../models/lead.model";
 import { getLeadStartAction } from "./state/lead.actions";
 import {
@@ -12,10 +18,11 @@ import {
   getLeadLoadingSelector,
   getLeadSelector,
 } from "./state/lead.selectors";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { ShowHistoryModelComponent } from "./show-history-model/show-history-model.component";
 import { AddLeadStatusComponent } from "./add-lead-status/add-lead-status.component";
 import { AddFollowupLeadComponent } from "./add-followup-lead/add-followup-lead.component";
+import { ThemeService } from "../../shared/services/theme.service";
 
 @Component({
   selector: "app-leads",
@@ -32,6 +39,19 @@ import { AddFollowupLeadComponent } from "./add-followup-lead/add-followup-lead.
 })
 export class LeadsComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
+
+  private themeService = inject(ThemeService);
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
+
   customers$!: Observable<LeadResponse[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;

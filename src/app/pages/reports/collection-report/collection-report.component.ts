@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from "@angular/core";
 import { AgGridAngular } from "ag-grid-angular";
 import { AlertComponent } from "../../../shared/components/ui/alert/alert.component";
 import { AsyncPipe } from "@angular/common";
-import { ColDef, GridApi, themeAlpine } from "ag-grid-community";
-import { Observable } from "rxjs";
+import { ColDef, colorSchemeDark, colorSchemeLight, GridApi, themeAlpine } from "ag-grid-community";
+import { map, Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../store/app.state";
 import { CollectionReportResponse } from "../../../models/collection-report.model";
@@ -14,6 +14,7 @@ import {
   getCollectionReportSelector,
 } from "./state/collection-report.selectors";
 import { DatePickerComponent } from "../../../shared/components/form/date-picker/date-picker.component";
+import { ThemeService } from "../../../shared/services/theme.service";
 
 @Component({
   selector: "app-collection-report",
@@ -23,6 +24,18 @@ import { DatePickerComponent } from "../../../shared/components/form/date-picker
 })
 export class CollectionReportComponent implements OnInit {
   private store: Store = inject(Store<AppState>);
+
+  private themeService = inject(ThemeService);
+
+  // Convert the Observable to a Signal
+  gridTheme$ = this.themeService.theme$.pipe(
+    map((theme) =>
+      theme === "dark"
+        ? themeAlpine.withPart(colorSchemeDark)
+        : themeAlpine.withPart(colorSchemeLight),
+    ),
+  );
+  protected readonly themeAlpine = themeAlpine;
 
   customers$!: Observable<CollectionReportResponse[] | []>;
   loading$!: Observable<boolean>;

@@ -4,6 +4,8 @@ import { AgGridAngular } from "ag-grid-angular";
 import {
   CellValueChangedEvent,
   ColDef,
+  colorSchemeDark,
+  colorSchemeLight,
   GridApi,
   themeAlpine,
 } from "ag-grid-community";
@@ -26,6 +28,7 @@ import { UpdateIndiaMartModelComponent } from "./update-india-mart-model/update-
 import { DetailIndiamartModelComponent } from "./detail-indiamart-model/detail-indiamart-model.component";
 import { HistoryIndiamartModelComponent } from "./history-indiamart-model/history-indiamart-model.component";
 import { RouterLink } from "@angular/router";
+import { ThemeService } from "../../shared/services/theme.service";
 
 @Component({
   selector: "app-indiamart",
@@ -46,7 +49,17 @@ export class IndiamartComponent implements OnInit {
 
   private gridApi!: GridApi<IndiaMartCustomer>;
 
-  public theme = themeAlpine;
+  private themeService = inject(ThemeService);
+  
+    // Convert the Observable to a Signal
+    gridTheme$ = this.themeService.theme$.pipe(
+      map((theme) =>
+        theme === "dark"
+          ? themeAlpine.withPart(colorSchemeDark)
+          : themeAlpine.withPart(colorSchemeLight),
+      ),
+    );
+    protected readonly themeAlpine = themeAlpine;
 
   indiamartCustomers$!: Observable<IndiaMartCustomer[]>;
   loadCustomer$!: Observable<boolean>;

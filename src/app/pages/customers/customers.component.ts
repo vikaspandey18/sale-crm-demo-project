@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { CustomerResponse } from "../../models/customer.model";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app.state";
@@ -11,7 +11,7 @@ import {
 } from "./state/customer.selectors";
 import { AsyncPipe } from "@angular/common";
 import { AgGridAngular } from "ag-grid-angular";
-import { ColDef, GridApi } from "ag-grid-community";
+import { ColDef, colorSchemeDark, colorSchemeLight, GridApi } from "ag-grid-community";
 import {
   themeAlpine,
   themeBalham,
@@ -19,6 +19,7 @@ import {
   themeQuartz,
 } from "ag-grid-community";
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
+import { ThemeService } from "../../shared/services/theme.service";
 
 @Component({
   selector: "app-customers",
@@ -31,7 +32,17 @@ export class CustomersComponent implements OnInit {
 
   private gridApi!: GridApi<CustomerResponse>;
 
-  public theme = themeAlpine;
+  private themeService = inject(ThemeService);
+  
+    // Convert the Observable to a Signal
+    gridTheme$ = this.themeService.theme$.pipe(
+      map((theme) =>
+        theme === "dark"
+          ? themeAlpine.withPart(colorSchemeDark)
+          : themeAlpine.withPart(colorSchemeLight),
+      ),
+    );
+    protected readonly themeAlpine = themeAlpine;
 
   customers$!: Observable<CustomerResponse[]>;
 
