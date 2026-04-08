@@ -1,4 +1,4 @@
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a66fd3e9-2321-4466-8dee-28437aa2b6ee" />##  Website Preview
+##  Website Preview
 
 ### LOGIN PAGE
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/565f9876-b78f-4c22-b6f1-119e0ac9a308" />
