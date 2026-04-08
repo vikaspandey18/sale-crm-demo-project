@@ -1,4 +1,35 @@
 ##  Website Preview
+🚀 Overview
+
+The Sale CRM Demo Project is a customer relationship management system designed to streamline and monitor daily business operations. It helps organizations efficiently track employee activities, manage customer interactions, and maintain records of sales processes in one centralized platform.
+
+🎯 Key Features
+👨‍💼 Employee Activity Tracking
+Monitor daily work updates and performance of employees.
+📦 Order Management
+Create, update, and manage customer orders with ease.
+💳 Payment Tracking
+Keep a detailed record of all customer payments and transactions.
+📈 Lead Management
+Capture and manage potential customer leads effectively.
+🗓️ Attendance Tracking
+Maintain employee attendance records for better workforce management.
+📑 Report Generation
+Generate insightful reports for:
+Orders
+Payments
+Leads
+Attendance
+
+🛠️ Purpose
+
+This project serves as a demo CRM system to showcase how businesses can digitize and organize their sales and operational workflows for improved productivity and decision-making.
+
+💡 Use Cases
+Small to medium businesses managing sales pipelines
+Teams needing structured tracking of employee activities
+Organizations looking for basic CRM functionality with reporting
+
 
 ### LOGIN PAGE
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/16a724eb-0e7d-45d2-b714-6df0b591eaf8" />
