@@ -7,6 +7,10 @@
 ### DASHBOARD
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/aa7e253e-3580-436c-95f0-3ec7be6e3bc6" />
 
+### DASHBOARD DARK MODE
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d753653a-3806-4ca9-ac2a-57581193c0ad" />
+
+
 ### MARK ATTENDANCE
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3858db2d-3054-48b8-96fd-b3dcb63ae691" />
 
